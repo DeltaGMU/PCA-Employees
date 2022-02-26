@@ -1,0 +1,64 @@
+/* Import Poppins font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,500;0,600;0,700;1,200;1,500&display=swap');
+
+:root {
+    --pcaBeige: #c3a579;
+    --pcaDarkBeige: #b39870;
+    --pcaBlue: #0C4A80;
+    --pcaGrey: #E6E6E6;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: Poppins, sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 1.5rem;
+}
+
+label {
+    font-size: 1.5em;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* Main background color */
+.bodyBG {
+    background-color: var(--pcaGrey);
+}
+
+.text-beige {
+    color: var(--pcaBeige);
+}
+
+.loginContainer {
+    background-color: var(--pcaBlue);
+    margin: 5rem 0;
+    padding: 3rem;
+    border-radius: 10px;
+}
+
+.formBtn {
+    margin-top: 1.5rem;
+    border-radius: 5px;
+    padding: 0.75rem 1rem;
+    font-size: 1.2em;
+    font-weight: 500;
+    width: 40%;
+    border: none;
+    color: var(--pcaBlue);
+    background-color: var(--pcaBeige);
+}
+
+.formBtn:hover {
+    background-color: var(--pcaDarkBeige);
+}
+
+.textBox:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.15rem var(--pcaBeige);
+}
