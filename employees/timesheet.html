@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCA Employee Timesheet</title>
+
+    <!--Link Bootstrap CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="../css/style.css">
+
+    <script src="https://unpkg.com/vue@3.0.2"></script>
+
+</head>
+<body>
+    <nav class="pcaNav">
+
+        <p class="text-white">Signed in as</p>
+        <p class="text-white">Sign Out</p>
+
+    </nav>
+    <div class="wrapper">
+
+        <div class="topSection">
+
+            <h1 class="text-blue">Timesheet Submission Form</h1>
+            <p>Please fill in the hours under each week day and click Submit Timesheet.</p>
+
+        </div>
+        
+        <div id="app">
+            <table class="timesheet">
+
+                <tr class="headingRow">
+                    <th class="smallCol">Date</th>
+                    <th class="smallCol middleCols">Day</th>
+                    <th class="largeCol middleCols">Regular Hours</th>
+                    <th class="largeCol middleCols">Overtime</th>
+                    <th class="largeCol middleCols">Personal Time Off (PTO)</th>
+                    <th class="largeCol middleCols">Other</th>
+                    <th class="smallCol">Total</th>
+                </tr>
+
+                <!-- Table body for the first half of the month (will be displayed by default) -->
+                <tbody id="firstHalf">
+
+                    <!-- If the index is even, add the "evenRow" class; if not, add the oddRow class -->
+                    <tr v-for="index in daysInFirstHalf" :class="index % 2 == 0 ? 'evenRow' : 'oddRow'">
+                        
+                        <!-- Get the date (format ex: 3/10) and day from the dateAndDayArray in employees.js -->
+                        <td class="smallCol">{{ dateAndDayArray[index-1][0] }}</td>
+                        <td class="smallCol middleCols">{{ dateAndDayArray[index-1][1] }}</td>
+                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + index + 'RegHours' "></td>
+                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + index + 'OTHours' "></td>
+                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + index + 'PTOHours' "></td>
+                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + index + 'OtherHours' "></td>
+                        <td class="smallCol"></td>
+                    </tr>
+
+                </tbody>
+
+                <!-- Table body for the second half of the month (will be hidden by default) -->
+                <tbody id="secondHalf">
+
+                    <tr v-for="index in daysInSecondHalf" :class="index % 2 == 0 ? 'evenRow' : 'oddRow'">
+
+                        <!-- In order to get the correct dates, add the index to the number of days in the first half of the month because index starts at 1 -->
+                        <td class="smallCol">{{ dateAndDayArray[(daysInFirstHalf + index) - 1][0] }}</td>
+                        <td class="smallCol middleCols">{{ dateAndDayArray[(daysInFirstHalf + index) - 1][1] }}</td>
+                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + (daysInFirstHalf + index) + 'RegHours' "></td>
+                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + (daysInFirstHalf + index) + 'OTHours' "></td>
+                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + (daysInFirstHalf + index) + 'PTOHours' "></td>
+                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + (daysInFirstHalf + index) + 'OtherHours' "></td>
+                        <td class="smallCol"></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+    <script src="../js/employees.js"></script>
+
+</body>
+</html>

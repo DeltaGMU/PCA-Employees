@@ -5,6 +5,7 @@
     --pcaBeige: #c3a579;
     --pcaDarkBeige: #b39870;
     --pcaBlue: #0C4A80;
+    --pcaDarkBlue: #0b3f6d;
     --pcaGrey: #E6E6E6;
 }
 
@@ -16,25 +17,58 @@
 }
 
 h1 {
-    font-size: 3em;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+h1.login {
+    font-size: 3rem;
     margin-bottom: 1.5rem;
 }
 
+.wrapper {
+    margin: 1.5rem 3rem;
+}
+
+/* Negate Bootstrap's CSS file that applies margin-bottom: 1rem to <p> */
+p {
+    margin-bottom: 0;
+}
+
 label {
-    font-size: 1.5em;
+    font-size: 1.5rem;
     margin-bottom: 0.5rem;
     margin-top: 1rem;
 }
 
-/* Main background color */
-.bodyBG {
-    background-color: var(--pcaGrey);
+/* Navbar styling */
+.pcaNav {
+    display: flex;
+    background-color: var(--pcaBlue);
+    border-bottom: 5px solid var(--pcaBeige);
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.5rem 3rem;
 }
+/* End navbar styling */
 
+
+/* Text colors */
 .text-beige {
     color: var(--pcaBeige);
 }
 
+.text-blue {
+    color: var(--pcaBlue);
+}
+
+.text-white {
+    color: white;
+}
+/* End text colors */
+
+
+/* Login form styling */
 .loginContainer {
     background-color: var(--pcaBlue);
     margin: 5rem 0;
@@ -46,7 +80,7 @@ label {
     margin-top: 1.5rem;
     border-radius: 5px;
     padding: 0.75rem 1rem;
-    font-size: 1.2em;
+    font-size: 1.2rem;
     font-weight: 500;
     width: 40%;
     border: none;
@@ -55,10 +89,68 @@ label {
 }
 
 .formBtn:hover {
+    color: var(--pcaDarkBlue);
     background-color: var(--pcaDarkBeige);
 }
 
 .textBox:focus {
     outline: 0;
+    border-color: white;
     box-shadow: 0 0 0 0.15rem var(--pcaBeige);
 }
+/* End login form styling */
+
+
+/* Timesheet styling */
+.topSection {
+    margin-bottom: 1rem;
+}
+
+table.timesheet {
+    border: 2px solid black;
+    width: 100%;
+    text-align: center;
+}
+
+.headingRow {
+    background-color: var(--pcaBlue);
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+th, td {
+    padding: 0.3rem 0;
+}
+
+th.middleCols, td.middleCols {
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+}
+
+th.smallCol, td.smallCol {
+    width: 10%;
+}
+
+th.largeCol, td.largeCol {
+    width: 17.5%;
+}
+
+td input.textBox {
+    width: 75%;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid var(--pcaBlue);
+}
+
+.oddRow {
+    background-color: rgba(12, 74, 128, .29);
+}
+
+.evenRow {
+    background-color: rgba(12, 74, 128, .15);
+}
+
+#secondHalf {
+    display: none;
+}
+/* End timesheet styling */
