@@ -122,16 +122,16 @@ th, td {
     padding: 0.3rem 0;
 }
 
-th.middleCols, td.middleCols {
+.middleCols {
     border-left: 1px solid white;
     border-right: 1px solid white;
 }
 
-th.smallCol, td.smallCol {
+.smallCol {
     width: 10%;
 }
 
-th.largeCol, td.largeCol {
+.largeCol {
     width: 17.5%;
 }
 
