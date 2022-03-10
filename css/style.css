@@ -27,10 +27,19 @@ h1.login {
 }
 
 .wrapper {
-    margin: 1.5rem 3rem;
+    margin: 1.5rem 3rem 3rem;
 }
 
-/* Negate Bootstrap's CSS file that applies margin-bottom: 1rem to <p> */
+.btn {
+    margin-top: 1.5rem;
+    border-radius: 5px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border: none;
+}
+
+/* Negate Bootstrap's CSS that applies margin-bottom: 1rem to <p> */
 p {
     margin-bottom: 0;
 }
@@ -77,13 +86,7 @@ label {
 }
 
 .formBtn {
-    margin-top: 1.5rem;
-    border-radius: 5px;
-    padding: 0.75rem 1rem;
-    font-size: 1.2rem;
-    font-weight: 500;
     width: 40%;
-    border: none;
     color: var(--pcaBlue);
     background-color: var(--pcaBeige);
 }
@@ -94,7 +97,6 @@ label {
 }
 
 .textBox:focus {
-    outline: 0;
     border-color: white;
     box-shadow: 0 0 0 0.15rem var(--pcaBeige);
 }
@@ -110,6 +112,7 @@ label {
     border: 2px solid black;
     width: 100%;
     text-align: center;
+    margin-bottom: 1rem;
 }
 
 .headingRow {
@@ -118,7 +121,11 @@ label {
     color: white;
 }
 
-th, td {
+th {
+    padding: 0.6rem 0;
+}
+
+td {
     padding: 0.3rem 0;
 }
 
@@ -150,7 +157,26 @@ td input.textBox {
     background-color: rgba(12, 74, 128, .15);
 }
 
-#secondHalf {
+.hide {
     display: none;
+}
+
+.blueBtn {
+    color: white;
+    background-color: var(--pcaBlue);
+}
+
+.blueBtn:hover {
+    background-color: var(--pcaDarkBlue);
+    color: rgb(230, 230, 230);
+}
+
+.right-align {
+    float: right;
+}
+
+.chevron {
+    width: 1.3rem;
+    height: 1.3rem;
 }
 /* End timesheet styling */
