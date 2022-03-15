@@ -16,7 +16,6 @@ const actions = {
       await axios.get("api/v1/me", headers).then(
         resp => {
           context.commit("setName", resp.data.data.user);
-          // console.log(resp.data.data.user);
         }
       );
     },

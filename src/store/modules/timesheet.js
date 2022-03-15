@@ -9,7 +9,7 @@ const getters = {
 };
 
 const actions = {
-  async SubmitTimesheets(context) {
+  async SubmitTimesheet(context) {
     let headers = {
       headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
     }
