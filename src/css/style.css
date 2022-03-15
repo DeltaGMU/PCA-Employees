@@ -1,0 +1,182 @@
+/* Import Poppins font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,500;0,600;0,700;1,200;1,500&display=swap');
+
+:root {
+    --pcaBeige: #c3a579;
+    --pcaDarkBeige: #b39870;
+    --pcaBlue: #0C4A80;
+    --pcaDarkBlue: #0b3f6d;
+    --pcaGrey: #E6E6E6;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: Poppins, sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+h1.loginHeader {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.wrapper {
+    margin: 1.5rem 3rem 3rem;
+}
+
+.btn {
+    margin-top: 1.5rem;
+    border-radius: 5px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border: none;
+}
+
+/* Negate Bootstrap's CSS that applies margin-bottom: 1rem to <p> */
+p {
+    margin-bottom: 0;
+}
+
+label {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* Navbar styling */
+.pcaNav {
+    display: flex;
+    background-color: var(--pcaBlue);
+    border-bottom: 5px solid var(--pcaBeige);
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.5rem 3rem;
+}
+/* End navbar styling */
+
+
+/* Text colors */
+.text-beige {
+    color: var(--pcaBeige);
+}
+
+.text-blue {
+    color: var(--pcaBlue);
+}
+
+.text-white {
+    color: white;
+}
+/* End text colors */
+
+
+/* Login form styling */
+.loginContainer {
+    background-color: var(--pcaBlue);
+    margin: 5rem 0;
+    padding: 3rem;
+    border-radius: 10px;
+}
+
+.formBtn {
+    width: 40%;
+    color: var(--pcaBlue);
+    background-color: var(--pcaBeige);
+}
+
+.formBtn:hover {
+    color: var(--pcaDarkBlue);
+    background-color: var(--pcaDarkBeige);
+}
+
+.textBox:focus {
+    border-color: white;
+    box-shadow: 0 0 0 0.15rem var(--pcaBeige);
+}
+/* End login form styling */
+
+
+/* Timesheet styling */
+.topSection {
+    margin-bottom: 1rem;
+}
+
+.timesheet {
+    border: 2px solid black;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.headingRow {
+    background-color: var(--pcaBlue);
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+th {
+    padding: 0.6rem 0;
+}
+
+td {
+    padding: 0.3rem 0;
+}
+
+.middleCols {
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+}
+
+.smallCol {
+    width: 10%;
+}
+
+.largeCol {
+    width: 17.5%;
+}
+
+td input.textBox {
+    width: 75%;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid var(--pcaBlue);
+}
+
+.oddRow {
+    background-color: rgba(12, 74, 128, .29);
+}
+
+.evenRow {
+    background-color: rgba(12, 74, 128, .15);
+}
+
+.hide {
+    display: none;
+}
+
+.blueBtn {
+    color: white;
+    background-color: var(--pcaBlue);
+}
+
+.blueBtn:hover {
+    background-color: var(--pcaDarkBlue);
+    color: rgb(230, 230, 230);
+}
+
+.right-align {
+    float: right;
+}
+
+.chevron {
+    width: 1.3rem;
+    height: 1.3rem;
+}
+/* End timesheet styling */
