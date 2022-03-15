@@ -11,7 +11,6 @@
     
                     <div class="text-center">
                         <h1 class="text-beige loginHeader">Log In</h1>
-                        <router-link to="/timesheet">Timesheet</router-link>
                     </div>
 
                     <p v-if="showError" id="error" class="invalid-feedback">Employee ID, Email, or Password is incorrect</p>

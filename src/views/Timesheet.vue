@@ -15,10 +15,10 @@
                 
                 <button id="nextPageBtn" class="btn blueBtn right-align" @click="switchTimesheetPage">
                     View Next Page
-                    <svg class="chevron" data-src="https://s2.svgbox.net/octicons.svg?ic=chevron-right-bold"></svg>
+                    <i class="fa fa-chevron-right chevron"></i>
                 </button>
                 <button id="previousPageBtn" class="btn blueBtn right-align hide" @click="switchTimesheetPage">
-                    <svg class="chevron" data-src="https://s2.svgbox.net/octicons.svg?ic=chevron-left-bold"></svg>
+                    <i class="fa fa-chevron-left chevron"></i>
                     View Previous Page
                 </button>
 
