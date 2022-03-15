@@ -68,7 +68,7 @@ export default {
       try {
           await this.LogIn(User);
           //this.$router.push({name: "Timesheet"}).catch(() => {});
-          this.$router.push("/timesheet").catch(() => {});
+          this.$router.push("/timesheet").catch((err) => console.log(err));
           this.showError = false;
       } catch (error) {
         this.showError = true;
