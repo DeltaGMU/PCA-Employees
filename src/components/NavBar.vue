@@ -2,7 +2,7 @@
   <div>
 
     <span class="pcaNav" v-if="isLoggedIn">
-      <p class="text-white">Signed in as {{UserName}}</p>
+      <p class="text-white">Signed in as {{getName}}</p>
       <a class="text-white" @click="logout">Sign Out</a>
     </span>
 
@@ -18,18 +18,12 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "NavBar",
-  data() {
-    let getName = ""
-    if (this.$store.getters.StateUser !== null) {
-      getName = this.$store.getters.StateUser.first_name;
-    }
-    return {
-      UserName: getName
-    }
-  },
   computed: {
     isLoggedIn: function() {
       return this.$store.getters.isAuthenticated;
+    },
+    getName: function() {
+      return this.$store.getters.StateName;
     },
     ...mapGetters({Name: "StateName"}),
   },

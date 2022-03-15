@@ -60,14 +60,13 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["LogIn", "GetUserInfo"]),
+    ...mapActions(["LogIn"]),
     async submit() {
       const User = new FormData();
       User.append("username", this.form.username);
       User.append("password", this.form.password);
       try {
           await this.LogIn(User);
-          //this.$router.push({name: "Timesheet"}).catch(() => {});
           this.$router.push("/timesheet").catch((err) => console.log(err));
           this.showError = false;
       } catch (error) {

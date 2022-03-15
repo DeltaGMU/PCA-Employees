@@ -158,6 +158,9 @@ export default {
         this.getDaysInFirstHalf()
         this.getDaysInSecondHalf()
         this.correlateDateAndDay()
+    },
+    beforeMount() {
+        this.$store.dispatch("GetName");
     }
 };
 </script>

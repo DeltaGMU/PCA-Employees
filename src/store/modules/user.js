@@ -13,9 +13,10 @@ const actions = {
       let headers = {
         headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
       }
-      axios.get("api/v1/me", headers).then(
+      await axios.get("api/v1/me", headers).then(
         resp => {
           context.commit("setName", resp.data.data.user);
+          // console.log(resp.data.data.user);
         }
       );
     },

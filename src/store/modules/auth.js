@@ -11,7 +11,7 @@ const getters = {
 
 const actions = {
   async LogIn({commit}, credentials) {
-    axios.post("api/v1/login", credentials).then(
+    await axios.post("api/v1/login", credentials).then(
       resp => {
         console.log(resp.data.data);
         commit("setUser", resp.data.data);
