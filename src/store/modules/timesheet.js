@@ -1,30 +1,42 @@
 import axios from "axios";
 
 const state = {
-  timesheetSubmission: null,
+  retrievedTimesheets: null
 };
 
 const getters = {
-  StateTimesheet: (state) => state.timesheetSubmission,
+  RetrievedTimesheet: (state) => state.retrievedTimesheets,
 };
 
 const actions = {
-  async SubmitTimesheet(context) {
-    let headers = {
-      headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
-    }
-    axios.get("api/v1/employees/all", headers).then(
-      resp => {
-        context.commit("setTimesheet", resp.data.data.timesheetSubmission);
-      }
-    );
-    
+  async SubmitTimesheet(context, valueArray) {
+    await axios({
+          method: 'post',
+          url: "api/v1/timesheet/" + context.rootState.auth.user.employee_id,
+          data: {
+              "time_sheets": valueArray
+          },
+          headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+    });
+  
   },
+  async GetTimesheets(context, payload) {
+    
+    await axios({
+      method: 'get',
+      url: "api/v1/timesheet/" + context.rootState.auth.user.employee_id,
+      params: {
+          "date_start": payload.firstDay,
+          "date_end": payload.lastDay
+      },
+      headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+    }).then(resp => context.commit("retrievedTimesheet", resp.data.data));
+  }
 };
 
 const mutations = {
-  setTimesheet(state, timesheetSubmission) {
-    state.timesheetSubmission = timesheetSubmission;
+  retrievedTimesheet(state, retrievedTimesheets) {
+    state.retrievedTimesheets = retrievedTimesheets;
   },
 };
 
