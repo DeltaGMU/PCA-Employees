@@ -21,7 +21,8 @@ const actions = {
   
   },
   async GetTimesheets(context, payload) {
-    
+    // console.log("start day in payload: " + payload.firstDay);
+    // console.log("end day in payload: " + payload.lastDay);
     await axios({
       method: 'get',
       url: "api/v1/timesheet/" + context.rootState.auth.user.employee_id,

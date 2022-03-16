@@ -353,7 +353,9 @@ export default {
                 this.yearAndMonth.setDate(i+1)
                 isoDate = this.yearAndMonth.toISOString().slice(0, 10)
                 
-                //console.log(timesheets.time_sheets[isoDate])
+                if (timesheets.time_sheets[isoDate] === undefined) {
+                    continue;
+                }
 
                 if(timesheets.time_sheets[isoDate].work_hours == 0) {
                     this.formData[i].work_hours = ""
@@ -400,7 +402,6 @@ export default {
             'firstDay': this.firstDay,
             'lastDay': this.lastDay
         };
-
         this.$store.dispatch("GetTimesheets", payload);
     }
 }
