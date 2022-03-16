@@ -292,9 +292,9 @@ export default {
         },
 
         // Sets the last day of the month in a yyyy-mm-dd format
-        setLastDay(todaysDate) {
-            todaysDate.setDate(todaysDate.getDate())
-            this.lastDay = todaysDate.toISOString().slice(0, 10)
+        setLastDay() {
+            var todaysDate = new Date(this.year, this.monthNum, 0)
+            this.lastDay = todaysDate.toISOString().slice(0, 10)  
         },
 
         // Controls the switch between the first half and second half of the month on the Timesheet
@@ -394,15 +394,16 @@ export default {
         this.year = dt.getFullYear()
 
         this.setFirstDay(dt)
-        this.setLastDay(dt)
+        this.setLastDay()
 
-        this.$store.dispatch("GetName");
+        this.$store.dispatch("GetName")
 
         var payload = {
             'firstDay': this.firstDay,
             'lastDay': this.lastDay
-        };
-        this.$store.dispatch("GetTimesheets", payload);
+        }
+
+        this.$store.dispatch("GetTimesheets", payload)
     }
 }
 </script>
