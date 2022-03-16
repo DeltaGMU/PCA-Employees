@@ -13,7 +13,6 @@ const actions = {
   async LogIn({commit}, credentials) {
     await axios.post("api/v1/login", credentials).then(
       resp => {
-        console.log(resp.data.data);
         commit("setUser", resp.data.data);
       }
     ).catch(e => console.log(e));
