@@ -59,6 +59,16 @@ label {
     width: 100%;
     padding: 1.5rem 3rem;
 }
+
+.pcaNav #signOut {
+    text-decoration: underline 0.15em rgba(255, 255, 255, 0);
+    transition: text-decoration-color 300ms;
+}
+
+.pcaNav #signOut:hover {
+    text-decoration-color: rgba(255, 255, 255, 1);
+    cursor: pointer;
+}
 /* End navbar styling */
 
 
