@@ -40,8 +40,7 @@ const actions = {
       }
       else {
         console.log("No employee time sheet records exist for the provided date range!")
-        // context.commit("retrievedTimeSheet", null)
-        this.state.retrievedTimesheets = null;
+        context.commit("retrievedTimesheet", {})
       }
     })
   }

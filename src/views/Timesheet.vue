@@ -367,7 +367,7 @@ export default {
                 this.yearAndMonth.setDate(i+1)
                 isoDate = this.yearAndMonth.toISOString().slice(0, 10)
                 
-                if (timesheets.time_sheets[isoDate] === undefined) {
+                if (timesheets.time_sheets === undefined || timesheets.time_sheets[isoDate] === undefined) {
                     this.formData[i].work_hours = ""
                     this.formData[i].pto_hours = ""
                     this.formData[i].extra_hours = ""
