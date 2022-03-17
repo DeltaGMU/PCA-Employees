@@ -3,7 +3,7 @@
 
     <span class="pcaNav" v-if="isLoggedIn">
       <p class="text-white">Signed in as {{getName}}</p>
-      <a class="text-white" @click="logout">Sign Out</a>
+      <a class="text-white" id="signOut" @click="logout">Sign Out</a>
     </span>
 
     <span class="pcaNav" v-else>
