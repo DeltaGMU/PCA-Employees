@@ -19,10 +19,10 @@ const actions = {
   },
   
   async LogOut(context) {
-    let user = null;
     context.rootState.employees.employees = null;
     context.rootState.user.name = null;
-    context.commit("logout", user);
+    context.rootState.timesheet.retrievedTimesheets = null;
+    context.commit("logout");
   },
 };
 
@@ -30,8 +30,8 @@ const mutations = {
   setUser(state, username) {
     state.user = username;
   },
-  logout(state, user) {
-    state.user = user;
+  logout(state) {
+    state.user = null;
   },
 };
 
