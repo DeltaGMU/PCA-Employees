@@ -33,7 +33,8 @@
                     <th class="smallCol middleCols">Day</th>
                     <th class="largeCol middleCols">Regular Hours</th>
                     <th class="largeCol middleCols">Personal Time Off (PTO)</th>
-                    <th class="largeCol middleCols">Overtime</th>
+                    <th class="largeCol middleCols">Extra Hours</th>
+                    <th class="largeCol middleCols">Comments</th>
                     <!--<th class="largeCol middleCols">Extra Hours</th>-->
                 </tr>
 
@@ -46,11 +47,11 @@
                         <!-- Get the date (format ex: 3/10) and day from the dateAndDayArray in employees.js -->
                         <td class="smallCol">{{ dateAndDayArray[day-1][0] }}</td>
                         <td class="smallCol middleCols">{{ dateAndDayArray[day-1][1] }}</td>
-                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" v-model=" formData[day-1].work_hours "></td>
-                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" v-model=" formData[day-1].pto_hours "></td>
-                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" v-model=" formData[day-1].extra_hours "></td>
+                        <td class="largeCol middleCols"><input type="number" class="form-control textBox" v-model=" formData[day-1].work_hours "></td>
+                        <td class="largeCol middleCols"><input type="number" class="form-control textBox" v-model=" formData[day-1].pto_hours "></td>
+                        <td class="largeCol middleCols"><input type="number" class="form-control textBox" v-model=" formData[day-1].extra_hours "></td>
+                        <td class="largeCol middleCols"><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[day-1].comment "></td>
                         <!--<td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + day + 'ExtraHours' "></td>-->
-
                     </tr>
 
                 </tbody>
@@ -66,8 +67,8 @@
                         <td class="largeCol middleCols"><input type="text" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].work_hours "></td>
                         <td class="largeCol middleCols"><input type="text" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].pto_hours "></td>
                         <td class="largeCol middleCols"><input type="text" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].extra_hours "></td>
+                        <td class="largeCol middleCols"><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].comment "></td>
                         <!--<td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + (daysInFirstHalf + day) + 'ExtraHours' "></td>-->
-
                     </tr>
 
                 </tbody>
@@ -91,157 +92,188 @@ export default {
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 }
             ],
             year: 0,
@@ -311,7 +343,7 @@ export default {
 
         // Get the values from the input fields and send them to the database
         submitTimesheet() {
-            let work_hours, pto_hours, extra_hours, date_worked
+            let work_hours, pto_hours, extra_hours, date_worked, comment
             
             for(let i = 0; i < this.daysInMonth; i++) {
                 this.yearAndMonth.setDate(i+1)
@@ -320,6 +352,7 @@ export default {
                 work_hours = parseInt(this.formData[i].work_hours)
                 pto_hours = parseInt(this.formData[i].pto_hours)
                 extra_hours = parseInt(this.formData[i].extra_hours)
+                comment = this.formData[i].comment
 
                 if(isNaN(work_hours)) {
                     work_hours = 0
@@ -335,7 +368,8 @@ export default {
                     "work_hours": work_hours,
                     "pto_hours": pto_hours,
                     "extra_hours": extra_hours,
-                    "date_worked": date_worked
+                    "date_worked": date_worked,
+                    "comment": comment
                 } 
             }
 
@@ -355,9 +389,10 @@ export default {
             
             if (timesheets === null) {
                 for(let i = 0; i < this.daysInMonth; i ++) {
-                    this.formData[i].work_hours = "";
-                    this.formData[i].pto_hours = "";
-                    this.formData[i].extra_hours = "";
+                    this.formData[i].work_hours = ""
+                    this.formData[i].pto_hours = ""
+                    this.formData[i].extra_hours = ""
+                    this.formData[i].comment = ""
                 }
             }
 
@@ -370,7 +405,8 @@ export default {
                     this.formData[i].work_hours = ""
                     this.formData[i].pto_hours = ""
                     this.formData[i].extra_hours = ""
-                    continue;
+                    this.formData[i].comment = ""
+                    continue
                 }
 
                 if(timesheets.time_sheets[isoDate].work_hours == 0) {
@@ -392,6 +428,10 @@ export default {
                 }
                 else {
                     this.formData[i].extra_hours = timesheets.time_sheets[isoDate].extra_hours
+                }
+
+                if(timesheets.time_sheets[isoDate].comment !== undefined) {
+                    this.formData[i].comment = timesheets.time_sheets[isoDate].comment
                 }
             }
         },
