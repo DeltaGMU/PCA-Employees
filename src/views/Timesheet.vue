@@ -47,9 +47,9 @@
                         <!-- Get the date (format ex: 3/10) and day from the dateAndDayArray in employees.js -->
                         <td class="smallCol">{{ dateAndDayArray[day-1][0] }}</td>
                         <td class="smallCol middleCols">{{ dateAndDayArray[day-1][1] }}</td>
-                        <td class="largeCol middleCols"><input type="number" class="form-control textBox" v-model=" formData[day-1].work_hours "></td>
-                        <td class="largeCol middleCols"><input type="number" class="form-control textBox" v-model=" formData[day-1].pto_hours "></td>
-                        <td class="largeCol middleCols"><input type="number" class="form-control textBox" v-model=" formData[day-1].extra_hours "></td>
+                        <td class="largeCol middleCols"><input type="number" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].work_hours "></td>
+                        <td class="largeCol middleCols"><input type="number" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].pto_hours "></td>
+                        <td class="largeCol middleCols"><input type="number" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].extra_hours "></td>
                         <td class="largeCol middleCols"><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[day-1].comment "></td>
                         <!--<td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + day + 'ExtraHours' "></td>-->
                     </tr>
@@ -64,9 +64,9 @@
                         <!-- In order to get the correct dates, add the index to the number of days in the first half of the month because index starts at 1 -->
                         <td class="smallCol">{{ dateAndDayArray[(daysInFirstHalf + day) - 1][0] }}</td>
                         <td class="smallCol middleCols">{{ dateAndDayArray[(daysInFirstHalf + day) - 1][1] }}</td>
-                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].work_hours "></td>
-                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].pto_hours "></td>
-                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].extra_hours "></td>
+                        <td class="largeCol middleCols"><input type="text" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].work_hours "></td>
+                        <td class="largeCol middleCols"><input type="text" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].pto_hours "></td>
+                        <td class="largeCol middleCols"><input type="text" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].extra_hours "></td>
                         <td class="largeCol middleCols"><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].comment "></td>
                         <!--<td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + (daysInFirstHalf + day) + 'ExtraHours' "></td>-->
                     </tr>
