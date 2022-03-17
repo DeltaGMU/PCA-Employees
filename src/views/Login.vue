@@ -5,7 +5,7 @@
 
         <div class="row justify-content-center">
 
-            <div class="col-xl-6 col-lg-8 col-md-10 col-sm-12">
+            <div class="col-xl-6 col-lg-8 col-md-10 col-sm-12 col-12">
 
                 <div class="loginContainer">
     
