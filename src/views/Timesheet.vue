@@ -75,7 +75,6 @@
             </table>
             <button id="submitTimesheetBtn" class="btn blueBtn" @click="submitTimesheet">Submit Timesheet</button>
         </div>
-
     </div>
   </div>
 </template>
@@ -261,12 +260,12 @@ export default {
         // This function associates a date with the day of the week in the dateAndDayArray
         correlateDateAndDay() {
             this.yearAndMonth = new Date(this.year, this.monthNum - 1)
-            var abbrevDay
+            let abbrevDay
     
             // setDate sets the month day of the date that was created above; starts at 1, goes until it gets to the end of the month
             // getDay returns an int (0-6) of the weekday that correlates to the date that was set; reference the index of the days array that corresponds to that int
             // Push the day number and abbreviated day name to dateAndDayArray
-            for(var i = 1; i <= this.daysInMonth; i ++) {                               
+            for(let i = 1; i <= this.daysInMonth; i ++) {                               
                 this.yearAndMonth.setDate(i) 
                 abbrevDay = this.days[this.yearAndMonth.getDay()]
 
@@ -286,23 +285,23 @@ export default {
         },
 
         // Sets the first day of the month in a yyyy-mm-dd format
-        setFirstDay(todaysDate) {
-            todaysDate.setDate(1)
-            this.firstDay = todaysDate.toISOString().slice(0, 10)
+        setFirstDay() {
+            let firstDate = new Date(this.year, this.monthNum-1, 1)
+            this.firstDay = firstDate.toISOString().slice(0, 10)
         },
 
         // Sets the last day of the month in a yyyy-mm-dd format
-        setLastDay(todaysDate) {
-            todaysDate.setDate(todaysDate.getDate())
-            this.lastDay = todaysDate.toISOString().slice(0, 10)
+        setLastDay() {
+            let lastDate = new Date(this.year, this.monthNum, 0)
+            this.lastDay = lastDate.toISOString().slice(0, 10)
         },
 
         // Controls the switch between the first half and second half of the month on the Timesheet
         switchTimesheetPage() {
-            var nextPageBtn = document.getElementById("nextPageBtn")
-            var previousPageBtn = document.getElementById("previousPageBtn")
-            var firstHalf = document.getElementById("firstHalf")
-            var secondHalf = document.getElementById("secondHalf")
+            let nextPageBtn = document.getElementById("nextPageBtn")
+            let previousPageBtn = document.getElementById("previousPageBtn")
+            let firstHalf = document.getElementById("firstHalf")
+            let secondHalf = document.getElementById("secondHalf")
 
             // Add the "hide" class to the elements if it is already there or remove it if it is not
             nextPageBtn.classList.toggle("hide")
@@ -313,9 +312,9 @@ export default {
 
         // Get the values from the input fields and send them to the database
         submitTimesheet() {
-            var work_hours, pto_hours, extra_hours, date_worked
+            let work_hours, pto_hours, extra_hours, date_worked
             
-            for(var i = 0; i < this.daysInMonth; i++) {
+            for(let i = 0; i < this.daysInMonth; i++) {
                 this.yearAndMonth.setDate(i+1)
                 date_worked = this.yearAndMonth.toISOString().slice(0, 10)
 
@@ -334,26 +333,44 @@ export default {
                 }
 
                 this.dateAndValuesArray[i] = {                    
-                            "work_hours": work_hours,
-                            "pto_hours": pto_hours,
-                            "extra_hours": extra_hours,
-                            "date_worked": date_worked
+                    "work_hours": work_hours,
+                    "pto_hours": pto_hours,
+                    "extra_hours": extra_hours,
+                    "date_worked": date_worked
                 } 
             }
 
-            this.$store.dispatch("SubmitTimesheet", this.dateAndValuesArray)
+            let payload = {
+            'firstDay': this.firstDay,
+            'lastDay': this.lastDay
+            };
+            this.$store.dispatch("SubmitTimesheet", this.dateAndValuesArray).then(() => {
+                this.$store.dispatch("GetTimesheets", payload);
+            })
         },
 
         // Fill the input fields with any previously submitted timesheet info
         getTimesheet() {
             let timesheets = this.$store.getters.RetrievedTimesheet
-            var isoDate
+            let isoDate
             
-            for(var i = 0; i < this.daysInMonth; i ++) {
+            if (timesheets === null) {
+                for(let i = 0; i < this.daysInMonth; i ++) {
+                    this.formData[i].work_hours = "";
+                    this.formData[i].pto_hours = "";
+                    this.formData[i].extra_hours = "";
+                }
+            }
+
+
+            for(let i = 0; i < this.daysInMonth; i ++) {
                 this.yearAndMonth.setDate(i+1)
                 isoDate = this.yearAndMonth.toISOString().slice(0, 10)
                 
                 if (timesheets.time_sheets[isoDate] === undefined) {
+                    this.formData[i].work_hours = ""
+                    this.formData[i].pto_hours = ""
+                    this.formData[i].extra_hours = ""
                     continue;
                 }
 
@@ -378,31 +395,34 @@ export default {
                     this.formData[i].extra_hours = timesheets.time_sheets[isoDate].extra_hours
                 }
             }
-        }
+        },
     },
-
     // Call these functions when the app has been mounted
     mounted() {
         this.getDaysInFirstHalf()
         this.getDaysInSecondHalf()
         this.correlateDateAndDay()
-        this.getTimesheet()
-    },
-    beforeMount() {
-        var dt = new Date()
-        this.monthNum = dt.getMonth() + 1
-        this.year = dt.getFullYear()
 
-        this.setFirstDay(dt)
-        this.setLastDay(dt)
-
-        this.$store.dispatch("GetName");
-
-        var payload = {
+        
+        let payload = {
             'firstDay': this.firstDay,
             'lastDay': this.lastDay
         };
-        this.$store.dispatch("GetTimesheets", payload);
-    }
+        this.$store.dispatch("GetTimesheets", payload).then(() => {
+            this.getTimesheet()
+            console.log(this.$store.getters.RetrievedTimesheet)
+            console.log("RE MOUNT")
+        })
+    },
+    beforeMount() {
+        let dt = new Date()
+        this.monthNum = dt.getMonth() + 1
+        this.year = dt.getFullYear()
+
+        this.setFirstDay()
+        this.setLastDay()
+
+        this.$store.dispatch("GetName")
+    },
 }
 </script>
