@@ -261,7 +261,7 @@ export default {
         // This function associates a date with the day of the week in the dateAndDayArray
         correlateDateAndDay() {
             this.yearAndMonth = new Date(this.year, this.monthNum - 1)
-            var abbrevDay
+            let abbrevDay
     
             // setDate sets the month day of the date that was created above; starts at 1, goes until it gets to the end of the month
             // getDay returns an int (0-6) of the weekday that correlates to the date that was set; reference the index of the days array that corresponds to that int
@@ -293,7 +293,7 @@ export default {
 
         // Sets the last day of the month in a yyyy-mm-dd format
         setLastDay() {
-            var todaysDate = new Date(this.year, this.monthNum, 0)
+            let todaysDate = new Date(this.year, this.monthNum, 0)
             this.lastDay = todaysDate.toISOString().slice(0, 10)  
         },
 
@@ -347,7 +347,7 @@ export default {
         // Fill the input fields with any previously submitted timesheet info
         getTimesheet() {
             let timesheets = this.$store.getters.RetrievedTimesheet
-            var isoDate
+            let isoDate
             
             for(var i = 0; i < this.daysInMonth; i ++) {
                 this.yearAndMonth.setDate(i+1)
