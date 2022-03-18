@@ -13,22 +13,19 @@
                         <h1 class="text-beige loginHeader">Log In</h1>
                     </div>
 
-                    <p v-if="showError" id="error" class="invalid-feedback">Employee ID, Email, or Password is incorrect</p>
+                    <p v-if="showError" class="error text-center formText">The login credentials you entered are incorrect. Please try again.</p>
                     
-                    <form @submit.prevent="submit" class="needs-validation" novalidate>
+                    <form @submit.prevent="submit">
                         <div class="mb-3">
                             <label for="username" class="text-beige">Enter Employee ID or Email Address</label>
                             <input type="text" class="form-control form-control-lg textBox" name="username" v-model="form.username" required>
-                            <div class="invalid-feedback">
-                                Please enter an employee ID or email address
-                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="text-beige">Enter Password</label>
                             <input type="password" class="form-control form-control-lg textBox" name="password" v-model="form.password" required>
-                            <div class="invalid-feedback">
-                                Please enter a password
-                            </div>
+                        </div>
+                        <div class="text-center formText">
+                            <a class="text-beige" @click="forgotPassword">Forgot password? Click here to reset.</a>
                         </div>
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn formBtn">Sign In</button>
@@ -67,11 +64,14 @@ export default {
       try {
           await this.LogIn(User);
           this.$router.push("/timesheet").catch((err) => console.log(err));
-          this.showError = false;
+          throw "incorrect information"
       } catch (error) {
         this.showError = true;
       }
     },
+    forgotPassword() {
+      this.$router.push("/forgotpassword").catch((err) => console.log(err));
+    }
   },
 };
 </script>
