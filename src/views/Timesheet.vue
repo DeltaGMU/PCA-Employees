@@ -4,25 +4,13 @@
 
         <div class="row topSection">
 
-            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-6">
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-6" style="user-select: none;">
 
                 <h1 class="text-blue">Timesheet Submission Form</h1>
                 <p>Please fill in the hours under each week day and click Submit Timesheet.</p>
 
             </div>
-            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                
-                <button id="nextPageBtn" class="btn blueBtn right-align" @click="switchTimesheetPage">
-                    View Next Page
-                    <i class="fa fa-chevron-right chevron" alt="Chevron Right"></i>
-                </button>
-                <button id="previousPageBtn" class="btn blueBtn right-align hide" @click="switchTimesheetPage">
-                    <i class="fa fa-chevron-left chevron" alt="Chevron Left"></i>
-                    View Previous Page
-                </button>
-
-            </div>
-
+        
         </div>
         
         <div>
@@ -71,7 +59,15 @@
 
                 </tbody>
             </table>
-            <button id="submitTimesheetBtn" class="btn blueBtn" @click="submitTimesheet">Submit Timesheet</button>
+            <button id="nextPageBtn" class="btn blueBtn left-align" @click="switchTimesheetPage">
+                View Next Page
+                <i class="fa fa-chevron-right chevron" alt="Chevron Right"></i>
+            </button>
+            <button id="previousPageBtn" class="btn blueBtn left-align hide" @click="switchTimesheetPage">
+                <i class="fa fa-chevron-left chevron" alt="Chevron Left"></i>
+                View Previous Page
+            </button>
+            <button id="submitTimesheetBtn" class="btn blueBtn right-align" @click="submitTimesheet">Submit Timesheet</button>                
         </div>
     </div>
   </div>

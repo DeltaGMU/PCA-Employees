@@ -7,9 +7,9 @@
       </div>
       <div class="centerInDiv">
         <div class="dropdown">
-          <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <!--<p class="profileBox">{{getInitials}}</p>-->
-            <p class="profileBox"><i class="fas fa-user fa-2xl"></i></p>
+          <div class="profileBox" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-user"></i>
+            <i class="dropdown-caret fa-solid fa-angle-down" ></i>
           </div>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Submit Leave Request</a></li>
