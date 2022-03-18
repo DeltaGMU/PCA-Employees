@@ -34,7 +34,7 @@
                     <th class="col-2 middleCols">Regular Hours</th>
                     <th class="col-2 middleCols">PTO</th>
                     <th class="col-2 middleCols">Extra Hours</th>
-                    <th class="col-4 middleCols">Comments</th>
+                    <th class="col-6 middleCols">Comments</th>
                 </tr>
 
                 <!-- Table body for the first half of the month (will be displayed by default) -->
@@ -49,7 +49,8 @@
                         <td class="col-2 middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].work_hours "></td>
                         <td class="col-2 middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].pto_hours "></td>
                         <td class="col-2 middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].extra_hours "></td>
-                        <td class="col-4"><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[day-1].comment "></td>
+                        <td class="col-6"><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[day-1].comment "></td>
+                        <!--<td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + day + 'ExtraHours' "></td>-->
                     </tr>
 
                 </tbody>
