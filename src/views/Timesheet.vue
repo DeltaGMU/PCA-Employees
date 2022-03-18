@@ -14,10 +14,10 @@
                 
                 <button id="nextPageBtn" class="btn blueBtn right-align" @click="switchTimesheetPage">
                     View Next Page
-                    <i class="fa fa-chevron-right chevron"></i>
+                    <i class="fa fa-chevron-right chevron" alt="Chevron Right"></i>
                 </button>
                 <button id="previousPageBtn" class="btn blueBtn right-align hide" @click="switchTimesheetPage">
-                    <i class="fa fa-chevron-left chevron"></i>
+                    <i class="fa fa-chevron-left chevron" alt="Chevron Left"></i>
                     View Previous Page
                 </button>
 
@@ -29,12 +29,12 @@
             <table class="timesheet">
 
                 <tr class="headingRow">
-                    <th class="smallCol">Date</th>
-                    <th class="smallCol middleCols">Day</th>
-                    <th class="largeCol middleCols">Regular Hours</th>
-                    <th class="largeCol middleCols">Personal Time Off (PTO)</th>
-                    <th class="largeCol middleCols">Overtime</th>
-                    <!--<th class="largeCol middleCols">Extra Hours</th>-->
+                    <th class="col-1">Date</th>
+                    <th class="col-1 middleCols">Day</th>
+                    <th class="col-2 middleCols">Regular Hours</th>
+                    <th class="col-2 middleCols">PTO</th>
+                    <th class="col-2 middleCols">Extra Hours</th>
+                    <th class="col-4 middleCols">Comments</th>
                 </tr>
 
                 <!-- Table body for the first half of the month (will be displayed by default) -->
@@ -44,13 +44,12 @@
                     <tr v-for="day in daysInFirstHalf" v-bind:class="day % 2 == 0 ? 'evenRow' : 'oddRow'" :key="day.id">
                         
                         <!-- Get the date (format ex: 3/10) and day from the dateAndDayArray in employees.js -->
-                        <td class="smallCol">{{ dateAndDayArray[day-1][0] }}</td>
-                        <td class="smallCol middleCols">{{ dateAndDayArray[day-1][1] }}</td>
-                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" v-model=" formData[day-1].work_hours "></td>
-                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" v-model=" formData[day-1].pto_hours "></td>
-                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" v-model=" formData[day-1].extra_hours "></td>
-                        <!--<td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + day + 'ExtraHours' "></td>-->
-
+                        <td class="col-1">{{ dateAndDayArray[day-1][0] }}</td>
+                        <td class="col-1 middleCols">{{ dateAndDayArray[day-1][1] }}</td>
+                        <td class="col-2 middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].work_hours "></td>
+                        <td class="col-2 middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].pto_hours "></td>
+                        <td class="col-2 middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].extra_hours "></td>
+                        <td class="col-4"><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[day-1].comment "></td>
                     </tr>
 
                 </tbody>
@@ -61,13 +60,12 @@
                     <tr v-for="day in daysInSecondHalf" v-bind:class="day % 2 == 0 ? 'evenRow' : 'oddRow'" :key="day.id">
 
                         <!-- In order to get the correct dates, add the index to the number of days in the first half of the month because index starts at 1 -->
-                        <td class="smallCol">{{ dateAndDayArray[(daysInFirstHalf + day) - 1][0] }}</td>
-                        <td class="smallCol middleCols">{{ dateAndDayArray[(daysInFirstHalf + day) - 1][1] }}</td>
-                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].work_hours "></td>
-                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].pto_hours "></td>
-                        <td class="largeCol middleCols"><input type="text" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].extra_hours "></td>
-                        <!--<td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + (daysInFirstHalf + day) + 'ExtraHours' "></td>-->
-
+                        <td class="col-1">{{ dateAndDayArray[(daysInFirstHalf + day) - 1][0] }}</td>
+                        <td class="col-1 middleCols">{{ dateAndDayArray[(daysInFirstHalf + day) - 1][1] }}</td>
+                        <td class="col-2 middleCols"><input type="text" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].work_hours "></td>
+                        <td class="col-2 middleCols"><input type="text" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].pto_hours "></td>
+                        <td class="col-2 middleCols"><input type="text" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].extra_hours "></td>
+                        <td class="col-4"><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].comment "></td>
                     </tr>
 
                 </tbody>
@@ -91,157 +89,188 @@ export default {
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 },
                 {
                     "work_hours" : "",
                     "pto_hours" : "",
-                    "extra_hours" : ""
+                    "extra_hours" : "",
+                    "comment": ""
                 }
             ],
             year: 0,
@@ -311,7 +340,7 @@ export default {
 
         // Get the values from the input fields and send them to the database
         submitTimesheet() {
-            let work_hours, pto_hours, extra_hours, date_worked
+            let work_hours, pto_hours, extra_hours, date_worked, comment
             
             for(let i = 0; i < this.daysInMonth; i++) {
                 this.yearAndMonth.setDate(i+1)
@@ -320,6 +349,7 @@ export default {
                 work_hours = parseInt(this.formData[i].work_hours)
                 pto_hours = parseInt(this.formData[i].pto_hours)
                 extra_hours = parseInt(this.formData[i].extra_hours)
+                comment = this.formData[i].comment
 
                 if(isNaN(work_hours)) {
                     work_hours = 0
@@ -335,7 +365,8 @@ export default {
                     "work_hours": work_hours,
                     "pto_hours": pto_hours,
                     "extra_hours": extra_hours,
-                    "date_worked": date_worked
+                    "date_worked": date_worked,
+                    "comment": comment
                 } 
             }
 
@@ -355,9 +386,10 @@ export default {
             
             if (timesheets === null) {
                 for(let i = 0; i < this.daysInMonth; i ++) {
-                    this.formData[i].work_hours = "";
-                    this.formData[i].pto_hours = "";
-                    this.formData[i].extra_hours = "";
+                    this.formData[i].work_hours = ""
+                    this.formData[i].pto_hours = ""
+                    this.formData[i].extra_hours = ""
+                    this.formData[i].comment = ""
                 }
             }
 
@@ -370,7 +402,8 @@ export default {
                     this.formData[i].work_hours = ""
                     this.formData[i].pto_hours = ""
                     this.formData[i].extra_hours = ""
-                    continue;
+                    this.formData[i].comment = ""
+                    continue
                 }
 
                 if(timesheets.time_sheets[isoDate].work_hours == 0) {
@@ -393,6 +426,10 @@ export default {
                 else {
                     this.formData[i].extra_hours = timesheets.time_sheets[isoDate].extra_hours
                 }
+
+                if(timesheets.time_sheets[isoDate].comment !== undefined) {
+                    this.formData[i].comment = timesheets.time_sheets[isoDate].comment
+                }
             }
         },
     },
@@ -409,8 +446,8 @@ export default {
         };
         this.$store.dispatch("GetTimesheets", payload).then(() => {
             this.getTimesheet()
-            console.log(this.$store.getters.RetrievedTimesheet)
-            console.log("RE MOUNT")
+            //console.log(this.$store.getters.RetrievedTimesheet)
+            //console.log("RE MOUNT")
         })
     },
     beforeMount() {
