@@ -3,6 +3,9 @@ import VueRouter from "vue-router";
 import store from "../store";
 import Login from "../views/Login";
 import Timesheet from "../views/Timesheet";
+import ForgotPassword from "../views/ForgotPassword";
+import ResetPassword from "../views/ResetPassword";
+import LeaveRequest from "../views/LeaveRequest";
 
 Vue.use(VueRouter);
 
@@ -17,6 +20,24 @@ const routes = [
     path: "/timesheet",
     name: "Timesheet",
     component: Timesheet,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/forgotpassword",
+    name: "ForgotPassword",
+    component: ForgotPassword,
+    meta: { guest: true },
+  },
+  {
+    path: "/resetpassword",
+    name: "ResetPassword",
+    component: ResetPassword,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/leaverequest",
+    name: "LeaveRequest",
+    component: LeaveRequest,
     meta: { requiresAuth: true },
   },
 ];
