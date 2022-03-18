@@ -58,6 +58,7 @@ label {
     justify-content: space-between;
     width: 100%;
     padding: 1rem 3rem;
+    user-select: none;
 }
 
 .centerInDiv {
@@ -73,15 +74,24 @@ label {
 }
 
 .profileBox {
-    float: left;
-    background-color: white;
-    padding: 0 10px;
+    padding: 5px 5px 0px;
     border-radius: 5px;
     padding-top: 5px;
+}
+.dropdown {
+    color: white;
+    transition: all .2s ease-in-out;
+    user-select: none;
+}
+.dropdown:hover {
+    color: var(--pcaBeige);
 }
 
 .dropdown-menu {
     margin-top: 11px !important;
+}
+.dropdown-caret {
+    padding: 5px 5px 0px;
 }
 
 .dropdown-toggle::after {
@@ -158,6 +168,7 @@ a.text-beige:hover {
     width: 100%;
     text-align: center;
     margin-bottom: 1rem;
+    user-select: none;
 }
 
 .headingRow {
