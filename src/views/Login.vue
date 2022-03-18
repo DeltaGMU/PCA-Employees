@@ -15,7 +15,7 @@
 
                     <p v-if="showError" class="error text-center formText">The login credentials you entered are incorrect. Please try again.</p>
                     
-                    <form @submit.prevent="submit">
+                    <form @submit.prevent="submit" novalidate>
                         <div class="mb-3">
                             <label for="username" class="text-beige">Enter Employee ID or Email Address</label>
                             <input type="text" class="form-control form-control-lg textBox" name="username" v-model="form.username" required>
