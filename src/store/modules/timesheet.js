@@ -36,7 +36,7 @@ const actions = {
     }).then(resp => {
       if (resp !== undefined) {
         context.commit("retrievedTimesheet", resp.data.data)
-        console.log(resp.data.data)
+        //console.log(resp.data.data)
       }
       else {
         console.log("No employee time sheet records exist for the provided date range!")
