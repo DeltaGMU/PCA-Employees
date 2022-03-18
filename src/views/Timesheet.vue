@@ -394,7 +394,6 @@ export default {
                 }
             }
 
-
             for(let i = 0; i < this.daysInMonth; i ++) {
                 this.yearAndMonth.setDate(i+1)
                 isoDate = this.yearAndMonth.toISOString().slice(0, 10)
