@@ -190,13 +190,6 @@ td {
     border-right: 1px solid white;
 }
 
-.smallCol {
-    width: 10%;
-}
-
-.largeCol {
-    width: 17.5%;
-}
 
 td input.textBox {
     width: 75%;
