@@ -39,11 +39,6 @@ export default {
     getName: function() {
       return this.$store.getters.StateName;
     },
-    getInitials: function() {
-      let fullName = this.$store.getters.StateName.split(' ');
-      let initials = fullName.shift().charAt(0) + fullName.pop().charAt(0);
-      return initials.toUpperCase();
-    },
     ...mapGetters({Name: "StateName"}),
   },
   methods: {
