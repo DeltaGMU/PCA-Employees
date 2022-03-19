@@ -1,18 +1,18 @@
 <template>
-    <div class = adminContainer>
+    <div class = "adminContainer">
         
-        <div class = sideBar>
+        <div class = "sideBar">
          <Sidebar>   </Sidebar>
         </div>
         
-        <div class = mainContent>
+        <div class = "mainContent">
             <button id="manageBtn" class="btn blueBtn" @click="manageUserPage">
                 Manage User <br/>
-                <img src = "https://s2.svgbox.net/octicons.svg?ic=person" >
+                <i class="fas fa-user"></i>
             </button>
             <button id="manageBtn" class="btn blueBtn" @click="manageEmployeesPage">
                 Manage Employees <br/>
-                <img src = "https://s2.svgbox.net/octicons.svg?ic=people" >
+                <i class="fas fa-users"></i>
             </button>
         </div>
     </div>
