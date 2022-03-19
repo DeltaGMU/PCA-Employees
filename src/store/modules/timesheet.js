@@ -11,15 +11,19 @@ const getters = {
 const actions = {
   async SubmitTimesheet(context, valueArray) {
     // console.log(valueArray);
-    await axios({
-          method: 'post',
-          url: "api/v1/timesheet/" + context.rootState.auth.user.employee_id,
-          data: {
-              "time_sheets": valueArray
-          },
-          headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
-    }).catch(() => alert('Timesheet submission failed!'));
-    alert('Timesheet submitted!')
+    try {
+      await axios({
+        method: 'post',
+        url: "api/v1/timesheet/" + context.rootState.auth.user.employee_id,
+        data: {
+            "time_sheets": valueArray
+        },
+        headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+      });
+    }
+    catch(err) {
+      throw "Timesheet submission failed!"
+    }
   },
   
   async GetTimesheets(context, payload) {
