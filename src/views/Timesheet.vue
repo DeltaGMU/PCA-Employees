@@ -2,9 +2,9 @@
   <div>
     <div class="wrapper">
 
-        <div class="row topSection">
+        <div class="topSection">
 
-            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-6" style="user-select: none;">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="user-select: none;">
 
                 <h1 class="text-blue">Timesheet Submission Form</h1>
                 <p>Please fill in the hours under each week day and click Submit Timesheet.</p>
@@ -38,7 +38,6 @@
                         <td class="col-2 middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].pto_hours "></td>
                         <td class="col-2 middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].extra_hours "></td>
                         <td class="col-6"><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[day-1].comment "></td>
-                        <!--<td class="largeCol middleCols"><input type="text" class="form-control textBox" :id=" 'day' + day + 'ExtraHours' "></td>-->
                     </tr>
 
                 </tbody>
