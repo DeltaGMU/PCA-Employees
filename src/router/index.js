@@ -6,6 +6,7 @@ import Timesheet from "../views/Timesheet";
 import ForgotPassword from "../views/ForgotPassword";
 import ResetPassword from "../views/ResetPassword";
 import LeaveRequest from "../views/LeaveRequest";
+import AdminDashboard from "../views/AdminDashboard";
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,12 @@ const routes = [
     path: "/timesheet",
     name: "Timesheet",
     component: Timesheet,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/admindashboard",
+    name: "AdminDashboard",
+    component: AdminDashboard,
     meta: { requiresAuth: true },
   },
   {
