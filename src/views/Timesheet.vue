@@ -58,6 +58,7 @@
 
                 </tbody>
             </table>
+
             <button id="nextPageBtn" class="btn blueBtn switchPageBtn left-align" @click="switchTimesheetPage">
                 View Next Page
                 <i class="fa fa-chevron-right chevron" alt="Chevron Right"></i>
@@ -66,7 +67,24 @@
                 <i class="fa fa-chevron-left chevron" alt="Chevron Left"></i>
                 View Previous Page
             </button>
-            <button id="submitTimesheetBtn" class="btn formBtn right-align" @click="submitTimesheet">Submit Timesheet</button>                
+            <button id="submitTimesheetBtn" class="btn formBtn right-align" data-bs-toggle="modal" data-bs-target="#submissionModal" @click="submitTimesheet">Submit Timesheet</button>    
+
+            <div class="modal fade" id="submissionModal" tabindex="-1" aria-labelledby="submissionModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{timesheetMessageTitle}}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{timesheetMessageBody}}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" v-bind:class=" timesheetMessageTitle == 'Timesheet submitted!' ? 'btn btn-success' : ' btn btn-warning' " data-bs-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
   </div>
@@ -276,7 +294,9 @@ export default {
             firstDay: "",
             lastDay: "",
             daysInFirstHalf: 0,
-            daysInSecondHalf: 0
+            daysInSecondHalf: 0,
+            timesheetMessageTitle: "",
+            timesheetMessageBody: ""
         }
     },
     methods: {
@@ -370,9 +390,19 @@ export default {
             'firstDay': this.firstDay,
             'lastDay': this.lastDay
             };
-            this.$store.dispatch("SubmitTimesheet", this.dateAndValuesArray).then(() => {
-                this.$store.dispatch("GetTimesheets", payload);
-            })
+
+            try {
+                this.$store.dispatch("SubmitTimesheet", this.dateAndValuesArray).then(() => {
+                    this.$store.dispatch("GetTimesheets", payload);
+                });
+                this.timesheetMessageTitle = "Timesheet submitted!"
+                this.timesheetMessageBody = "Your timesheet was submitted succesfully."
+            }
+            catch(err) {
+                this.timesheetMessageTitle = err
+                this.timesheetMessageBody = "There was an error with your timesheet submission."
+            }
+            
         },
 
         // Fill the input fields with any previously submitted timesheet info
