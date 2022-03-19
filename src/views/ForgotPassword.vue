@@ -13,7 +13,7 @@
                         <h1 class="text-beige loginHeader">Forgot Password</h1>
                     </div>
 
-                    <p v-if="showError" class="error text-center formText">The Employee ID was not found</p>
+                    <div v-if="showError" class="alert alert-danger ">Employee ID not found. Please try again.</div>
                     
                     <form @submit.prevent="submit">
                         <div class="mb-3">
@@ -43,7 +43,6 @@ export default {
     return {
       form: {
         username: "",
-        password: "",
       },
       showError: false
     };
@@ -53,7 +52,6 @@ export default {
     async submit() {
       const User = new FormData();
       User.append("username", this.form.username);
-      User.append("password", this.form.password);
       try {
           await this.LogIn(User);
           this.$router.push("/resetpassword").catch((err) => console.log(err));
