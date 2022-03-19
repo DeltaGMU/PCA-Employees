@@ -236,3 +236,43 @@ td input.textBox {
     height: 1.3rem;
 }
 /* End timesheet styling */
+
+/* Admin dashboard styling */
+a {
+    text-decoration: none; 
+}
+
+.adminContainer{
+    min-height: 100%;
+}
+
+.mainContent{
+    margin-left: 235px;
+
+}
+
+#manageBtn{
+    width: 20%;
+    min-width: 200px;
+    height: 150px;
+    margin: 50px;
+    text-align: center;
+}
+.sidebar {
+    background-color: #F5F5F5;
+    float: left;
+    position:absolute;
+    width: 250px;
+    height: 100%;
+}
+
+.sidebar-item {
+    border-top: #DEDEDE;
+    padding: 30px;
+}
+
+.sidebar-item:hover {
+    background-color: #DEDEDE;
+}
+
+/* End admin dashboard styling*/
