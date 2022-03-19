@@ -58,15 +58,15 @@
 
                 </tbody>
             </table>
-            <button id="nextPageBtn" class="btn blueBtn left-align" @click="switchTimesheetPage">
+            <button id="nextPageBtn" class="btn blueBtn switchPageBtn left-align" @click="switchTimesheetPage">
                 View Next Page
                 <i class="fa fa-chevron-right chevron" alt="Chevron Right"></i>
             </button>
-            <button id="previousPageBtn" class="btn blueBtn left-align hide" @click="switchTimesheetPage">
+            <button id="previousPageBtn" class="btn blueBtn switchPageBtn left-align hide" @click="switchTimesheetPage">
                 <i class="fa fa-chevron-left chevron" alt="Chevron Left"></i>
                 View Previous Page
             </button>
-            <button id="submitTimesheetBtn" class="btn blueBtn right-align" @click="submitTimesheet">Submit Timesheet</button>                
+            <button id="submitTimesheetBtn" class="btn formBtn right-align" @click="submitTimesheet">Submit Timesheet</button>                
         </div>
     </div>
   </div>
