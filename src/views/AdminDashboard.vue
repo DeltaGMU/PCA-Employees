@@ -6,11 +6,13 @@
         </div>
         
         <div class = "mainContent">
-            <button id="manageBtn" class="btn blueBtn" @click="manageUserPage">
+            <!--<button id="manageBtn" class="btn blueBtn" @click="manageUserPage">-->
+            <button id="manageBtn" class="btn blueBtn">
                 Manage User <br/>
                 <i class="fas fa-user"></i>
             </button>
-            <button id="manageBtn" class="btn blueBtn" @click="manageEmployeesPage">
+            <!--<button id="manageBtn" class="btn blueBtn" @click="manageEmployeesPage">-->
+            <button id="manageBtn" class="btn blueBtn">
                 Manage Employees <br/>
                 <i class="fas fa-users"></i>
             </button>
@@ -22,6 +24,7 @@
 <script>
     import Sidebar from "../components/Sidebar.vue";
     export default {
+        name: "AdminDashboard",
         components: {
             Sidebar
         },
