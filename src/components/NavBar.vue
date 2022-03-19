@@ -12,7 +12,7 @@
             <i class="dropdown-caret fa-solid fa-angle-down" ></i>
           </div>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Submit Leave Request</a></li>
+            <li v-if=" getRole != 'administrator' "><a class="dropdown-item" href="#">Submit Leave Request</a></li>
             <li><a class="dropdown-item" @click="logout">Sign Out</a></li>
           </ul>
         </div>
@@ -39,7 +39,11 @@ export default {
     getName: function() {
       return this.$store.getters.StateName;
     },
+    getRole: function() {
+      return this.$store.getters.StateRole;
+    },
     ...mapGetters({Name: "StateName"}),
+    ...mapGetters({Name: "StateRole"}),
   },
   methods: {
     async logout() {
@@ -47,6 +51,7 @@ export default {
       this.$router.push("/");
     },
     ...mapActions(["GetName"]),
+    ...mapActions(["GetRole"]),
   },
 };
 </script>
