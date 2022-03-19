@@ -28,5 +28,11 @@
         components: {
             Sidebar
         },
+        methods: {
+            
+        },
+        beforeMount() {
+            this.$store.dispatch("GetName")
+        }
     };
 </script>
