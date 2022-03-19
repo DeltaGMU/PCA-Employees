@@ -13,7 +13,6 @@
                         <h1 class="text-beige loginHeader">Log In</h1>
                     </div>
 
-                    <!--<p v-if="showError" class="error text-center formText">The login credentials you entered are incorrect. Please try again.</p>-->
                     <div v-if="showError" class="alert alert-danger ">Invalid login credentials. Please try again.</div>
                     
                     <form @submit.prevent="submit" novalidate>
@@ -79,7 +78,6 @@ export default {
           else if (this.getRole == "employee"){
             this.$router.push("/timesheet").catch((err) => console.log(err));
           }
-          console.log(this.getRole)
       } catch (error) {
         this.showError = true;
       }
