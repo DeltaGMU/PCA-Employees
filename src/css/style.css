@@ -39,6 +39,50 @@ h1.loginHeader {
     border: none;
 }
 
+.twoBtnCol {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 770px) {
+    .container {
+        max-width: 85%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .formBtn {
+        width: 13rem !important;
+    }
+
+    .btn {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 645px) {
+    .twoBtnCol {
+        justify-content: center;
+    }
+
+    .btn {
+        width: 100% !important;
+    }
+    
+    label {
+        font-size: 1.3rem !important;
+    }
+}
+@media screen and (max-width: 520px) {
+    .container {
+        max-width: 90%;
+    }
+    .loginContainer {
+        padding: 3rem 2.5rem !important;
+    }
+}
+
 /* Negate Bootstrap's CSS that applies margin-bottom: 1rem to <p> */
 p {
     margin-bottom: 0;
