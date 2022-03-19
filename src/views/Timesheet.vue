@@ -13,7 +13,7 @@
         
         </div>
         
-        <div>
+        <div class="table-responsive">
             <table class="timesheet">
 
                 <tr class="headingRow">
@@ -59,7 +59,8 @@
                 </tbody>
             </table>
 
-            <button id="nextPageBtn" class="btn blueBtn switchPageBtn left-align" @click="switchTimesheetPage">
+            <div class="twoBtnCol">
+                <button id="nextPageBtn" class="btn blueBtn switchPageBtn left-align" @click="switchTimesheetPage">
                 View Next Page
                 <i class="fa fa-chevron-right chevron" alt="Chevron Right"></i>
             </button>
@@ -67,7 +68,8 @@
                 <i class="fa fa-chevron-left chevron" alt="Chevron Left"></i>
                 View Previous Page
             </button>
-            <button id="submitTimesheetBtn" class="btn formBtn right-align" data-bs-toggle="modal" data-bs-target="#submissionModal" @click="submitTimesheet">Submit Timesheet</button>    
+            <button id="submitTimesheetBtn" class="btn formBtn right-align" data-bs-toggle="modal" data-bs-target="#submissionModal" @click="submitTimesheet">Submit Timesheet</button>
+            </div>       
 
             <div class="modal fade" id="submissionModal" tabindex="-1" aria-labelledby="submissionModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
