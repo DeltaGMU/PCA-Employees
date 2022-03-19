@@ -72,14 +72,14 @@ export default {
       User.append("password", this.form.password);
       try {
           await this.LogIn(User);
-          //if(this.getRole == "administrator") {
-          //  this.$router.push("/admindashboard").catch((err) => console.log(err));
-          //}
-          //else if (this.getRole == "employee"){
+          await this.GetRole();
+          if(this.getRole == "administrator") {
+            this.$router.push("/admindashboard").catch((err) => console.log(err));
+          }
+          else if (this.getRole == "employee"){
             this.$router.push("/timesheet").catch((err) => console.log(err));
-          //}
+          }
           console.log(this.getRole)
-          throw "throw error"
       } catch (error) {
         this.showError = true;
       }
