@@ -13,7 +13,8 @@
                         <h1 class="text-beige loginHeader">Log In</h1>
                     </div>
 
-                    <p v-if="showError" class="error text-center formText">The login credentials you entered are incorrect. Please try again.</p>
+                    <!--<p v-if="showError" class="error text-center formText">The login credentials you entered are incorrect. Please try again.</p>-->
+                    <div v-if="showError" class="alert alert-danger ">Invalid login credentials. Please try again.</div>
                     
                     <form @submit.prevent="submit" novalidate>
                         <div class="mb-3">
@@ -42,7 +43,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Login",
   components: {},
@@ -55,16 +56,30 @@ export default {
       showError: false
     };
   },
+  computed: {
+    getRole: function() {
+      return this.$store.getters.StateRole;
+    },
+    ...mapGetters({Name: "StateRole"}),
+  },
   methods: {
     ...mapActions(["LogIn"]),
+    ...mapActions(["GetRole"]),
+    
     async submit() {
       const User = new FormData();
       User.append("username", this.form.username);
       User.append("password", this.form.password);
       try {
           await this.LogIn(User);
-          this.$router.push("/timesheet").catch((err) => console.log(err));
-          throw "incorrect information"
+          //if(this.getRole == "administrator") {
+          //  this.$router.push("/admindashboard").catch((err) => console.log(err));
+          //}
+          //else if (this.getRole == "employee"){
+            this.$router.push("/timesheet").catch((err) => console.log(err));
+          //}
+          console.log(this.getRole)
+          throw "throw error"
       } catch (error) {
         this.showError = true;
       }
