@@ -21,6 +21,7 @@ const actions = {
   async LogOut(context) {
     context.rootState.employees.employees = null;
     context.rootState.user.name = null;
+    context.rootState.user.role = null;
     context.rootState.timesheet.retrievedTimesheets = null;
     context.commit("logout");
   },
