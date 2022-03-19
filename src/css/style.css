@@ -220,6 +220,14 @@ td input.textBox {
     color: rgb(230, 230, 230);
 }
 
+.switchPageBtn {
+    padding: 0.95rem 1.7rem;
+}
+
+#submitTimesheetBtn {
+    border: 0.2rem solid var(--pcaBlue);
+}
+
 .right-align {
     float: right;
 }
