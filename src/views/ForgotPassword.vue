@@ -61,7 +61,7 @@ export default {
       }
     },
     returnToLogin() {
-      this.$router.push("/");
+      this.$router.push("/").catch((err)=> console.log(err));
     }
   },
 };
