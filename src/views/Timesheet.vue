@@ -4,7 +4,7 @@
 
         <div class="topSection">
 
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="user-select: none;">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
 
                 <h1 class="text-blue">Timesheet Submission Form</h1>
                 <p>Please fill in the hours under each week day and click Submit Timesheet.</p>
