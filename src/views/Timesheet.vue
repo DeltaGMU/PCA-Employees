@@ -2,7 +2,7 @@
   <div>
     <div class="wrapper">
 
-        <div class="topSection">
+        <div class="topSection noSelect">
 
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
 
@@ -61,14 +61,14 @@
 
             <div class="twoBtnCol">
                 <button id="nextPageBtn" class="btn blueBtn switchPageBtn left-align" @click="switchTimesheetPage">
-                View Next Page
-                <i class="fa fa-chevron-right chevron" alt="Chevron Right"></i>
-            </button>
-            <button id="previousPageBtn" class="btn blueBtn switchPageBtn left-align hide" @click="switchTimesheetPage">
-                <i class="fa fa-chevron-left chevron" alt="Chevron Left"></i>
-                View Previous Page
-            </button>
-            <button id="submitTimesheetBtn" class="btn formBtn right-align" data-bs-toggle="modal" data-bs-target="#submissionModal" @click="submitTimesheet">Submit Timesheet</button>
+                    View Next Page
+                    <i class="fa fa-chevron-right chevron" alt="Chevron Right"></i>
+                </button>
+                <button id="previousPageBtn" class="btn blueBtn switchPageBtn left-align hide" @click="switchTimesheetPage">
+                    <i class="fa fa-chevron-left chevron" alt="Chevron Left"></i>
+                    View Previous Page
+                </button>
+                <button id="submitTimesheetBtn" class="btn formBtn right-align" data-bs-toggle="modal" data-bs-target="#submissionModal" @click="submitTimesheet">Submit Timesheet</button>
             </div>       
 
             <div class="modal fade" id="submissionModal" tabindex="-1" aria-labelledby="submissionModalLabel" aria-hidden="true">
