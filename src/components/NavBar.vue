@@ -12,8 +12,8 @@
             <i class="dropdown-caret fa-solid fa-angle-down" ></i>
           </div>
           <ul class="dropdown-menu">
-            <li v-if=" getRole != 'administrator' && getPage == '/timesheet' "><a class="dropdown-item" @click="goToLeaveRequest">Submit Leave Request</a></li>
-            <li v-if=" getRole != 'administrator' && getPage == '/leaverequest' "><a class="dropdown-item" @click="goToTimesheet">Submit Timesheet</a></li>
+            <li v-if=" getRole != 'administrator' && current_page == '/timesheet' "><a class="dropdown-item" @click="goToLeaveRequest">Submit Leave Request</a></li>
+            <li v-if=" getRole != 'administrator' && current_page == '/leaverequest' "><a class="dropdown-item" @click="goToTimesheet">Submit Timesheet</a></li>
             <li><a class="dropdown-item" @click="logout">Sign Out</a></li>
           </ul>
         </div>
@@ -34,11 +34,8 @@ export default {
   name: "NavBar",
   data() {
     return {
-      current_page: "",
+      current_page: window.location.pathname,
     }
-  },
-  mounted() {
-    this.current_page = "/timesheet"
   },
   computed: {
     isLoggedIn: function() {
@@ -49,9 +46,6 @@ export default {
     },
     getRole: function() {
       return this.$store.getters.StateRole;
-    },
-    getPage: function() {
-      return this.current_page;
     },
     ...mapGetters({Name: "StateName"}),
     ...mapGetters({Name: "StateRole"}),
