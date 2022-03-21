@@ -34,7 +34,7 @@ export default {
   name: "NavBar",
   data() {
     return {
-      current_page: window.location.pathname,
+      current_page: this.getRole == 'administrator' ? '/admindashboard' : '/timesheet'
     }
   },
   computed: {
