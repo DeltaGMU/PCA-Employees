@@ -17,7 +17,7 @@
                     
                     <form @submit.prevent="submit" novalidate>
                         <div class="mb-3">
-                            <label for="username" class="text-beige">Enter Employee ID</label>
+                            <label for="username" class="text-beige formLabel">Enter Employee ID</label>
                             <input type="text" class="form-control form-control-lg textBox" name="username" v-model="form.username" required>
                         </div>
                         <div class="twoBtnCol">
@@ -56,7 +56,8 @@ export default {
       try {
           await this.LogIn(User);
           this.$router.push("/resetpassword").catch((err) => console.log(err));
-      } catch (error) {
+      } 
+      catch (error) {
         this.showError = true;
       }
     },
