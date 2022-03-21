@@ -17,11 +17,11 @@
                     
                     <form @submit.prevent="submit" novalidate>
                         <div class="mb-3">
-                            <label for="username" class="text-beige">Enter Employee ID or Email Address</label>
+                            <label for="username" class="text-beige formLabel">Enter Employee ID or Email Address</label>
                             <input type="text" class="form-control form-control-lg textBox" name="username" v-model="form.username" required>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="text-beige">Enter Password</label>
+                            <label for="password" class="text-beige formLabel">Enter Password</label>
                             <input type="password" class="form-control form-control-lg textBox" name="password" v-model="form.password" required>
                         </div>
                         <div class="text-center formText">
