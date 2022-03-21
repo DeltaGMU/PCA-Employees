@@ -39,6 +39,10 @@ h1.loginHeader {
     border: none;
 }
 
+.noSelect {
+    user-select: none;
+}
+
 .twoBtnCol {
     display: flex;
     flex-wrap: wrap;
@@ -70,7 +74,7 @@ h1.loginHeader {
         width: 100% !important;
     }
     
-    label {
+    .formLabel {
         font-size: 1.3rem !important;
     }
 }
@@ -88,7 +92,7 @@ p {
     margin-bottom: 0;
 }
 
-label {
+.formLabel {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
     margin-top: 1rem;
@@ -205,7 +209,6 @@ a.text-beige:hover {
 /* Timesheet styling */
 .topSection {
     margin-bottom: 1rem;
-    user-select: none;
 }
 
 .timesheet {
@@ -331,6 +334,10 @@ td input.textBox {
 
 .row .leaveInput {
     margin-left: 0.85rem;
+}
+
+.leaveLabel {
+    margin-bottom: 0;
 }
 
 /* Leave of absence styling */
