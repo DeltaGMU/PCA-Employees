@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import axios from "axios";
+import https from 'https'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -11,6 +12,7 @@ import "./css/style.css";
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://jjservers.ddns.net:56709/";
+axios.defaults.httpsAgent = new https.Agent({ rejectUnauthorized: false })
 
 axios.interceptors.response.use(undefined, function(error) {
   if (error) {
