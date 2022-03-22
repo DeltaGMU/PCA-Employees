@@ -1,4 +1,5 @@
 import axios from "axios";
+import httpsAgent from "https_agent";
 
 const state = {
   user: null,
@@ -11,7 +12,7 @@ const getters = {
 
 const actions = {
   async LogIn({commit}, credentials) {
-    await axios.post("api/v1/login", credentials).then(
+    await axios.post("api/v1/login", credentials, { httpsAgent: httpsAgent }).then(
       resp => {
         commit("setUser", resp.data.data);
       }

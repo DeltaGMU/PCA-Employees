@@ -18,7 +18,6 @@ const actions = {
         context.commit("setEmployees", resp.data.data.employees);
       }
     );
-    
   },
 };
 
