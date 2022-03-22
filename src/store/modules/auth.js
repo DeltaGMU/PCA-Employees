@@ -1,5 +1,5 @@
 import axios from "axios";
-import https_config from "https_agent";
+import https_config from "./https_agent";
 
 const state = {
   user: null,
