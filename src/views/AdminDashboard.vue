@@ -6,16 +6,21 @@
         </div>
         
         <div class = "mainContent">
-            <!--<button id="manageBtn" class="btn blueBtn" @click="manageUserPage">-->
-            <button id="manageBtn" class="btn blueBtn">
+            <button id="manageBtn" class="btn blueBtn"  @click="$router.push({ path: 'manageadmin'})">
                 Manage User <br/>
                 <i class="fas fa-user"></i>
             </button>
-            <!--<button id="manageBtn" class="btn blueBtn" @click="manageEmployeesPage">-->
-            <button id="manageBtn" class="btn blueBtn">
+            
+            <button id="manageBtn" class="btn blueBtn" @click="$router.push({ path: 'manageemployees'})">
                 Manage Employees <br/>
                 <i class="fas fa-users"></i>
             </button>
+
+            <button id="manageBtn" class="btn blueBtn" @click="$router.push({ path: 'managestudents'})">
+                Manage Students <br/>
+                <i class="fas fa-users"></i>
+            </button>   
+
         </div>
     </div>
 </template>
