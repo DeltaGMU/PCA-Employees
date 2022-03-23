@@ -7,7 +7,7 @@
         
         <div class = "mainContent">
             <button id="manageBtn" class="btn blueBtn"  @click="$router.push({ path: 'manageadmin'})">
-                Manage User <br/>
+                Manage My Account <br/>
                 <i class="fas fa-user"></i>
             </button>
             
