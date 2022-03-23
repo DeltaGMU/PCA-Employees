@@ -29,8 +29,6 @@
                     <input type="text" class="form-control" id="lastName">
                 </div>
 
-                <br>
-
                 <div class="form-group row noSelect">
                     <div class="mb-1">
                         <label for="carpool" class="text-blue formLabel">Carpool Number</label>
@@ -39,34 +37,21 @@
                     <input type="text" class="form-control" id="carpool">
                 </div>
 
-                <br>
-
                 <div class="form-group row noSelect">
                     <div class="mb-1">
-                        <label for="firstNameParent" class="text-blue formLabel">Parent First Name</label>
+                        <label for="firstNameParent" class="text-blue formLabel">Parent Name</label>
                     </div>
                     
                     <input type="text" class="form-control" id="firstName" required>
                     
-                </div>
-
-                <div class="form-group row noSelect">
-                    <div class="mb-1">
-                        <label for="lastNameParent" class="text-blue formLabel">Parent Last Name</label>
-                    </div>
-                    
-                    <input type="text" class="form-control" id="lastName">
-                </div>
-                
-                <br>
-                
+                </div>                     
 
                 <div class="form-group row noSelect">
                         <div class="mb-1">
                             <label for="primaryEmail" class="text-blue formLabel">Parent Primary Email</label>
                         </div>
                         
-                        <input type="text" class="form-control leaveInput" id="primaryMail">
+                        <input type="text" class="form-control" id="primaryMail">
                 </div>
             
                 <div class="form-group row noSelect">
@@ -74,11 +59,8 @@
                             <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Parent Secondary Email</label>
                         </div>
                         
-                        <input type="text" class="form-control leaveInput" id="primaryMail">
+                        <input type="text" class="form-control" id="primaryMail">
                 </div>
-
-                <br>
-
 
                 <div class="form-group row">
                     <div class="mb-1">
