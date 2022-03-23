@@ -3,7 +3,6 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import axios from "axios";
-import https from 'https'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -12,10 +11,27 @@ import "./css/style.css";
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "https://jjservers.ddns.net:56709/";
-axios.defaults.httpsAgent = new https.Agent({ 
-  rejectUnauthorized: false,
-  requestCert: true,
-})
+
+/*
+try {
+  let retrieved_cert = '';
+  axios.get("https://localhost:8080/cert.pem").then(
+    resp => {
+      retrieved_cert = resp.data;
+    }
+  ).then(() => {
+    console.log(retrieved_cert);
+    axios.defaults.httpsAgent = axios.defaults.httpsAgent = new https.Agent({ 
+      rejectUnauthorized: false,
+      requestCert: false,
+      agent: false,
+      ca: retrieved_cert
+    })
+  })
+} catch(err) {
+  console.log("Error retrieving CA cert");
+}
+*/
 
 axios.interceptors.response.use(undefined, function(error) {
   if (error) {
