@@ -5,7 +5,7 @@
 
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
 
-                    <h1 class="text-blue">Manage employee</h1>
+                    <h1 class="text-blue">Manage My Account</h1>
 
                 </div>
             
@@ -29,39 +29,27 @@
                     <input type="text" class="form-control" id="lastName">
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row noSelect">
                     <div class="mb-1">
-                        <label for="pass" class="text-blue formLabel">Request for temporary password?</label>
-                    </div>
-                
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="pass flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Yes
-                        </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="pass flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            No
-                        </label>
-                    </div>
+                        <label for="passwordChange" class="text-blue formLabel">Password</label><br>
+                        <button class="btn blueBtn" id="passwordChange">Change Password</button>
+                    </div>                    
                 </div>
 
                 <div class="form-group row noSelect">
-                        <div class="mb-1">
-                            <label for="primaryEmail" class="text-blue formLabel">Primary Email</label>
-                        </div>
-                        
-                        <input type="text" class="form-control leaveInput" id="primaryMail">
+                    <div class="mb-1">
+                        <label for="primaryEmail" class="text-blue formLabel">Primary Email</label>
+                    </div>
+                    
+                    <input type="text" class="form-control leaveInput" id="primaryMail">
                 </div>
             
                 <div class="form-group row noSelect">
-                        <div class="mb-1">
-                            <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Secondary Email</label>
-                        </div>
-                        
-                        <input type="text" class="form-control leaveInput" id="primaryMail">
+                    <div class="mb-1">
+                        <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Secondary Email</label>
+                    </div>
+                    
+                    <input type="text" class="form-control leaveInput" id="primaryMail">
                 </div>
 
                 <div class="form-group row">
