@@ -82,7 +82,7 @@
 
             options: {
                 headings: {
-                    employeeID: 'EmployeeID',
+                    employeeID: 'Employee ID',
                     last_name: 'Last Name',
                     first_mame: 'First Name',
                     editEmployee: 'Edit Employee'
