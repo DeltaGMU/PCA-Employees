@@ -72,13 +72,16 @@
                         
                         <input type="text" class="form-control leaveInput" id="primaryMail">
                 </div>
-
+                
                 <div class="form-group row noSelect">
-                        <div class="mb-1">
-                            <label for="role" class="text-blue formLabel leaveLabel">Role</label>
-                        </div>
-                        
-                        <input type="text" class="form-control leaveInput" id="role">
+                    <div class="mb-1">
+                        <label for="role" class="text-blue formLabel leaveLabel">Select Role</label>
+                    </div>
+
+                    <select class="form-control leaveInput" name="role" id="role">
+                        <option value="adminRole">Administrator</option>
+                        <option value="empRole">Employee</option>
+                    </select>
                 </div>
 
                 <div class="form-group row">
