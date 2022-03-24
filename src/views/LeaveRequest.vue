@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <div class="topSection noSelect">
+        <div class="noSelect">
 
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
 
