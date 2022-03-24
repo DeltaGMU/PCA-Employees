@@ -342,6 +342,43 @@ td input.textBox {
 
 /* End admin dashboard styling*/
 
+
+/* Employee info styling */
+.empContent{
+    margin-left: 225px;
+    padding-left: 75px;
+    padding-top: 10px;
+}
+
+.table {
+    border:#0b3f6d;
+}
+
+.table-th {
+    padding: 10px;
+    border-top: solid 2px #0b3f6d;
+    border-left: solid 2px #0b3f6d;
+    border-right: solid 2px #0b3f6d;
+}
+
+.column{
+    padding: 10px;
+    border: solid 2px #0b3f6d;
+}
+
+.row-striped:nth-child(even) {
+    background-color: rgba(12, 74, 128, .15);
+}
+
+.row-striped:nth-child(odd) {
+    background-color: rgba(12, 74, 128, .29);
+}
+
+.search-bar{
+}
+/*End employee info styling */
+
+
 /* Leave of absence styling */
 
 .row .leaveInput {

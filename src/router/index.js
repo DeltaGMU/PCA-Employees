@@ -7,6 +7,15 @@ import ForgotPassword from "../views/ForgotPassword";
 import ResetPassword from "../views/ResetPassword";
 import LeaveRequest from "../views/LeaveRequest";
 import AdminDashboard from "../views/AdminDashboard";
+import EmployeeInfo from "../views/EmployeeInfo";
+import ManageAdmin from "../views/ManageAdmin";
+import ManageEmployees from "../views/ManageEmployees";
+import ManageStudents from "../views/ManageStudents";
+import EditEmployee from "../views/EditEmployee";
+import EditStudent from "../views/EditStudent";
+import CreateEmployee from "../views/CreateEmployee";
+import CreateStudent from "../views/CreateStudent";
+
 
 Vue.use(VueRouter);
 
@@ -45,6 +54,54 @@ const routes = [
     path: "/leaverequest",
     name: "LeaveRequest",
     component: LeaveRequest,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/employeeinfo",
+    name: "EmployeeInfo",
+    component: EmployeeInfo,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/manageadmin",
+    name: "ManageAdmin",
+    component: ManageAdmin,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/manageemployees",
+    name: "ManageEmployees",
+    component: ManageEmployees,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/managestudents",
+    name: "ManageStudents",
+    component: ManageStudents,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/editemployee",
+    name: "EditEmployee",
+    component: EditEmployee,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/editstudent",
+    name: "EditStudent",
+    component: EditStudent,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/createEmployee",
+    name: "CreateEmployee",
+    component: CreateEmployee,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/createStudent",
+    name: "CreateStudent",
+    component: CreateStudent,
     meta: { requiresAuth: true },
   },
 ];
