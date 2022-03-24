@@ -10,7 +10,7 @@ const getters = {
 
 const actions = {
   async SubmitTimesheet(context, valueArray) {
-    // console.log(valueArray);
+     console.log(valueArray);
     try {
       await axios({
         method: 'post',
@@ -27,8 +27,8 @@ const actions = {
   },
   
   async GetTimesheets(context, payload) {
-    // console.log("start day in payload: " + payload.firstDay);
-    // console.log("end day in payload: " + payload.lastDay);
+     //console.log("start day in payload: " + payload.firstDay);
+     //console.log("end day in payload: " + payload.lastDay);
     await axios({
       method: 'get',
       url: "api/v1/timesheet/" + context.rootState.auth.user.employee_id,
