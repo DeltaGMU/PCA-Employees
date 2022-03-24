@@ -1,4 +1,5 @@
 import axios from "axios";
+//import httpsAgent from 'https';
 
 const state = {
   user: null,
@@ -11,7 +12,16 @@ const getters = {
 
 const actions = {
   async LogIn({commit}, credentials) {
-    await axios.post("api/v1/login", credentials).then(
+    /*
+    const https_agent = new httpsAgent({
+      rejectUnauthorized: false,
+      requestCert: false
+    })
+    */
+    const headers = {
+      "Access-Control-Allow-Origin": "*"
+    }
+    await axios.post("api/v1/login", credentials, {headers: headers}).then(
       resp => {
         commit("setUser", resp.data.data);
       }
