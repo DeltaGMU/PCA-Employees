@@ -10,7 +10,7 @@ import '@fortawesome/fontawesome-free/js/all.js';
 import "./css/style.css";
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "https://localhost:56709/";
+axios.defaults.baseURL = "https://jjservers.ddns.net:56709/";
 
 /*
 try {
