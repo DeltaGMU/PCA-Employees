@@ -291,8 +291,9 @@ export default {
             ],
             year: 0,
             monthNum: 0,
-            yearAndMonth: 0,
-            daysInMonth: 0,
+            yearAndThisMonth: 0,
+            yearAndNextMonth: 0,
+            daysInPeriod: 0,
             firstDay: "",
             lastDay: "",
             daysInFirstHalf: 0,
@@ -305,41 +306,64 @@ export default {
        
         // This function associates a date with the day of the week in the dateAndDayArray
         correlateDateAndDay() {
-            this.yearAndMonth = new Date(this.year, this.monthNum - 1)
+            this.yearAndThisMonth = new Date(this.year, this.monthNum - 1)
+
+            this.yearAndNextMonth = new Date(this.year, this.monthNum)
+
+            let daysInThisMonth = new Date(this.year, this.monthNum, 0).getDate()
+
             let abbrevDay
     
             // setDate sets the month day of the date that was created above; starts at 1, goes until it gets to the end of the month
             // getDay returns an int (0-6) of the weekday that correlates to the date that was set; reference the index of the days array that corresponds to that int
             // Push the day number and abbreviated day name to dateAndDayArray
-            for(let i = 1; i <= this.daysInMonth; i ++) {                               
-                this.yearAndMonth.setDate(i) 
-                abbrevDay = this.days[this.yearAndMonth.getDay()]
+            for(let i = 10; i <= daysInThisMonth; i++) {                               
+                this.yearAndThisMonth.setDate(i) 
+                abbrevDay = this.days[this.yearAndThisMonth.getDay()]
 
                 this.dateAndDayArray.push([this.monthNum + "/" + i, abbrevDay])
+            }
+
+            for(let x = 1; x <= 9; x++) {
+                this.yearAndNextMonth.setDate(i) 
+                abbrevDay = this.days[this.yearAndNextMonth.getDay()]
+
+                this.dateAndDayArray.push([(this.monthNum+1) + "/" + i, abbrevDay])
             }
         },
 
         // Calculates the number of days in the first half of the month (for the first page of the timesheet)
-        getDaysInFirstHalf() {            
-            this.daysInMonth = new Date(this.year, this.monthNum, 0).getDate()
-            this.daysInFirstHalf = parseInt(this.daysInMonth / 2)
+        getDaysInFirstHalf() { 
+            let startDate = new Date(this.firstDay)
+            let endDate = new Date(this.lastDay)
+
+            let differenceInTime = endDate.getTime() - startDate.getTime()
+
+            // Add 1 to include the last day
+            let differenceInDays = (differenceInTime / (1000 * 3600 * 24)) + 1
+            
+            console.log(differenceInDays)
+            this.daysInPeriod = differenceInDays
+            this.daysInFirstHalf = parseInt(this.daysInPeriod / 2)
         },
 
         // Calculates the number of days in the second half of the month (for the second page of the timesheet)
         getDaysInSecondHalf() {
-            this.daysInSecondHalf = this.daysInMonth - this.daysInFirstHalf
+            this.daysInSecondHalf = this.daysInPeriod - this.daysInFirstHalf
         },
 
-        // Sets the first day of the month in a yyyy-mm-dd format
+        // Sets the first day of the time period in a yyyy-mm-dd format
         setFirstDay() {
-            let firstDate = new Date(this.year, this.monthNum-1, 1)
+            let firstDate = new Date(this.year, this.monthNum-1, 10)
             this.firstDay = firstDate.toISOString().slice(0, 10)
+            //console.log(this.firstDay)
         },
 
-        // Sets the last day of the month in a yyyy-mm-dd format
+        // Sets the last day of the time period in a yyyy-mm-dd format
         setLastDay() {
-            let lastDate = new Date(this.year, this.monthNum, 0)
+            let lastDate = new Date(this.year, this.monthNum, 9)
             this.lastDay = lastDate.toISOString().slice(0, 10)
+            //console.log(this.lastDay)
         },
 
         // Controls the switch between the first half and second half of the month on the Timesheet
@@ -360,9 +384,9 @@ export default {
         submitTimesheet() {
             let work_hours, pto_hours, extra_hours, date_worked, comment
             
-            for(let i = 0; i < this.daysInMonth; i++) {
-                this.yearAndMonth.setDate(i+1)
-                date_worked = this.yearAndMonth.toISOString().slice(0, 10)
+            for(let i = 0; i < this.daysInPeriod; i++) {
+                this.yearAndThisMonth.setDate(i+1)
+                date_worked = this.yearAndThisMonth.toISOString().slice(0, 10)
 
                 work_hours = parseInt(this.formData[i].work_hours)
                 pto_hours = parseInt(this.formData[i].pto_hours)
@@ -413,7 +437,7 @@ export default {
             let isoDate
             
             if (timesheets === null) {
-                for(let i = 0; i < this.daysInMonth; i ++) {
+                for(let i = 0; i < this.daysInPeriod; i ++) {
                     this.formData[i].work_hours = ""
                     this.formData[i].pto_hours = ""
                     this.formData[i].extra_hours = ""
@@ -421,9 +445,9 @@ export default {
                 }
             }
 
-            for(let i = 0; i < this.daysInMonth; i ++) {
-                this.yearAndMonth.setDate(i+1)
-                isoDate = this.yearAndMonth.toISOString().slice(0, 10)
+            for(let i = 0; i < this.daysInPeriod; i ++) {
+                this.yearAndThisMonth.setDate(i+1)
+                isoDate = this.yearAndThisMonth.toISOString().slice(0, 10)
                 
                 if (timesheets.time_sheets === undefined || timesheets.time_sheets[isoDate] === undefined) {
                     this.formData[i].work_hours = ""
