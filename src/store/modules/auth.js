@@ -24,14 +24,15 @@ const actions = {
     context.rootState.user.role = null;
     context.rootState.timesheet.retrievedTimesheets = null;
 
+    /*
     if (this.state.isAuthenticated) {
       let headers = { 'Authorization': 'Bearer '+context.rootState.auth.user.token }
       await axios.post("api/v1/logout", headers).then(
         () => { context.commit("logout") }
       ).catch(e => console.log(e));
     }
-
-    
+    */
+    context.commit("logout")
   },
 };
 
