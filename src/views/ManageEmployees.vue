@@ -1,44 +1,45 @@
 <template>
     <div>
-    <div class = "sideBar">
-         <Sidebar>   </Sidebar>
-    </div>
+        <div class = "sideBar">
+            <Sidebar>   </Sidebar>
+        </div>
 
-    <div class = "empContent">
+        <div class = "empContent">
 
-        <h1>Manage Employees</h1>
+            <h1>Manage Employees</h1>
 
-        
-        <button class="btn blueBtn" @click="$router.push({ path: 'createemployee'})">
-            Create Employee 
-         </button>
-        
-        <br> <br>
+            
+            <button class="btn blueBtn" @click="$router.push({ path: 'createemployee'})">
+                Create Employee 
+            </button>
+            
+            <br> <br>
 
-        <!-- >Search and filter through employees <-->
-        <input class = "search-bar" type="text"  v-model= "query" placeholder="Search for employees.." title="Type in a name">
-        
-        <table class = "table">
-            <thead>
-                <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
-                    {{ option }}
-                </th>
-            </thead>
-            <tbody>
-                <tr class = "row-striped" v-for = "emp in empInfo" v-bind:key="emp">
-                    <td class = "column text-center">{{ emp.employee_id }} </td>
-                    <td class = "column text-center">{{ emp.last_name }} </td>
-                    <td class = "column text-center">{{ emp.first_name}} </td>
-                    <td class = "column text-center"> 
-                        <button class="btn blueBtn" @click="$router.push({ path: 'editEmployee'})">
-                            Edit 
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-          
-    </div>
+            <!-- >Search and filter through employees <-->
+            <!-- v-model= "query" -->
+            <input class = "search-bar" type="text" placeholder="Search for employees.." title="Type in a name">
+            
+            <table class = "table">
+                <thead>
+                    <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
+                        {{ option }}
+                    </th>
+                </thead>
+                <tbody>
+                    <tr class = "row-striped" v-for = "(emp, index) in empInfo" v-bind:key=index>
+                        <td class = "column text-center">{{ emp.employee_id }} </td>
+                        <td class = "column text-center">{{ emp.last_name }} </td>
+                        <td class = "column text-center">{{ emp.first_name}} </td>
+                        <td class = "column text-center"> 
+                            <button class="btn blueBtn" @click="$router.push({ path: 'editEmployee'})">
+                                Edit 
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
     </div>
 </template> 
 
