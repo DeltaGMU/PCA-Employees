@@ -50,46 +50,46 @@
             Sidebar
         },
         data() {
-        return {
-            //query: '',
-            //empInfo: [],
-            empInfo: [
-                {
-                    'employee_id':"jadams",
-                    'last_name':'Adams',
-                    'first_name': 'Jane'
-                },
-                {
-                    'employee_id':"asmith",
-                    'last_name':'Smith',
-                    'first_name': 'Amy'
-                },
-                {
-                    'employee_id':"sjones",
-                    'last_name':'Jones',
-                    'first_name': 'Sam'
-                }
-                
-            ],
-        
-            columns: [
-                'employeeID',
-                'last_name',
-                'first_name',
-                'editEmployee'
-            ],
+            return {
+                //query: '',
+                //empInfo: [],
+                empInfo: [
+                    {
+                        'employee_id':"jadams",
+                        'last_name':'Adams',
+                        'first_name': 'Jane'
+                    },
+                    {
+                        'employee_id':"asmith",
+                        'last_name':'Smith',
+                        'first_name': 'Amy'
+                    },
+                    {
+                        'employee_id':"sjones",
+                        'last_name':'Jones',
+                        'first_name': 'Sam'
+                    }
+                    
+                ],
+            
+                columns: [
+                    'employeeID',
+                    'last_name',
+                    'first_name',
+                    'editEmployee'
+                ],
 
-            empCollection: [],
+                empCollection: [],
 
-            options: {
-                headings: {
-                    employeeID: 'Employee ID',
-                    last_name: 'Last Name',
-                    first_mame: 'First Name',
-                    editEmployee: 'Edit Employee'
+                options: {
+                    headings: {
+                        employeeID: 'Employee ID',
+                        last_name: 'Last Name',
+                        first_mame: 'First Name',
+                        editEmployee: 'Edit Employee'
+                    }
                 }
             }
-        }
-    },
+        },
     };
 </script>
