@@ -12,8 +12,8 @@
             <i class="dropdown-caret fa-solid fa-angle-down" ></i>
           </div>
           <ul class="dropdown-menu">
-            <li v-if=" getRole != 'administrator' && current_page == '/timesheet' "><a class="dropdown-item" @click="goToLeaveRequest">Submit Leave Request</a></li>
-            <li v-if=" getRole != 'administrator' && current_page == '/leaverequest' "><a class="dropdown-item" @click="goToTimesheet">Submit Timesheet</a></li>
+            <li v-if=" current_page == '/timesheet' "><a class="dropdown-item" @click="goToLeaveRequest">Submit Leave Request</a></li>
+            <li v-if=" current_page == '/leaverequest' "><a class="dropdown-item" @click="goToTimesheet">Submit Timesheet</a></li>
             <li><a class="dropdown-item" @click="logout">Sign Out</a></li>
           </ul>
         </div>
