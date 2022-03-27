@@ -43,11 +43,22 @@
                     </div>
                     
                     <div class="form-check form-check-inline leaveInput">
-                        <input class="form-check-input" type="checkbox" name="resetPasswordCheckbox" id="pass flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
+                        <input class="form-check-input" type="checkbox" name="resetPasswordCheckbox" id="pass resetPasswordCheckbox">
+                        <label class="form-check-label" for="resetPasswordCheckbox">
                             Reset Password
                         </label>
                     </div>
+                </div>
+
+                <div class="form-group row noSelect">
+                    <div class="mb-1">
+                        <label for="role" class="text-blue formLabel leaveLabel">Select Role</label>
+                    </div>
+
+                    <select class="form-control leaveInput" name="role" id="role">
+                        <option value="adminRole">Administrator</option>
+                        <option value="empRole">Employee</option>
+                    </select>
                 </div>
 
                 <div class="form-group row noSelect">
@@ -65,31 +76,38 @@
                         
                         <input type="text" class="form-control leaveInput" id="primaryMail">
                 </div>
-                
-                <div class="form-group row noSelect">
-                    <div class="mb-1">
-                        <label for="role" class="text-blue formLabel leaveLabel">Select Role</label>
-                    </div>
-
-                    <select class="form-control leaveInput" name="role" id="role">
-                        <option value="adminRole">Administrator</option>
-                        <option value="empRole">Employee</option>
-                    </select>
-                </div>
 
                 <div class="form-group row">
                     <div class="mb-1">
-                        <label for="pass" class="text-blue formLabel">Enable email notifications?</label>
+                        <label for="pass" class="text-blue formLabel">Enable email notifications for primary email?</label>
                     </div>
                     
                     <div class="form-check form-check-inline leaveInput">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="pass flexRadioDefault1">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault1" id="pass flexRadioDefault1">
                         <label class="form-check-label" for="flexRadioDefault1">
                             Yes
                         </label>
                         </div>
                         <div class="form-check form-check-inline leaveInput">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="pass flexRadioDefault2" checked>
+                        <input class="form-check-input" type="radio" name="flexRadioDefault1" id="pass flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            No
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group row noSelect">
+                    <div class="mb-1">
+                        <label for="notification" class="text-blue formLabel">Enable email notifications for secondary email?</label>
+                    </div>
+                    
+                    <div class="form-check form-check-inline leaveInput">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault2" id="notification flexRadioDefault2">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Yes
+                        </label>
+                        </div>
+                        <div class="form-check form-check-inline leaveInput">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault2" id="notification flexRadioDefault2">
                         <label class="form-check-label" for="flexRadioDefault2">
                             No
                         </label>
