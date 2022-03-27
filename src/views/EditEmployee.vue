@@ -106,6 +106,7 @@
                     </div>
                 </div>
             </div>
+            <br/>
             <button class="btn blueBtn">Submit</button>
         </div>
     </form>
