@@ -14,14 +14,6 @@
             <div>
                 <div class="form-group row noSelect">
                     <div class="mb-1">
-                        <label for="employeeID" class="text-blue formLabel">Employee ID</label>
-                    </div>
-                    
-                    <input type="text" class="form-control leaveInput" id="employeeID">  
-                </div>
-
-                <div class="form-group row noSelect">
-                    <div class="mb-1">
                         <label for="firstName" class="text-blue formLabel">First Name</label>
                     </div>
                     
