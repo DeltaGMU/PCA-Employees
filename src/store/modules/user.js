@@ -27,7 +27,7 @@ const actions = {
       }
       await axios.get("api/v1/employees/" + context.rootState.auth.user.employee_id, headers).then(
         resp => {
-          context.commit("setRole", resp.data.data.employee.role);
+          context.commit("setRole", resp.data.data.employee.role.name);
         }
       );
     },
