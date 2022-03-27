@@ -27,8 +27,8 @@
                 </th>
             </thead>
             <tbody>
-                <tr class = "row-striped" v-if = "studentInfo.length == 0">
-                    <td class = "column text-center">No student information available!</td>
+                <tr class = "row-striped" v-if = "!studentInfo || !studentInfo.length">
+                    <td class = "column text-center">No student information available...</td>
                 </tr>
                 <tr class = "row-striped" v-for = "(student, index) in studentInfo" v-bind:key="index">
                     <td class = "column text-center">{{ student.student_id }} </td>
