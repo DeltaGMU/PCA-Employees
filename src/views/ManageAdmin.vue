@@ -23,7 +23,7 @@
                                 <label for="firstName" class="text-blue formLabel">First Name</label>
                             </div>
                             
-                            <input type="text" class="form-control" id="firstName" required>
+                            <input type="text" class="form-control leaveInput" id="firstName" required>
                             
                         </div>
 
@@ -32,7 +32,7 @@
                                 <label for="lastName" class="text-blue formLabel">Last Name</label>
                             </div>
                             
-                            <input type="text" class="form-control" id="lastName">
+                            <input type="text" class="form-control leaveInput" id="lastName">
                         </div>
 
                         <div class="form-group row noSelect">
@@ -58,25 +58,45 @@
                             <input type="text" class="form-control leaveInput" id="primaryMail">
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group row noSelect">
                             <div class="mb-1">
-                                <label for="notification" class="text-blue formLabel">Enable email notifications?</label>
+                                <label for="notification" class="text-blue formLabel">Enable email notifications for primary email?</label>
                             </div>
                             
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="notification flexRadioDefault1">
+                            <div class="form-check form-check-inline leaveInput">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault1" id="notification flexRadioDefault1" checked>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Yes
                                 </label>
                                 </div>
-                                <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="notification flexRadioDefault2" checked>
+                                <div class="form-check form-check-inline leaveInput">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault1" id="notification flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row noSelect">
+                            <div class="mb-1">
+                                <label for="notification" class="text-blue formLabel">Enable email notifications for secondary email?</label>
+                            </div>
+                            
+                            <div class="form-check form-check-inline leaveInput">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault2" id="notification flexRadioDefault2">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Yes
+                                </label>
+                                </div>
+                                <div class="form-check form-check-inline leaveInput">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault2" id="notification flexRadioDefault2" checked>
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     No
                                 </label>
                             </div>
                         </div>
                     </div>
+                    <br/>
                     <button class="btn blueBtn">Submit</button>
                 </div>
             </form>
