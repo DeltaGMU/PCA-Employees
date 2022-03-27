@@ -10,12 +10,15 @@
 
         <button class="btn blueBtn" @click="$router.push({ path: 'createstudent'})">
             Create Student 
-         </button>
+        </button>
+        <button class="btn blueBtn" style="float: right;" @click="refreshStudentsTable()">
+            Refresh Students List
+        </button>
         
         <br> <br>
 
         <!-- >Search and filter through employees <-->
-        <input class = "search-bar" type="text"  v-model= "query" placeholder="Search for students.." title="Type in a name">
+        <!-- <input class = "search-bar" type="text"  v-model= "query" placeholder="Search for students.." title="Type in a name"> -->
         
         <table class = "table">
             <thead>
@@ -24,8 +27,12 @@
                 </th>
             </thead>
             <tbody>
-                <tr class = "row-striped" v-for = "student in studentInfo" v-bind:key="student">
-                    <td class = "column text-center">{{ student.car_pool_number }} </td>
+                <tr class = "row-striped" v-if = "studentInfo.length == 0">
+                    <td class = "column text-center">No student information available!</td>
+                </tr>
+                <tr class = "row-striped" v-for = "(student, index) in studentInfo" v-bind:key="index">
+                    <td class = "column text-center">{{ student.student_id }} </td>
+                    <td class = "column text-center">{{ student.carpool_number }} </td>
                     <td class = "column text-center">{{ student.last_name }} </td>
                     <td class = "column text-center">{{ student.first_name}} </td>
                     <td class = "column text-center"> 
@@ -48,44 +55,41 @@
             Sidebar
         },
         data() {
-        return {
-            //query: '',
-            studentInfo: [
-                {
-                    'car_pool_number':"23",
-                    'last_name':'Barnes',
-                    'first_name': 'Jamie'
-                },
-                {
-                    'car_pool_number':"51",
-                    'last_name':'Coleman',
-                    'first_name': 'Penny'
-                },
-                {
-                    'car_pool_number':"4",
-                    'last_name':'Klein',
-                    'first_name': 'John'
-                }
-                
-            ],
-        
-            columns: [
-                'carpoolNum',
-                'last_name',
-                'first_name',
-                'editStudent'
-            ],
+            return {
+                //query: '',
+                studentInfo: this.$store.getters.StateStudents,
+            
+                columns: [
+                    'studentID',
+                    'carpoolNum',
+                    'last_name',
+                    'first_name',
+                    'editStudent'
+                ],
 
 
-            options: {
-                headings: {
-                    carpoolNum: 'Carpool Number',
-                    last_name: 'Last Name',
-                    first_mame: 'First Name',
-                    editStudent: 'Edit Student'
+                options: {
+                    headings: {
+                        studentID: 'ID',
+                        carpoolNum: 'Carpool #',
+                        last_name: 'Last Name',
+                        first_name: 'First Name',
+                        editStudent: 'Edit Student'
+                    }
                 }
             }
+        },
+        methods: {
+            async refreshStudentsTable() {
+                this.$store.dispatch("GetAllStudents").then(
+                    () => {
+                        this.studentInfo = this.$store.getters.StateStudents
+                    }
+                )
+            }
+        },
+        mounted() {
+            this.$store.dispatch("GetAllStudents")
         }
-    },
     };
 </script>

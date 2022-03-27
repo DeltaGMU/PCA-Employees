@@ -23,6 +23,7 @@ const actions = {
     context.rootState.user.name = null;
     context.rootState.user.role = null;
     context.rootState.timesheet.retrievedTimesheets = null;
+    context.rootState.students.students = null;
 
     /*
     if (this.state.isAuthenticated) {
