@@ -17,8 +17,7 @@
                         <label for="employeeID" class="text-blue formLabel">Employee ID</label>
                     </div>
                     
-                    <input type="text" class="form-control leaveInput" id="employeeID">
-                    
+                    <input type="text" class="form-control leaveInput" id="employeeID">  
                 </div>
 
                 <div class="form-group row noSelect">
@@ -27,7 +26,6 @@
                     </div>
                     
                     <input type="text" class="form-control leaveInput" id="firstName">
-                    
                 </div>
 
                 <div class="form-group row noSelect">
@@ -40,19 +38,14 @@
 
                 <div class="form-group row">
                     <div class="mb-1">
-                        <label for="pass" class="text-blue formLabel">Request for temporary password?</label>
+                        <label for="pass" class="text-blue formLabel">Password</label>
+                        <br/><small>Resetting the password will send a new generated temporary password to the employee's primary email.</small>
                     </div>
                     
                     <div class="form-check form-check-inline leaveInput">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="pass flexRadioDefault1">
+                        <input class="form-check-input" type="checkbox" name="resetPasswordCheckbox" id="pass flexRadioDefault1">
                         <label class="form-check-label" for="flexRadioDefault1">
-                            Yes
-                        </label>
-                        </div>
-                        <div class="form-check form-check-inline leaveInput">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="pass flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            No
+                            Reset Password
                         </label>
                     </div>
                 </div>
