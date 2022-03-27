@@ -89,7 +89,9 @@
             }
         },
         mounted() {
-            this.$store.dispatch("GetAllStudents")
+            this.$store.dispatch("GetAllStudents").then(() => {
+                this.refreshStudentsTable();
+            })
         }
     };
 </script>
