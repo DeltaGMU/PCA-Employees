@@ -16,8 +16,7 @@
             <br> <br>
 
             <!-- >Search and filter through employees <-->
-            <!-- v-model= "query" -->
-            <input class = "search-bar" type="text" placeholder="Search for employees.." title="Type in a name">
+            <!-- <input class = "search-bar" type="text" v-model= "query" placeholder="Search for employees.." title="Type in a name"> -->
             
             <table class = "table">
                 <thead>

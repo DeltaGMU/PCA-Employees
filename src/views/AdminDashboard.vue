@@ -19,8 +19,7 @@
             <button id="manageBtn" class="btn blueBtn" @click="goToStudentManagement()">
                 Manage Students <br/>
                 <i class="fas fa-users"></i>
-            </button>   
-
+            </button>
         </div>
     </div>
 </template>

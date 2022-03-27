@@ -32,7 +32,7 @@
                                 <label for="lastName" class="text-blue formLabel">Last Name</label>
                             </div>
                             
-                            <input type="text" class="form-control leaveInput" id="lastName">
+                            <input type="text" class="form-control leaveInput" id="lastName" required>
                         </div>
 
                         <div class="form-group row noSelect">
@@ -55,7 +55,7 @@
                                 <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Secondary Email</label>
                             </div>
                             
-                            <input type="text" class="form-control leaveInput" id="primaryMail">
+                            <input type="text" class="form-control leaveInput" id="secondaryEmail" placeholder="Optional...">
                         </div>
 
                         <div class="form-group row noSelect">
@@ -95,9 +95,9 @@
                                 </label>
                             </div>
                         </div>
+                        <br/>
+                        <button class="btn blueBtn">Submit</button>
                     </div>
-                    <br/>
-                    <button class="btn blueBtn">Submit</button>
                 </div>
             </form>
         </div>

@@ -17,15 +17,6 @@
             <div>
                 <div class="form-group row noSelect">
                     <div class="mb-1">
-                        <label for="employeeID" class="text-blue formLabel">Employee ID</label>
-                    </div>
-                    
-                    <input type="text" class="form-control leaveInput" id="employeeID">
-                    
-                </div>
-
-                <div class="form-group row noSelect">
-                    <div class="mb-1">
                         <label for="firstName" class="text-blue formLabel">First Name</label>
                     </div>
                     
@@ -73,7 +64,7 @@
                             <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Secondary Email</label>
                         </div>
                         
-                        <input type="text" class="form-control leaveInput" id="primaryMail">
+                        <input type="text" class="form-control leaveInput" id="secondaryEmail" placeholder="Optional...">
                 </div>
 
 
@@ -123,19 +114,19 @@
                     <div class="form-check form-check-inline leaveInput">
                         <input class="form-check-input" type="radio" name="flexRadioDefault3" id="notification flexRadioDefault3" checked>
                         <label class="form-check-label" for="flexRadioDefault3">
-                            Enable
+                            Enable Account
                         </label>
                         </div>
                         <div class="form-check form-check-inline leaveInput">
                         <input class="form-check-input" type="radio" name="flexRadioDefault3" id="notification flexRadioDefault3">
                         <label class="form-check-label" for="flexRadioDefault3">
-                            Disable
+                            Disable Account
                         </label>
                     </div>
                 </div>
+                <br/>
+                <button class="btn blueBtn">Submit</button>
             </div>
-            <br/>
-            <button class="btn blueBtn">Submit</button>
         </div>
     </form>
 </template>
