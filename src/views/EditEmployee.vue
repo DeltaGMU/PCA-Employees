@@ -1,6 +1,10 @@
 <template>
     <form>
-        <div class="wrapper">
+        <div class = "sideBar">
+            <Sidebar>   </Sidebar>
+        </div>
+
+        <div class="empContent">
             <div class="topSection noSelect">
 
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -113,6 +117,11 @@
 </template>
 
 <script>
-
+    import Sidebar from "../components/Sidebar.vue";
+    export default {
+        components: {
+            Sidebar
+        },
+    }
 </script>
 
