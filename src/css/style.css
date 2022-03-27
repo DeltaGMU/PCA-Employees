@@ -291,6 +291,9 @@ td input.textBox {
 .right-align {
     float: right;
 }
+.left-align {
+    float: left;
+}
 
 .chevron {
     width: 1.3rem;
@@ -316,24 +319,18 @@ td input.textBox {
     text-align: center;
 }
 .sidebar {
-    background-color: #F5F5F5;
     float: left;
-    position:absolute;
-    width: 250px;
-    height: 100%;
+    margin-right: 1.5rem;
 }
 
 .sidebar-item {
     border-top: #DEDEDE;
-    padding: 30px;
+    padding: 1rem;
+    width: 100%;
 }
 
 .sidebar-item a {
     text-decoration: none;
-}
-
-.sidebar-item:hover {
-    background-color: #DEDEDE;
 }
 
 .mainContent .fa-user, .mainContent .fa-users {
@@ -373,10 +370,10 @@ td input.textBox {
 .row-striped:nth-child(odd) {
     background-color: rgba(12, 74, 128, .29);
 }
-
+/*
 .search-bar{
 }
-/*End employee info styling */
+End employee info styling */
 
 
 /* Leave of absence styling */
