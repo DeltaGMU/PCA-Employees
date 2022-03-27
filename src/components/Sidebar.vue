@@ -1,20 +1,49 @@
 <template>
-    <div class = "sidebar">
-        <div class = "sidebar-item">
-            <router-link to="/admindashboard">Home</router-link>
-        </div>
-        <div class = "sidebar-item">
-            <router-link to="/employeeinfo">View Timesheet Info</router-link>
-        </div>
-        <div class = "sidebar-item">
-            <router-link to="#Home">View Student Care Info</router-link>
-        </div>
-        <div class = "sidebar-item">
-            <router-link to="#Home">Generate Timesheet Report</router-link>
-        </div>
-        <div class = "sidebar-item">
-            <router-link to="#Home">Generate Student Care Report</router-link>
+    <div class = "col-auto col-sm-2 col-md-3 col-xl-2 px-0 sidebar">
+        <div class="d-flex flex-column align-items-center align-items-sm-start pt-2 min-vh-100">
+            <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                <li class="sidebar-item">
+                    <a class="nav-link align-middle px-0" @click=" home ">
+                        <i class="fas fa-home"></i> <span class="ml-1 d-none d-sm-inline">Home</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="nav-link align-middle px-0" @click=" timesheetInfo ">
+                        <i class="fa-solid fa-hourglass"></i> <span class="ml-1 d-none d-sm-inline">View Timesheet Info</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="nav-link align-middle px-0">
+                        <i class="fa-solid fa-school"></i> <span class="ml-1 d-none d-sm-inline">View Student Care Info</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="nav-link align-middle px-0">
+                        <i class="fa-solid fa-hourglass"></i> <span class="ml-1 d-none d-sm-inline">Generate Timesheet Report</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="nav-link px-0">
+                        <i class="fa-solid fa-school"></i> <span class="ml-1 d-none d-sm-inline">Generate Student Care Report</span>
+                    </a>
+                </li>
+
+            </ul>
         </div>
     </div>
-  
+ 
 </template>
+
+<script>
+export default {
+  name: "Sidebar",
+  methods: {
+    home() {
+      this.$router.push("/admindashboard");
+    },
+    timesheetInfo() {
+      this.$router.push("/employeeinfo");
+    },
+  },
+};
+</script>
