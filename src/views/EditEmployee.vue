@@ -49,7 +49,7 @@
 
                     <select class="form-control leaveInput" name="role" id="role">
                         <option value="adminRole">Administrator</option>
-                        <option value="empRole">Employee</option>
+                        <option value="empRole" selected>Employee</option>
                     </select>
                 </div>
 
