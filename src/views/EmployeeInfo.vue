@@ -1,6 +1,6 @@
 <template>
     <div>
-    <div class = "sideBar">
+    <div>
          <Sidebar>   </Sidebar>
     </div>
     <div class = "empContent">
