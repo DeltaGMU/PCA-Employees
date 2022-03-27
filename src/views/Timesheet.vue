@@ -1,5 +1,10 @@
 <template>
-  <div>
+<div>
+
+    <div v-if = " getRole == 'administrator' ">
+        <Sidebar></Sidebar>
+    </div>
+    
     <div class="wrapper">
 
         <div class="topSection noSelect">
@@ -93,9 +98,13 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+import Sidebar from "../components/Sidebar.vue";
 export default {
     name: "Timesheet",
-    components: {},
+    components: {
+        Sidebar
+    },
     data() {
         return {
             days: ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"],
@@ -304,6 +313,12 @@ export default {
             reporting_period_start: 10,
             reporting_period_end: 9
         }
+    },
+    computed: {
+        getRole: function() {
+            return this.$store.getters.StateRole;
+        },
+        ...mapGetters({Name: "StateRole"}),
     },
     methods: {
        
@@ -584,7 +599,9 @@ export default {
                 formCount += 1
             }
         },
+        ...mapActions(["GetRole"]),
     },
+    
     // Call these functions when the app has been mounted
     mounted() {
         this.getDaysInFirstHalf()
