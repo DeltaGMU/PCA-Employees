@@ -342,9 +342,11 @@ td input.textBox {
 
 /* Employee info styling */
 .empContent{
+    float: none;
     margin-left: 225px;
     padding-left: 75px;
     padding-top: 10px;
+    padding-right: 10px;
 }
 
 .table {
