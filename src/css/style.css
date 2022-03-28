@@ -7,6 +7,8 @@
     --pcaBlue: #0C4A80;
     --pcaDarkBlue: #0b3f6d;
     --pcaGrey: #E6E6E6;
+    --pcaRed: #d4104b;
+    --pcaDarkRed: #740d2c;
 }
 
 * {
@@ -274,8 +276,18 @@ td input.textBox {
     background-color: var(--pcaBlue);
 }
 
+.redBtn {
+    color: white;
+    background-color: var(--pcaRed);
+}
+
 .blueBtn:hover {
     background-color: var(--pcaDarkBlue);
+    color: rgb(230, 230, 230);
+}
+
+.redBtn:hover {
+    background-color: var(--pcaDarkRed);
     color: rgb(230, 230, 230);
 }
 
