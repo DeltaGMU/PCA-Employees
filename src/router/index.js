@@ -7,7 +7,7 @@ import ForgotPassword from "../views/ForgotPassword";
 import ResetPassword from "../views/ResetPassword";
 import LeaveRequest from "../views/LeaveRequest";
 import AdminDashboard from "../views/AdminDashboard";
-import EmployeeInfo from "../views/EmployeeInfo";
+import TimesheetInfo from "../views/TimesheetInfo";
 import ManageAdmin from "../views/ManageAdmin";
 import ManageEmployees from "../views/ManageEmployees";
 import ManageStudents from "../views/ManageStudents";
@@ -57,9 +57,9 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: "/employeeinfo",
-    name: "EmployeeInfo",
-    component: EmployeeInfo,
+    path: "/timesheetinfo",
+    name: "TimesheetInfo",
+    component: TimesheetInfo,
     meta: { requiresAuth: true },
   },
   {
