@@ -22,13 +22,14 @@
                 </div>
             </div>
 
-            <div class="search-bar col-sm-12">
+            <div class="col-sm-12">
                 <label class="form-check-label" for="studentSearchBar">
                     Filter student list:
                 </label>
-                <input type="text" v-model="searchQuery" class="search-bar form-control rounded" placeholder="Search for students by ID, First Name, Last Name, or Grade..." name="studentSearchBar" id="studentSearchBar"/>
+                <input type="text" v-model="searchQuery" class="form-control rounded" placeholder="Search for students by ID, First Name, Last Name, or Grade..." name="studentSearchBar" id="studentSearchBar"/>
                 <br>
             </div> 
+
             <div class="table-responsive" v-if = "!filteredStudentsList || !filteredStudentsList.length">
                 <table class = "table table-hover">
                     <thead>
@@ -43,6 +44,7 @@
                     </tbody>
                 </table>
             </div>
+
             <div class="table-responsive" v-else>
                 <table class = "table table-hover">
                     <thead>
@@ -58,7 +60,7 @@
                             <td class = "column text-center">{{ student.first_name}} </td>
                             <td class = "column text-center">{{ student.grade.name}} </td>
                             <td class = "column text-center"> 
-                                <button class="btn blueBtn" @click="$router.push({ path: 'editStudent'})">
+                                <button type="button" class="btn blueBtn" @click="$router.push({ path: 'editStudent'})">
                                     Edit 
                                 </button>
                             </td>

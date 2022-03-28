@@ -20,13 +20,11 @@
                 </div>
             </div>
 
-            <!-- >Search and filter through employees <-->
-            <!-- <input class = "search-bar" type="text" v-model= "query" placeholder="Search for employees.." title="Type in a name"> -->
-            <div class="search-bar col-sm-12">
+            <div class="col-sm-12">
                 <label class="form-check-label" for="studentSearchBar">
                     Filter employee list:
                 </label>
-                <input type="text" v-model="searchQuery" class="search-bar form-control rounded" placeholder="Search for employees by ID, First Name, or Last Name..." name="studentSearchBar" id="studentSearchBar"/>
+                <input type="text" v-model="searchQuery" class="form-control rounded" placeholder="Search for employees by ID, First Name, or Last Name..." name="studentSearchBar" id="studentSearchBar"/>
                 <br>
             </div> 
             <div class="table-responsive" v-if = "!filteredEmployeesList || !filteredEmployeesList.length">
