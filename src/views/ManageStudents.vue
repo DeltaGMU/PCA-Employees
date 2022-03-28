@@ -4,7 +4,7 @@
             <Sidebar>   </Sidebar>
         </div>
 
-        <div class = "p-2 flex-grow-1">
+        <div class="p-2 flex-grow-1">
 
             <h1 class="text-blue">Manage Students</h1>
 
