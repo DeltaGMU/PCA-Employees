@@ -1,11 +1,11 @@
 <template>
-    <div class = "row">
+    <div class="d-flex">
         
-        <div class="col-3 col-sm-5 col-xl-3">
+        <div class="p-2">
          <Sidebar>   </Sidebar>
         </div>
         
-        <div class = "mt-3 col-9 col-sm-7 col-xl-9">
+        <div class = "p-2 flex-grow-1">
             <button id="manageBtn" class="btn blueBtn"  @click="$router.push({ path: 'manageadmin'})">
                 Manage My Account <br/>
                 <i class="fas fa-user"></i>
