@@ -1,40 +1,38 @@
 <template>
-<div v-bind:class=" getRole == 'administrator' ? 'row' : '' ">
+<div class="d-flex">
 
-    <div v-if = " getRole == 'administrator' " class="col-2 col-md-4 col-lg-3 col-xxl-2">
+    <div v-if = " getRole == 'administrator' " class="p-2">
         <Sidebar></Sidebar>
     </div>
     
-    <div v-bind:class=" getRole != 'administrator' ? 'ms-3 ms-md-4 me-3 me-md-4 mt-3 mb-5' : 'mt-3 mb-5 col-10 col-md-8 col-lg-9 col-xxl-10 pe-3 pe-md-4 pe-xl-5' ">
+    <div v-bind:class=" getRole == 'administrator' ? 'p-2 flex-grow-1' : 'p-3 ps-md-4 pe-md-4 pb-md-4 flex-grow-1' ">
 
         <div class="topSection noSelect">
-
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <div>
 
                 <h1 class="text-blue">Timesheet Submission Form</h1>
                 <p>Please fill in the hours under each week day and click Submit Timesheet.</p>
 
-            </div>
-        
+            </div>       
         </div>
         
         <div class="table-responsive">
-            <table class="table">
-                <tr class="headingRow">
+            <table class="timesheet">
+                <thead class="headingRow">
                     <th class="col-1">Date</th>
                     <th class="col-1 middleCols">Day</th>
                     <th class="col-2 middleCols">Regular Hours</th>
                     <th class="col-2 middleCols">PTO</th>
                     <th class="col-2 middleCols">Extra Hours</th>
                     <th class="col-4 middleCols">Comments</th>
-                </tr>
+                </thead>
 
                 <!-- Table body for the first half of the month (will be displayed by default) -->
                 <tbody id="firstHalf">
 
                     <tr v-for="day in daysInFirstHalf" class="row-striped" :key="day.id">
                         
-                        <!-- Get the date (format ex: 3/10) and day from the dateAndDayArray in employees.js -->
+                        <!-- Get the date (format ex: 3/10) and day from the dateAndDayArray -->
                         <td>{{ dateAndDayArray[day-1][0] }}</td>
                         <td class="middleCols">{{ dateAndDayArray[day-1][1] }}</td>
                         <td class="middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].work_hours "></td>
@@ -63,11 +61,11 @@
             </table>
 
             <div class="twoBtnCol">
-                <button id="nextPageBtn" class="mt-2 btn blueBtn switchPageBtn smallerScreenBtn hideWhenSmall" @click="switchTimesheetPage">
+                <button id="nextPageBtn" class="mt-3 btn blueBtn switchPageBtn smallerScreenBtn hideWhenSmall" @click="switchTimesheetPage">
                     View Next Page
                     <i class="fa fa-chevron-right chevron" alt="Chevron Right"></i>
                 </button>
-                <button id="previousPageBtn" class="mt-2 btn blueBtn switchPageBtn smallerScreenBtn hide" @click="switchTimesheetPage">
+                <button id="previousPageBtn" class="mt-3 btn blueBtn switchPageBtn smallerScreenBtn hide" @click="switchTimesheetPage">
                     <i class="fa fa-chevron-left chevron" alt="Chevron Left"></i>
                     View Previous Page
                 </button>
