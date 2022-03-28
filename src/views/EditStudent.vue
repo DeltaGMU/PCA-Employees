@@ -131,6 +131,12 @@
                 <hr>
                 <div class="form-group row noSelect">
                     <div class="mb-1">
+                        <label for="deleteStudentAccountBtn" class="text-blue formLabel">Delete Student Account:</label><br/>
+                        <button class="btn redBtn" name="deleteStudentAccountBtn" id="deleteStudentAccount">Delete Student Account</button>
+                    </div>
+                </div>
+                <div class="form-group row noSelect">
+                    <div class="mb-1">
                         <label for="notification" class="text-blue formLabel">Enable or disable student account:</label>
                     </div>
                     
