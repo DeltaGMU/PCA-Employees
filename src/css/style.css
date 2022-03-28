@@ -345,7 +345,7 @@ td input.textBox {
     width: 20%;
     min-width: 200px;
     height: 150px;
-    margin: 50px;
+    margin: 10px;
     text-align: center;
 }
 .sidebar {
