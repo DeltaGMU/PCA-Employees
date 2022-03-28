@@ -1,5 +1,23 @@
 <template>
     <form>
+        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deleteAccountBtnLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        Delete Student Account?
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete the student's account?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn redBtn" data-bs-dismiss="modal" @click="deleteStudentAccount()">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class = "sideBar">
             <Sidebar>   </Sidebar>
         </div>
@@ -132,7 +150,7 @@
                 <div class="form-group row noSelect">
                     <div class="mb-1">
                         <label for="deleteStudentAccountBtn" class="text-blue formLabel">Delete Student Account:</label><br/>
-                        <button class="btn redBtn" name="deleteStudentAccountBtn" id="deleteStudentAccount">Delete Student Account</button>
+                        <button type="button" class="btn redBtn" name="deleteStudentAccountBtn" id="deleteStudentAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Student Account</button>
                     </div>
                 </div>
                 <div class="form-group row noSelect">
@@ -166,6 +184,11 @@
         components: {
             Sidebar
         },
+        methods: {
+            deleteStudentAccount: function() {
+                return
+            },
+        }
     }
 </script>
 

@@ -1,18 +1,34 @@
 <template>
     <form>
+        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deleteAccountBtnLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        Delete Employee Account?
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete the employee's account?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn redBtn" data-bs-dismiss="modal" @click="deleteEmployeeAccount()">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class = "sideBar">
             <Sidebar>   </Sidebar>
         </div>
-
+        
         <div class="empContent">
             <div class="topSection noSelect">
-
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
 
                     <h1 class="text-blue">Edit Employee</h1>
 
                 </div>
-            
             </div>
 
             <div>
@@ -111,6 +127,12 @@
                 </div>
                 <div class="form-group row noSelect">
                     <div class="mb-1">
+                        <label for="deleteEmployeeAccountBtn" class="text-blue formLabel">Delete Employee Account:</label><br/>
+                        <button type="button" class="btn redBtn" name="deleteEmployeeAccountBtn" id="deleteEmployeeAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Employee Account</button>
+                    </div>
+                </div>
+                <div class="form-group row noSelect">
+                    <div class="mb-1">
                         <label for="notification" class="text-blue formLabel">Enable or disable employee account:</label>
                     </div>
                     
@@ -140,6 +162,11 @@
         components: {
             Sidebar
         },
+        methods: {
+            deleteEmployeeAccount: function() {
+                return
+            },
+        }
     }
 </script>
 
