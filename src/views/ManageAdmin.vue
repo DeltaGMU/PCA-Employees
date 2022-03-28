@@ -38,7 +38,7 @@
                         <div class="form-group row noSelect">
                             <div class="mb-1">
                                 <label for="passwordChange" class="text-blue formLabel">Password</label><br>
-                                <button class="btn blueBtn" id="passwordChange">Change Password</button>
+                                <button type="button" class="btn blueBtn" id="passwordChange">Change Password</button>
                             </div>                    
                         </div>
 
