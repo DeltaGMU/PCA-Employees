@@ -350,21 +350,27 @@ td input.textBox {
 }
 .sidebar {
     position: relative;
-    margin-right: 1.5rem;
 }
 
 .sidebar-item {
+    background-color: var(--pcaGrey);
     border-top: #DEDEDE;
-    padding: 1rem 0.5rem 1rem 1rem;
     width: 100%;
 }
 
 .sidebar-item a {
     text-decoration: none;
+    padding: 1rem 1rem 1rem 1rem;
 }
 
-.sidebar-item:hover {
+.sidebar-item a:hover {
     cursor: pointer;
+    color: white;
+    background-color: var(--pcaDarkBlue);
+}
+
+.sidebar-item a:visited {
+    background-color: #c3a579;
 }
 
 .mainContent .fa-user, .mainContent .fa-users {

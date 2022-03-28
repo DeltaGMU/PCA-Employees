@@ -1,29 +1,29 @@
 <template>
     <div class = "px-0 sidebar">
-        <div class="d-flex flex-column align-items-center align-items-sm-start pt-2 min-vh-100">
+        <div class="d-flex flex-column align-items-center align-items-sm-start">
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                <li class="sidebar-item">
-                    <a class="ms-1 nav-link align-middle px-0" @click=" home ">
+                <li class="sidebar-item" style="border-radius: 5px 5px 0px 0px;">
+                    <a class="nav-link align-middle noSelect" @click=" home ">
                         <i class="fas fa-home"></i> <span class="ml-1 d-none d-sm-inline">Home</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="ms-1 nav-link align-middle px-0" @click="timesheetInfo">
+                    <a class="nav-link align-middle noSelect" @click="timesheetInfo">
                         <i class="fa-solid fa-hourglass"></i> <span class="ml-1 d-none d-sm-inline">View Timesheet Info</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="ms-1 nav-link align-middle px-0">
+                    <a class="nav-link align-middle noSelect" @click="() => {}">
                         <i class="fa-solid fa-school"></i> <span class="ml-1 d-none d-sm-inline">View Student Care Info</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="ms-1 nav-link align-middle px-0">
+                    <a class="nav-link align-middle noSelect" @click="() => {}">
                         <i class="fa-solid fa-hourglass"></i> <span class="ml-1 d-none d-sm-inline">Generate Timesheet Report</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="#" class="ms-1 nav-link px-0">
+                <li class="sidebar-item" style="border-radius: 0px 0px 5px 5px;">
+                    <a class="nav-link align-middle noSelect" @click="() => {}">
                         <i class="fa-solid fa-school"></i> <span class="ml-1 d-none d-sm-inline">Generate Student Care Report</span>
                     </a>
                 </li>
