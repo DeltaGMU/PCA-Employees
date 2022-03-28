@@ -1,5 +1,8 @@
 <template>
-    <form>
+    <div class="d-flex">
+        <div class="p-2">
+            <Sidebar>   </Sidebar>
+        </div>
         <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deleteAccountBtnLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -11,149 +14,145 @@
                         Are you sure you want to delete the employee's account?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn redBtn" data-bs-dismiss="modal" @click="deleteEmployeeAccount()">Delete</button>
+                        <button type="button" class="btn blueBtn" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="deleteEmployeeAccount()">Delete</button>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class = "sideBar">
-            <Sidebar>   </Sidebar>
-        </div>
-        
-        <div class="empContent">
-            <div class="topSection noSelect">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-
-                    <h1 class="text-blue">Edit Employee</h1>
-
-                </div>
-            </div>
-
-            <div>
-                <div class="form-group row noSelect">
-                    <div class="mb-1">
-                        <label for="firstName" class="text-blue formLabel">First Name</label>
-                    </div>
-                    
-                    <input type="text" class="form-control leaveInput" id="firstName">
-                </div>
-
-                <div class="form-group row noSelect">
-                    <div class="mb-1">
-                        <label for="lastName" class="text-blue formLabel">Last Name</label>
-                    </div>
-                    
-                    <input type="text" class="form-control leaveInput" id="lastName">
-                </div>
-
-                <div class="form-group row">
-                    <div class="mb-1">
-                        <label for="pass" class="text-blue formLabel">Password</label>
-                        <br/><small>Resetting the password will send a new generated temporary password to the employee's primary email.</small>
-                    </div>
-                    
-                    <div class="form-check form-check-inline leaveInput">
-                        <input class="form-check-input" type="checkbox" name="resetPasswordCheckbox" id="pass resetPasswordCheckbox">
-                        <label class="form-check-label" for="resetPasswordCheckbox">
-                            Reset Password
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group row noSelect">
-                    <div class="mb-1">
-                        <label for="role" class="text-blue formLabel leaveLabel">Select Role</label>
-                    </div>
-
-                    <select class="form-control leaveInput" name="role" id="role">
-                        <option value="adminRole">Administrator</option>
-                        <option value="empRole" selected>Employee</option>
-                    </select>
-                </div>
-
-                <div class="form-group row noSelect">
+        <div class="p-2 flex-grow-1">
+            <form>
+                <div>
+                    <div class="topSection noSelect">
                         <div class="mb-1">
-                            <label for="primaryEmail" class="text-blue formLabel">Primary Email</label>
+                            <h1 class="text-blue">Edit Employee</h1>
                         </div>
-                        
-                        <input type="text" class="form-control leaveInput" id="primaryMail">
-                </div>
-            
-                <div class="form-group row noSelect">
-                        <div class="mb-1">
-                            <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Secondary Email</label>
+                    </div>
+                    <div>
+                        <div class="form-group noSelect">
+                            <div class="mb-1">
+                                <label for="firstName" class="text-blue formLabel">First Name</label>
+                            </div>
+                            
+                            <input type="text" class="form-control" id="firstName">
                         </div>
-                        
-                        <input type="text" class="form-control leaveInput" id="secondaryEmail" placeholder="Optional...">
-                </div>
 
-                <div class="form-group row">
-                    <div class="mb-1">
-                        <label for="pass" class="text-blue formLabel">Enable email notifications for primary email?</label>
-                    </div>
-                    
-                    <div class="form-check form-check-inline leaveInput">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault1" id="pass flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Yes
-                        </label>
+                        <div class="form-group noSelect">
+                            <div class="mb-1">
+                                <label for="lastName" class="text-blue formLabel">Last Name</label>
+                            </div>
+                            
+                            <input type="text" class="form-control" id="lastName">
                         </div>
-                        <div class="form-check form-check-inline leaveInput">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault1" id="pass flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            No
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group row noSelect">
-                    <div class="mb-1">
-                        <label for="notification" class="text-blue formLabel">Enable email notifications for secondary email?</label>
-                    </div>
-                    
-                    <div class="form-check form-check-inline leaveInput">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault2" id="notification flexRadioDefault2">
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            Yes
-                        </label>
+
+                        <div class="form-group">
+                            <div class="mb-1">
+                                <label for="pass" class="text-blue formLabel">Password</label>
+                                <br/><small>Resetting the password will send a new generated temporary password to the employee's primary email.</small>
+                            </div>
+                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="resetPasswordCheckbox" id="pass resetPasswordCheckbox">
+                                <label class="form-check-label" for="resetPasswordCheckbox">
+                                    Reset Password
+                                </label>
+                            </div>
                         </div>
-                        <div class="form-check form-check-inline leaveInput">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault2" id="notification flexRadioDefault2">
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            No
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group row noSelect">
-                    <div class="mb-1">
-                        <label for="deleteEmployeeAccountBtn" class="text-blue formLabel">Delete Employee Account:</label><br/>
-                        <button type="button" class="btn redBtn" name="deleteEmployeeAccountBtn" id="deleteEmployeeAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Employee Account</button>
-                    </div>
-                </div>
-                <div class="form-group row noSelect">
-                    <div class="mb-1">
-                        <label for="notification" class="text-blue formLabel">Enable or disable employee account:</label>
-                    </div>
-                    
-                    <div class="form-check form-check-inline leaveInput">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault3" id="notification flexRadioDefault3">
-                        <label class="form-check-label" for="flexRadioDefault3">
-                            Enable Account
-                        </label>
+
+                        <div class="form-group noSelect">
+                            <div class="mb-1">
+                                <label for="role" class="text-blue formLabel leaveLabel">Select Role</label>
+                            </div>
+
+                            <select class="form-control" name="role" id="role">
+                                <option value="adminRole">Administrator</option>
+                                <option value="empRole" selected>Employee</option>
+                            </select>
                         </div>
-                        <div class="form-check form-check-inline leaveInput">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault3" id="notification flexRadioDefault3">
-                        <label class="form-check-label" for="flexRadioDefault3">
-                            Disable Account
-                        </label>
+
+                        <div class="form-group noSelect">
+                                <div class="mb-1">
+                                    <label for="primaryEmail" class="text-blue formLabel">Primary Email</label>
+                                </div>
+                                
+                                <input type="text" class="form-control" id="primaryMail">
+                        </div>
+                    
+                        <div class="form-group noSelect">
+                                <div class="mb-1">
+                                    <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Secondary Email</label>
+                                </div>
+                                
+                                <input type="text" class="form-control" id="secondaryEmail" placeholder="Optional...">
+                        </div>
+
+                        <div class="form-group">
+                            <div class="mb-1">
+                                <label for="pass" class="text-blue formLabel">Enable email notifications for primary email?</label>
+                            </div>
+                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault1" id="pass flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Yes
+                                </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault1" id="pass flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group noSelect">
+                            <div class="mb-1">
+                                <label for="notification" class="text-blue formLabel">Enable email notifications for secondary email?</label>
+                            </div>
+                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault2" id="notification flexRadioDefault2">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Yes
+                                </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault2" id="notification flexRadioDefault2">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group noSelect">
+                            <div class="mb-1">
+                                <label for="deleteEmployeeAccountBtn" class="text-blue formLabel">Delete Employee Account:</label><br/>
+                                <button type="button" class="btn btn-danger" name="deleteEmployeeAccountBtn" id="deleteEmployeeAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Employee Account</button>
+                            </div>
+                        </div>
+                        <div class="form-group noSelect">
+                            <div>
+                                <label for="notification" class="text-blue formLabel">Enable or disable employee account:</label>
+                            </div>
+                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault3" id="notification flexRadioDefault3">
+                                <label class="form-check-label" for="flexRadioDefault3">
+                                    Enable Account
+                                </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault3" id="notification flexRadioDefault3">
+                                <label class="form-check-label" for="flexRadioDefault3">
+                                    Disable Account
+                                </label>
+                            </div>
+                        </div>
                     </div>
+                    <br/>
+                    <button class="btn blueBtn">Submit</button>
                 </div>
-                <br/>
-                <button class="btn blueBtn">Submit</button>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
 </template>
 
 <script>
