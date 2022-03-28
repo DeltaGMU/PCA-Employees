@@ -3,7 +3,7 @@
         <div v-if = " getRole == 'administrator' " class="col-2 col-md-4 col-lg-3 col-xxl-2">
             <Sidebar>   </Sidebar>
         </div>
-        <div v-bind:class=" getRole != 'administrator' ? 'ms-3 ms-md-4 me-3 me-md-4 mt-3 mb-5' : 'mt-3 mb-5 col-10 col-md-8 col-lg-9 col-xxl-10 pe-3 pe-md-4 pe-xl-' ">
+        <div v-bind:class=" getRole != 'administrator' ? 'ms-3 ms-md-4 me-3 me-md-4 mt-3 mb-5' : 'mt-3 mb-5 col-10 col-md-8 col-lg-9 col-xxl-10 pe-3 pe-md-4 pe-xl-5' ">
             <div class="noSelect">
 
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
