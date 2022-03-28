@@ -1,22 +1,24 @@
 <template>
-    <div class="row">
-        <div class="col-2 col-md-4 col-lg-3 col-xxl-2">
+    <div class="d-flex">
+        <div class="p-2">
             <Sidebar>   </Sidebar>
         </div>
 
-        <div class = "mt-3 col-10 col-md-8 col-lg-9 col-xxl-10 pe-3 pe-md-4 pe-xl-5">
-
+        <div class = "p-2 flex-grow-1">
             <h1 class="text-blue">Manage Employees</h1>
-
-            
-            <button class="mt-2 btn blueBtn" @click="$router.push({ path: 'createemployee'})">
-                Create Employee 
-            </button>
-            <button class="btn blueBtn" style="float: right;" @click="refreshEmployeesTable()">
-                Refresh Employees List
-            </button>
-            
-            <br> <br>
+            <div class="d-flex mb-3">
+                <div class="me-auto p-2">
+                    <button class="btn blueBtn" @click="$router.push({ path: 'createemployee'})">
+                        Create Employee 
+                    </button>
+                </div>
+                <div class="p-2"></div>
+                <div class="p-2">
+                    <button class="btn blueBtn" style="float: right;" @click="refreshEmployeesTable()">
+                        Refresh Employees List
+                    </button>
+                </div>
+            </div>
 
             <!-- >Search and filter through employees <-->
             <!-- <input class = "search-bar" type="text" v-model= "query" placeholder="Search for employees.." title="Type in a name"> -->
@@ -27,8 +29,8 @@
                 <input type="text" v-model="searchQuery" class="search-bar form-control rounded" placeholder="Search for employees by ID, First Name, or Last Name..." name="studentSearchBar" id="studentSearchBar"/>
                 <br>
             </div> 
-            <div v-if = "!filteredEmployeesList || !filteredEmployeesList.length">
-                <table class = "table">
+            <div class="table-responsive" v-if = "!filteredEmployeesList || !filteredEmployeesList.length">
+                <table class = "table table-hover">
                     <thead>
                         <th class = "table-th text-center" scope = "col" >
                             Employees List
@@ -41,26 +43,27 @@
                     </tbody>
                 </table>
             </div>
-            <table class = "table" v-else>
-                <thead>
-                    <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
-                        {{ option }}
-                    </th>
-                </thead>
-                <tbody>
-                    <tr class = "row-striped" v-for = "(employee, index) in filteredEmployeesList" v-bind:key=index>
-                        <td class = "column text-center">{{ employee.employee_id }} </td>
-                        <td class = "column text-center">{{ employee.last_name }} </td>
-                        <td class = "column text-center">{{ employee.first_name}} </td>
-                        <td class = "column text-center"> 
-                            <button class="btn blueBtn" @click="$router.push({ path: 'editEmployee'})">
-                                Edit 
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            
+            <div class="table-responsive" v-else>
+                <table class = "table table-hover">
+                    <thead>
+                        <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
+                            {{ option }}
+                        </th>
+                    </thead>
+                    <tbody>
+                        <tr class = "row-striped" v-for = "(employee, index) in filteredEmployeesList" v-bind:key=index>
+                            <td class = "column text-center">{{ employee.employee_id }} </td>
+                            <td class = "column text-center">{{ employee.last_name }} </td>
+                            <td class = "column text-center">{{ employee.first_name}} </td>
+                            <td class = "column text-center"> 
+                                <button class="btn blueBtn" @click="$router.push({ path: 'editEmployee'})">
+                                    Edit 
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </template> 
