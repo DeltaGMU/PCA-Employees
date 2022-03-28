@@ -12,24 +12,46 @@
             <button class="mt-2 btn blueBtn" @click="$router.push({ path: 'createemployee'})">
                 Create Employee 
             </button>
+            <button class="btn blueBtn" style="float: right;" @click="refreshEmployeesTable()">
+                Refresh Employees List
+            </button>
             
             <br> <br>
 
             <!-- >Search and filter through employees <-->
-            <!-- v-model= "query" -->
-            <input class = "search-bar" type="text" placeholder="Search for employees.." title="Type in a name">
-            
-            <table class = "table">
+            <!-- <input class = "search-bar" type="text" v-model= "query" placeholder="Search for employees.." title="Type in a name"> -->
+            <div class="search-bar col-sm-12">
+                <label class="form-check-label" for="studentSearchBar">
+                    Filter employee list:
+                </label>
+                <input type="text" v-model="searchQuery" class="search-bar form-control rounded" placeholder="Search for employees by ID, First Name, or Last Name..." name="studentSearchBar" id="studentSearchBar"/>
+                <br>
+            </div> 
+            <div v-if = "!filteredEmployeesList || !filteredEmployeesList.length">
+                <table class = "table">
+                    <thead>
+                        <th class = "table-th text-center" scope = "col" >
+                            Employees List
+                        </th>
+                    </thead>
+                    <tbody>
+                        <tr class = "row-striped">
+                            <td class = "column text-center">No employee information available...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <table class = "table" v-else>
                 <thead>
                     <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
                         {{ option }}
                     </th>
                 </thead>
                 <tbody>
-                    <tr class = "row-striped" v-for = "(emp, index) in empInfo" v-bind:key=index>
-                        <td class = "column text-center">{{ emp.employee_id }} </td>
-                        <td class = "column text-center">{{ emp.last_name }} </td>
-                        <td class = "column text-center">{{ emp.first_name}} </td>
+                    <tr class = "row-striped" v-for = "(employee, index) in filteredEmployeesList" v-bind:key=index>
+                        <td class = "column text-center">{{ employee.employee_id }} </td>
+                        <td class = "column text-center">{{ employee.last_name }} </td>
+                        <td class = "column text-center">{{ employee.first_name}} </td>
                         <td class = "column text-center"> 
                             <button class="btn blueBtn" @click="$router.push({ path: 'editEmployee'})">
                                 Edit 
@@ -51,36 +73,14 @@
         },
         data() {
             return {
-                //query: '',
-                //empInfo: [],
-                empInfo: [
-                    {
-                        'employee_id':"jadams",
-                        'last_name':'Adams',
-                        'first_name': 'Jane'
-                    },
-                    {
-                        'employee_id':"asmith",
-                        'last_name':'Smith',
-                        'first_name': 'Amy'
-                    },
-                    {
-                        'employee_id':"sjones",
-                        'last_name':'Jones',
-                        'first_name': 'Sam'
-                    }
-                    
-                ],
-            
+                searchQuery: '',
+                employeeInfo: this.$store.getters.StateEmployees,
                 columns: [
                     'employeeID',
                     'last_name',
                     'first_name',
                     'editEmployee'
                 ],
-
-                empCollection: [],
-
                 options: {
                     headings: {
                         employeeID: 'Employee ID',
@@ -91,5 +91,32 @@
                 }
             }
         },
+        computed: {
+            filteredEmployeesList() {
+                if (this.employeeInfo !== null) {
+                    return this.employeeInfo.filter(item => {
+                        return (
+                            item.first_name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1
+                            ) || (item.last_name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1) ||
+                            (item.employee_id.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1);
+                    })
+                }
+                else {
+                    return [];
+                }
+            }
+        },
+        methods: {
+            refreshEmployeesTable() {
+                this.$store.dispatch("GetAllEmployees").then(
+                    () => {
+                        this.employeeInfo = this.$store.getters.StateEmployees
+                    }
+                )
+            }
+        },
+        mounted() {
+            this.refreshEmployeesTable();
+        }
     };
 </script>

@@ -11,16 +11,15 @@
                 <i class="fas fa-user"></i>
             </button>
             
-            <button id="manageBtn" class="btn blueBtn" @click="$router.push({ path: 'manageemployees'})">
+            <button id="manageBtn" class="btn blueBtn" @click="goToEmployeeManagement()">
                 Manage Employees <br/>
                 <i class="fas fa-users"></i>
             </button>
 
-            <button id="manageBtn" class="btn blueBtn" @click="$router.push({ path: 'managestudents'})">
+            <button id="manageBtn" class="btn blueBtn" @click="goToStudentManagement()">
                 Manage Students <br/>
                 <i class="fas fa-users"></i>
-            </button>   
-
+            </button>
         </div>
     </div>
 </template>
@@ -34,7 +33,20 @@
             Sidebar
         },
         methods: {
-            
+            goToStudentManagement() {
+                this.$router.push({ path: 'managestudents'}).then(
+                    () => {
+                        this.$store.dispatch("GetAllStudents")
+                    }
+                )
+            },
+            goToEmployeeManagement() {
+                this.$router.push({ path: 'manageemployees'}).then(
+                    () => {
+                        this.$store.dispatch("GetAllEmployees")
+                    }
+                )
+            }
         },
         beforeMount() {
             this.$store.dispatch("GetName")

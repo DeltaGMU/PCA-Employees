@@ -1,6 +1,28 @@
 <template>
     <form>
-        <div class="wrapper">
+        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deleteAccountBtnLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        Delete Student Account?
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete the student's account?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn redBtn" data-bs-dismiss="modal" @click="deleteStudentAccount()">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class = "sideBar">
+            <Sidebar>   </Sidebar>
+        </div>
+        
+        <div class="empContent">
             <div class="topSection noSelect">
 
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -17,7 +39,7 @@
                         <label for="firstNameStudent" class="text-blue formLabel">Student First Name</label>
                     </div>
                     
-                    <input type="text" class="form-control" id="firstName" required>
+                    <input type="text" class="form-control leaveInput" id="firstName" required>
                     
                 </div>
 
@@ -26,7 +48,7 @@
                         <label for="lastNameStudent" class="text-blue formLabel">Student Last Name</label>
                     </div>
                     
-                    <input type="text" class="form-control" id="lastName">
+                    <input type="text" class="form-control leaveInput" id="lastName" required>
                 </div>
 
                 <div class="form-group row noSelect">
@@ -34,59 +56,139 @@
                         <label for="carpool" class="text-blue formLabel">Carpool Number</label>
                     </div>
                     
-                    <input type="text" class="form-control" id="carpool">
+                    <input type="text" class="form-control leaveInput" id="carpool" required>
+                </div>
+                <br>
+                <hr>
+                <div class="form-group row noSelect">
+                    <div class="mb-1">
+                        <label for="firstNameParent" class="text-blue formLabel">Parent #1 First Name</label>
+                    </div>
+                    
+                    <input type="text" class="form-control leaveInput" id="firstName" required>
                 </div>
 
                 <div class="form-group row noSelect">
                     <div class="mb-1">
-                        <label for="firstNameParent" class="text-blue formLabel">Parent Name</label>
+                        <label for="lastNameParent" class="text-blue formLabel">Parent #1 Last Name</label>
                     </div>
                     
-                    <input type="text" class="form-control" id="firstName" required>
-                    
-                </div>                     
+                    <input type="text" class="form-control leaveInput" id="lastName" required>
+                </div>
 
                 <div class="form-group row noSelect">
                         <div class="mb-1">
-                            <label for="primaryEmail" class="text-blue formLabel">Parent Primary Email</label>
+                            <label for="primaryEmail" class="text-blue formLabel">Parent #1 Email</label>
                         </div>
                         
-                        <input type="text" class="form-control" id="primaryMail">
-                </div>
-            
-                <div class="form-group row noSelect">
-                        <div class="mb-1">
-                            <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Parent Secondary Email</label>
-                        </div>
-                        
-                        <input type="text" class="form-control" id="primaryMail">
+                        <input type="text" class="form-control leaveInput" id="primaryMail">
                 </div>
 
                 <div class="form-group row">
                     <div class="mb-1">
-                        <label for="notification" class="text-blue formLabel">Enable email notifications?</label>
+                        <label for="pass" class="text-blue formLabel">Enable email notifications for Parent #1 email?</label>
                     </div>
                     
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="notification flexRadioDefault1">
+                    <div class="form-check form-check-inline leaveInput">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault1" id="pass flexRadioDefault1">
                         <label class="form-check-label" for="flexRadioDefault1">
                             Yes
                         </label>
                         </div>
-                        <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="notification flexRadioDefault2" checked>
+                        <div class="form-check form-check-inline leaveInput">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault1" id="pass flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            No
+                        </label>
+                    </div>
+                </div>
+                <br>
+                <hr>
+                <div class="form-group row noSelect">
+                    <div class="mb-1">
+                        <label for="firstNameParent" class="text-blue formLabel">Parent #2 First Name</label>
+                    </div>
+                    
+                    <input type="text" class="form-control leaveInput" id="firstName" placeholder="Optional...">
+                </div>
+
+                <div class="form-group row noSelect">
+                    <div class="mb-1">
+                        <label for="lastNameParent" class="text-blue formLabel">Parent #2 Last Name</label>
+                    </div>
+                    
+                    <input type="text" class="form-control leaveInput" id="lastName" placeholder="Optional...">
+                </div>                   
+            
+                <div class="form-group row noSelect">
+                        <div class="mb-1">
+                            <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Parent #2 Email</label>
+                        </div>
+                        
+                        <input type="text" class="form-control leaveInput" id="secondaryEmail" placeholder="Optional...">
+                </div>
+
+                <div class="form-group row noSelect">
+                    <div class="mb-1">
+                        <label for="notification" class="text-blue formLabel">Enable email notifications for Parent #2 email?</label>
+                    </div>
+                    
+                    <div class="form-check form-check-inline leaveInput">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault2" id="notification flexRadioDefault2">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Yes
+                        </label>
+                        </div>
+                        <div class="form-check form-check-inline leaveInput">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault2" id="notification flexRadioDefault2">
                         <label class="form-check-label" for="flexRadioDefault2">
                             No
                         </label>
-                        </div>
                     </div>
                 </div>
-            <button class="btn blueBtn">Submit</button>
+                <hr>
+                <div class="form-group row noSelect">
+                    <div class="mb-1">
+                        <label for="deleteStudentAccountBtn" class="text-blue formLabel">Delete Student Account:</label><br/>
+                        <button type="button" class="btn redBtn" name="deleteStudentAccountBtn" id="deleteStudentAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Student Account</button>
+                    </div>
+                </div>
+                <div class="form-group row noSelect">
+                    <div class="mb-1">
+                        <label for="notification" class="text-blue formLabel">Enable or disable student account:</label>
+                    </div>
+                    
+                    <div class="form-check form-check-inline leaveInput">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault3" id="notification flexRadioDefault3">
+                        <label class="form-check-label" for="flexRadioDefault3">
+                            Enable Account
+                        </label>
+                        </div>
+                        <div class="form-check form-check-inline leaveInput">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault3" id="notification flexRadioDefault3">
+                        <label class="form-check-label" for="flexRadioDefault3">
+                            Disable Account
+                        </label>
+                    </div>
+                </div>
+                <br/>
+                <button class="btn blueBtn">Submit</button>
+            </div>
         </div>
     </form>
 </template>
 
 <script>
-
+    import Sidebar from "../components/Sidebar.vue";
+    export default {
+        components: {
+            Sidebar
+        },
+        methods: {
+            deleteStudentAccount: function() {
+                return
+            },
+        }
+    }
 </script>
 

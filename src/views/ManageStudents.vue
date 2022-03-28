@@ -8,36 +8,61 @@
 
             <h1>Manage Students</h1>
 
-            <button class="btn blueBtn" @click="$router.push({ path: 'createstudent'})">
-                Create Student 
-            </button>
-            
-            <br> <br>
+        <button class="btn blueBtn" @click="$router.push({ path: 'createstudent'})">
+            Create Student 
+        </button>
+        <button class="btn blueBtn" style="float: right;" @click="refreshStudentsTable()">
+            Refresh Students List
+        </button>
+        
+        <br> <br>
 
-            <!-- >Search and filter through employees <-->
-            <input class = "search-bar" type="text"  v-model= "query" placeholder="Search for students.." title="Type in a name">
-            
+        <!-- >Search and filter through employees <-->
+        <!-- <input class = "search-bar" type="text"  v-model= "query" placeholder="Search for students.." title="Type in a name"> -->
+        
+        <div class="search-bar col-sm-12">
+            <label class="form-check-label" for="studentSearchBar">
+                Filter student list:
+            </label>
+            <input type="text" v-model="searchQuery" class="search-bar form-control rounded" placeholder="Search for students by ID, First Name, Last Name, or Grade..." name="studentSearchBar" id="studentSearchBar"/>
+            <br>
+        </div> 
+        <div v-if = "!filteredStudentsList || !filteredStudentsList.length">
             <table class = "table">
                 <thead>
-                    <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
-                        {{ option }}
+                    <th class = "table-th text-center" scope = "col" >
+                        Students List
                     </th>
                 </thead>
                 <tbody>
-                    <tr class = "row-striped" v-for = "student in studentInfo" v-bind:key="student">
-                        <td class = "column text-center">{{ student.car_pool_number }} </td>
-                        <td class = "column text-center">{{ student.last_name }} </td>
-                        <td class = "column text-center">{{ student.first_name}} </td>
-                        <td class = "column text-center"> 
-                            <button class="btn blueBtn" @click="$router.push({ path: 'editStudent'})">
-                                Edit 
-                            </button>
-                        </td>
+                    <tr class = "row-striped">
+                        <td class = "column text-center">No student information available...</td>
                     </tr>
                 </tbody>
             </table>
-            
         </div>
+        <table class = "table" v-else>
+            <thead>
+                <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
+                    {{ option }}
+                </th>
+            </thead>
+            <tbody>
+                <tr class = "row-striped" v-for = "(student, index) in filteredStudentsList" v-bind:key="index">
+                    <td class = "column text-center">{{ student.student_id }} </td>
+                    <td class = "column text-center">{{ student.carpool_number }} </td>
+                    <td class = "column text-center">{{ student.last_name }} </td>
+                    <td class = "column text-center">{{ student.first_name}} </td>
+                    <td class = "column text-center">{{ student.grade.name}} </td>
+                    <td class = "column text-center"> 
+                        <button class="btn blueBtn" @click="$router.push({ path: 'editStudent'})">
+                            Edit 
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     </div>
 </template> 
 
@@ -48,44 +73,56 @@
             Sidebar
         },
         data() {
-        return {
-            //query: '',
-            studentInfo: [
-                {
-                    'car_pool_number':"23",
-                    'last_name':'Barnes',
-                    'first_name': 'Jamie'
-                },
-                {
-                    'car_pool_number':"51",
-                    'last_name':'Coleman',
-                    'first_name': 'Penny'
-                },
-                {
-                    'car_pool_number':"4",
-                    'last_name':'Klein',
-                    'first_name': 'John'
-                }
-                
-            ],
-        
-            columns: [
-                'carpoolNum',
-                'last_name',
-                'first_name',
-                'editStudent'
-            ],
-
-
-            options: {
-                headings: {
-                    carpoolNum: 'Carpool Number',
-                    last_name: 'Last Name',
-                    first_mame: 'First Name',
-                    editStudent: 'Edit Student'
+            return {
+                searchQuery: "",
+                studentInfo: this.$store.getters.StateStudents,
+                columns: [
+                    'studentID',
+                    'carpoolNum',
+                    'last_name',
+                    'first_name',
+                    'grade',
+                    'editStudent'
+                ],
+                options: {
+                    headings: {
+                        studentID: 'ID',
+                        carpoolNum: 'Carpool #',
+                        last_name: 'Last Name',
+                        first_name: 'First Name',
+                        grade: 'Grade',
+                        editStudent: 'Edit Student'
+                    }
                 }
             }
+        },
+        computed: {
+            filteredStudentsList() {
+                if (this.studentInfo !== null) {
+                    return this.studentInfo.filter(item => {
+                        return (
+                            item.first_name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1
+                            ) || (item.last_name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1) ||
+                            (item.student_id.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1) ||
+                            (item.grade.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1);
+                    })
+                }
+                else {
+                    return [];
+                }
+            }
+        },
+        methods: {
+            refreshStudentsTable() {
+                this.$store.dispatch("GetAllStudents").then(
+                    () => {
+                        this.studentInfo = this.$store.getters.StateStudents
+                    }
+                )
+            }
+        },
+        mounted() {
+            this.refreshStudentsTable();
         }
-    },
     };
 </script>
