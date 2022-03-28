@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex">
         <div class="p-2">
-            <Sidebar>   </Sidebar>
+            <Sidebar></Sidebar>
         </div>
 
         <div class="p-2 flex-grow-1">
@@ -119,9 +119,9 @@
                                 </label>
                             </div>
                         </div>
-                        <br/>
-                        <button class="btn blueBtn">Submit</button>
                     </div>
+                    <br/>
+                    <button class="btn blueBtn">Submit</button>
                 </div>
             </form>
         </div>
