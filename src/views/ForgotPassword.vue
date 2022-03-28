@@ -21,8 +21,8 @@
                             <input type="text" class="form-control form-control-lg textBox" name="username" v-model="form.username" required>
                         </div>
                         <div class="twoBtnCol">
-                            <button class="btn formBtn" @click="returnToLogin">Cancel</button>
-                            <button type="submit" class="btn formBtn">Send Reset Request</button>
+                            <button class="mt-3 btn formBtn smallerScreenBtn" @click="returnToLogin">Cancel</button>
+                            <button type="submit" class="mt-3 btn formBtn smallerScreenBtn">Send Reset Request</button>
                         </div>
                     </form>
                 </div>

@@ -28,7 +28,7 @@
                             <a class="text-beige" @click="forgotPassword">Forgot password? Click here to reset.</a>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn formBtn">Sign In</button>
+                            <button type="submit" class="mt-3 btn formBtn">Sign In</button>
                         </div>
                     </form>
                 </div>
