@@ -9,7 +9,7 @@ const getters = {
 };
 
 const actions = {
-  async GetEmployees(context) {
+  async GetAllEmployees(context) {
     let headers = {
       headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
     }
