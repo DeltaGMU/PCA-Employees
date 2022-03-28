@@ -6,7 +6,7 @@
 
         <div class = "mt-3 col-10 col-md-8 col-lg-9 col-xxl-10 pe-3 pe-md-4 pe-xl-5">
 
-            <h1>Manage Employees</h1>
+            <h1 class="text-blue">Manage Employees</h1>
 
             
             <button class="mt-2 btn blueBtn" @click="$router.push({ path: 'createemployee'})">
