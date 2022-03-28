@@ -1,9 +1,9 @@
 <template>
-    <form>
-        <div class = "sideBar">
+    <form class="row">
+        <div class="col-2 col-md-4 col-lg-3 col-xxl-2">
             <Sidebar>   </Sidebar>
         </div>
-        <div class="empContent">
+        <div class="mt-3 mb-5 col-10 col-md-8 col-lg-9 col-xxl-10 pe-3 pe-md-4 pe-xl-5">
             <div class="topSection noSelect">
 
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
