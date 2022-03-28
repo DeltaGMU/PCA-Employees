@@ -12,6 +12,9 @@
             <button class="btn blueBtn" @click="$router.push({ path: 'createemployee'})">
                 Create Employee 
             </button>
+            <button class="btn blueBtn" style="float: right;" @click="refreshEmployeesTable()">
+                Refresh Employees List
+            </button>
             
             <br> <br>
 
@@ -72,16 +75,12 @@
             return {
                 searchQuery: '',
                 employeeInfo: this.$store.getters.StateEmployees,
-            
                 columns: [
                     'employeeID',
                     'last_name',
                     'first_name',
                     'editEmployee'
                 ],
-
-                empCollection: [],
-
                 options: {
                     headings: {
                         employeeID: 'Employee ID',
@@ -111,7 +110,7 @@
             refreshEmployeesTable() {
                 this.$store.dispatch("GetAllEmployees").then(
                     () => {
-                        this.studentInfo = this.$store.getters.StateEmployees
+                        this.employeeInfo = this.$store.getters.StateEmployees
                     }
                 )
             }
