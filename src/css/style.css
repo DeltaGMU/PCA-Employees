@@ -26,12 +26,7 @@ h1.loginHeader {
     margin-bottom: 1.5rem;
 }
 
-.wrapper {
-    margin: 1.5rem 3rem 3rem;
-}
-
 .btn {
-    margin-top: 1.5rem;
     border-radius: 5px;
     padding: 0.75rem 1.5rem;
     font-size: 1.2rem;
@@ -65,31 +60,6 @@ h1.loginHeader {
     }
 }
 
-@media screen and (max-width: 645px) {
-    .wrapper {
-        margin: 1.5rem 1rem 3rem 1rem;
-    }
-
-    table {
-        font-size: 0.9rem !important;
-    }
-
-    .pcaNav {
-        padding: 1rem !important;
-    }
-
-    .twoBtnCol {
-        justify-content: center;
-    }
-
-    .btn {
-        width: 100% !important;
-    }
-    
-    .formLabel {
-        font-size: 1.3rem !important;
-    }
-}
 @media screen and (max-width: 520px) {
     .container {
         max-width: 90%;
@@ -117,7 +87,7 @@ p {
     border-bottom: 5px solid var(--pcaBeige);
     justify-content: space-between;
     width: 100%;
-    padding: 1rem 3rem;
+    padding: 1rem 0rem;
     user-select: none;
 }
 
@@ -291,10 +261,74 @@ td input.textBox {
 .right-align {
     float: right;
 }
+
 .left-align {
     float: left;
 }
 
+@media only screen and (max-width: 710px) {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	.headingRow { 
+		display: none;
+	}
+	
+	tr { 
+        border: 1px solid var(--pcaDarkBlue); 
+    }
+	
+	td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+
+    .showWhenSmall {
+        display: block;
+    }
+
+    .hideWhenSmall {
+        display: none;
+    }
+
+    td:nth-of-type(1):before { content: "Date"; }
+	td:nth-of-type(2):before { content: "Day"; }
+	td:nth-of-type(3):before { content: "Regular Hours"; }
+	td:nth-of-type(4):before { content: "PTO"; }
+	td:nth-of-type(5):before { content: "Extra Hours"; }
+	td:nth-of-type(6):before { content: "Comments"; }
+
+    .twoBtnCol {
+        justify-content: center;
+    }
+
+    .smallerScreenBtn {
+        width: 100% !important;
+    }
+    
+    /* Not for timesheet */
+    .formLabel {
+        font-size: 1.3rem !important;
+    }
+}
 .chevron {
     width: 1.3rem;
     height: 1.3rem;
@@ -319,18 +353,22 @@ td input.textBox {
     text-align: center;
 }
 .sidebar {
-    float: left;
+    position: relative;
     margin-right: 1.5rem;
 }
 
 .sidebar-item {
     border-top: #DEDEDE;
-    padding: 1rem;
+    padding: 1rem 0.5rem 1rem 1rem;
     width: 100%;
 }
 
 .sidebar-item a {
     text-decoration: none;
+}
+
+.sidebar-item:hover {
+    cursor: pointer;
 }
 
 .mainContent .fa-user, .mainContent .fa-users {
@@ -341,14 +379,9 @@ td input.textBox {
 
 
 /* Employee info styling */
-.empContent{
-    margin-left: 225px;
-    padding-left: 75px;
-    padding-top: 10px;
-}
 
 .table {
-    border:#0b3f6d;
+    border:2px solid #0b3f6d;
 }
 
 .table-th {

@@ -1,11 +1,11 @@
 <template>
-    <div class = "adminContainer">
+    <div class = "row">
         
-        <div class = "sideBar">
+        <div class="col-3 col-sm-5 col-xl-3">
          <Sidebar>   </Sidebar>
         </div>
         
-        <div class = "mainContent">
+        <div class = "mt-3 col-9 col-sm-7 col-xl-9">
             <button id="manageBtn" class="btn blueBtn"  @click="$router.push({ path: 'manageadmin'})">
                 Manage My Account <br/>
                 <i class="fas fa-user"></i>

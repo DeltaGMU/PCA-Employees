@@ -1,15 +1,15 @@
 <template>
-    <div>
-        <div class = "sideBar">
+    <div class="row">
+        <div class="col-2 col-md-4 col-lg-3 col-xxl-2">
             <Sidebar>   </Sidebar>
         </div>
 
-        <div class = "empContent">
+        <div class = "mt-3 col-10 col-md-8 col-lg-9 col-xxl-10 pe-3 pe-md-4 pe-xl-5">
 
             <h1>Manage Employees</h1>
 
             
-            <button class="btn blueBtn" @click="$router.push({ path: 'createemployee'})">
+            <button class="mt-2 btn blueBtn" @click="$router.push({ path: 'createemployee'})">
                 Create Employee 
             </button>
             

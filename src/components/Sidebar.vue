@@ -1,29 +1,29 @@
 <template>
-    <div class = "col-auto col-sm-2 col-md-3 col-xl-2 px-0 sidebar">
+    <div class = "px-0 sidebar">
         <div class="d-flex flex-column align-items-center align-items-sm-start pt-2 min-vh-100">
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                 <li class="sidebar-item">
-                    <a class="nav-link align-middle px-0" @click=" home ">
+                    <a class="ms-1 nav-link align-middle px-0" @click=" home ">
                         <i class="fas fa-home"></i> <span class="ml-1 d-none d-sm-inline">Home</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="nav-link align-middle px-0" @click=" timesheetInfo ">
+                    <a class="ms-1 nav-link align-middle px-0" @click=" timesheetInfo ">
                         <i class="fa-solid fa-hourglass"></i> <span class="ml-1 d-none d-sm-inline">View Timesheet Info</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="nav-link align-middle px-0">
+                    <a href="#" class="ms-1 nav-link align-middle px-0">
                         <i class="fa-solid fa-school"></i> <span class="ml-1 d-none d-sm-inline">View Student Care Info</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="nav-link align-middle px-0">
+                    <a href="#" class="ms-1 nav-link align-middle px-0">
                         <i class="fa-solid fa-hourglass"></i> <span class="ml-1 d-none d-sm-inline">Generate Timesheet Report</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="nav-link px-0">
+                    <a href="#" class="ms-1 nav-link px-0">
                         <i class="fa-solid fa-school"></i> <span class="ml-1 d-none d-sm-inline">Generate Student Care Report</span>
                     </a>
                 </li>

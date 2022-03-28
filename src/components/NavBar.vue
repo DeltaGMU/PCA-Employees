@@ -2,10 +2,10 @@
   <div>
 
     <span class="pcaNav" v-if="isLoggedIn">
-      <div class="centerInDiv">
+      <div class="ms-3 ms-md-4 centerInDiv">
         <p class="text-white">Signed in as {{getName}}</p>
       </div>
-      <div class="centerInDiv">
+      <div class="me-3 me-md-4 centerInDiv">
         <div class="dropdown">
           <div class="profileBox" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa-solid fa-user"></i>
@@ -21,7 +21,7 @@
     </span>
 
     <span class="pcaNav" v-else>
-      <p class="text-white navSection">Providence Christian Academy</p>
+      <p class="ms-3 ms-md-4 text-white navSection">Providence Christian Academy</p>
     </span>
 
   </div>

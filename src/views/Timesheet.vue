@@ -1,11 +1,11 @@
 <template>
-<div>
+<div v-bind:class=" getRole == 'administrator' ? 'row' : '' ">
 
-    <div v-if = " getRole == 'administrator' ">
+    <div v-if = " getRole == 'administrator' " class="col-2 col-md-4 col-lg-3 col-xxl-2">
         <Sidebar></Sidebar>
     </div>
     
-    <div class="wrapper">
+    <div v-bind:class=" getRole != 'administrator' ? 'ms-3 ms-md-4 me-3 me-md-4 mt-3 mb-5' : 'mt-3 mb-5 col-10 col-md-8 col-lg-9 col-xxl-10 pe-3 pe-md-4 pe-xl-5' ">
 
         <div class="topSection noSelect">
 
@@ -27,7 +27,7 @@
                     <th class="col-2 middleCols">Regular Hours</th>
                     <th class="col-2 middleCols">PTO</th>
                     <th class="col-2 middleCols">Extra Hours</th>
-                    <th class="col-6 middleCols">Comments</th>
+                    <th class="col-4 middleCols">Comments</th>
                 </tr>
 
                 <!-- Table body for the first half of the month (will be displayed by default) -->
@@ -37,43 +37,43 @@
                     <tr v-for="day in daysInFirstHalf" v-bind:class="day % 2 == 0 ? 'evenRow' : 'oddRow'" :key="day.id">
                         
                         <!-- Get the date (format ex: 3/10) and day from the dateAndDayArray in employees.js -->
-                        <td class="col-1">{{ dateAndDayArray[day-1][0] }}</td>
-                        <td class="col-1 middleCols">{{ dateAndDayArray[day-1][1] }}</td>
-                        <td class="col-2 middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].work_hours "></td>
-                        <td class="col-2 middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].pto_hours "></td>
-                        <td class="col-2 middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].extra_hours "></td>
-                        <td class="col-6"><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[day-1].comment "></td>
+                        <td>{{ dateAndDayArray[day-1][0] }}</td>
+                        <td class="middleCols">{{ dateAndDayArray[day-1][1] }}</td>
+                        <td class="middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].work_hours "></td>
+                        <td class="middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].pto_hours "></td>
+                        <td class="middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].extra_hours "></td>
+                        <td><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[day-1].comment "></td>
                     </tr>
 
                 </tbody>
 
                 <!-- Table body for the second half of the month (will be hidden by default) -->
-                <tbody id="secondHalf" class="hide">
+                <tbody id="secondHalf" class="showWhenSmall hide">
 
                     <tr v-for="day in daysInSecondHalf" v-bind:class="day % 2 == 0 ? 'evenRow' : 'oddRow'" :key="day.id">
 
                         <!-- In order to get the correct dates, add the index to the number of days in the first half of the month because index starts at 1 -->
-                        <td class="col-1">{{ dateAndDayArray[(daysInFirstHalf + day) - 1][0] }}</td>
-                        <td class="col-1 middleCols">{{ dateAndDayArray[(daysInFirstHalf + day) - 1][1] }}</td>
-                        <td class="col-2 middleCols"><input type="text" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].work_hours "></td>
-                        <td class="col-2 middleCols"><input type="text" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].pto_hours "></td>
-                        <td class="col-2 middleCols"><input type="text" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].extra_hours "></td>
-                        <td class="col-4"><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].comment "></td>
+                        <td>{{ dateAndDayArray[(daysInFirstHalf + day) - 1][0] }}</td>
+                        <td class="middleCols">{{ dateAndDayArray[(daysInFirstHalf + day) - 1][1] }}</td>
+                        <td class="middleCols"><input type="text" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].work_hours "></td>
+                        <td class="middleCols"><input type="text" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].pto_hours "></td>
+                        <td class="middleCols"><input type="text" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].extra_hours "></td>
+                        <td><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].comment "></td>
                     </tr>
 
                 </tbody>
             </table>
 
             <div class="twoBtnCol">
-                <button id="nextPageBtn" class="btn blueBtn switchPageBtn left-align" @click="switchTimesheetPage">
+                <button id="nextPageBtn" class="mt-2 btn blueBtn switchPageBtn smallerScreenBtn hideWhenSmall" @click="switchTimesheetPage">
                     View Next Page
                     <i class="fa fa-chevron-right chevron" alt="Chevron Right"></i>
                 </button>
-                <button id="previousPageBtn" class="btn blueBtn switchPageBtn left-align hide" @click="switchTimesheetPage">
+                <button id="previousPageBtn" class="mt-2 btn blueBtn switchPageBtn smallerScreenBtn hide" @click="switchTimesheetPage">
                     <i class="fa fa-chevron-left chevron" alt="Chevron Left"></i>
                     View Previous Page
                 </button>
-                <button id="submitTimesheetBtn" class="btn formBtn right-align" data-bs-toggle="modal" data-bs-target="#submissionModal" @click="submitTimesheet">Submit Timesheet</button>
+                <button id="submitTimesheetBtn" class="mt-3 btn formBtn smallerScreenBtn" data-bs-toggle="modal" data-bs-target="#submissionModal" @click="submitTimesheet">Submit Timesheet</button>
             </div>       
 
             <div class="modal fade" id="submissionModal" tabindex="-1" aria-labelledby="submissionModalLabel" aria-hidden="true">
