@@ -8,7 +8,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="ms-1 nav-link align-middle px-0" @click=" timesheetInfo ">
+                    <a class="ms-1 nav-link align-middle px-0" @click="timesheetInfo">
                         <i class="fa-solid fa-hourglass"></i> <span class="ml-1 d-none d-sm-inline">View Timesheet Info</span>
                     </a>
                 </li>
@@ -42,7 +42,7 @@ export default {
       this.$router.push("/admindashboard");
     },
     timesheetInfo() {
-      this.$router.push("/employeeinfo");
+      this.$router.push("/timesheetinfo");
     },
   },
 };
