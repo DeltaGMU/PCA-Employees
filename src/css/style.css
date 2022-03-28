@@ -228,14 +228,6 @@ td input.textBox {
     border: 1px solid var(--pcaBlue);
 }
 
-.oddRow {
-    background-color: rgba(12, 74, 128, .29);
-}
-
-.evenRow {
-    background-color: rgba(12, 74, 128, .15);
-}
-
 .hide {
     display: none;
 }

@@ -19,8 +19,7 @@
         </div>
         
         <div class="table-responsive">
-            <table class="timesheet">
-
+            <table class="table">
                 <tr class="headingRow">
                     <th class="col-1">Date</th>
                     <th class="col-1 middleCols">Day</th>
@@ -33,8 +32,7 @@
                 <!-- Table body for the first half of the month (will be displayed by default) -->
                 <tbody id="firstHalf">
 
-                    <!-- If the index is even, add the "evenRow" class; if not, add the oddRow class -->
-                    <tr v-for="day in daysInFirstHalf" v-bind:class="day % 2 == 0 ? 'evenRow' : 'oddRow'" :key="day.id">
+                    <tr v-for="day in daysInFirstHalf" class="row-striped" :key="day.id">
                         
                         <!-- Get the date (format ex: 3/10) and day from the dateAndDayArray in employees.js -->
                         <td>{{ dateAndDayArray[day-1][0] }}</td>
@@ -50,7 +48,7 @@
                 <!-- Table body for the second half of the month (will be hidden by default) -->
                 <tbody id="secondHalf" class="showWhenSmall hide">
 
-                    <tr v-for="day in daysInSecondHalf" v-bind:class="day % 2 == 0 ? 'evenRow' : 'oddRow'" :key="day.id">
+                    <tr v-for="day in daysInSecondHalf" class="row-striped" :key="day.id">
 
                         <!-- In order to get the correct dates, add the index to the number of days in the first half of the month because index starts at 1 -->
                         <td>{{ dateAndDayArray[(daysInFirstHalf + day) - 1][0] }}</td>
