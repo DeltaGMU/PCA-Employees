@@ -76,7 +76,6 @@
             return {
                 searchQuery: "",
                 studentInfo: this.$store.getters.StateStudents,
-            
                 columns: [
                     'studentID',
                     'carpoolNum',
@@ -85,8 +84,6 @@
                     'grade',
                     'editStudent'
                 ],
-
-
                 options: {
                     headings: {
                         studentID: 'ID',
