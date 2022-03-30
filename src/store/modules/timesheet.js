@@ -12,7 +12,7 @@ const actions = {
   async SubmitTimesheet(context, valueArray) {
      console.log(valueArray);
     try {
-      await axios({
+      return await axios({
         method: 'post',
         url: "api/v1/timesheet/" + context.rootState.auth.user.employee_id,
         data: {

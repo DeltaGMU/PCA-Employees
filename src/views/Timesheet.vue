@@ -69,21 +69,25 @@
                     <i class="fa fa-chevron-left chevron" alt="Chevron Left"></i>
                     View Previous Page
                 </button>
-                <button id="submitTimesheetBtn" class="mt-3 btn formBtn smallerScreenBtn" data-bs-toggle="modal" data-bs-target="#submissionModal" @click="submitTimesheet">Submit Timesheet</button>
-            </div>       
+                <button id="submitTimesheetBtn" class="mt-3 btn formBtn smallerScreenBtn" @click="submitTimesheet">
+                    <span v-show="!isLoading"> Submit Timesheet </span>
+                    <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
+                    <span v-show="isLoading"> Loading... </span>
+                </button>
+            </div>
 
             <div class="modal fade" id="submissionModal" tabindex="-1" aria-labelledby="submissionModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">{{timesheetMessageTitle}}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeModal"></button>
                         </div>
                         <div class="modal-body">
                             {{timesheetMessageBody}}
                         </div>
                         <div class="modal-footer">
-                            <button type="button" v-bind:class=" timesheetMessageTitle == 'Timesheet submitted!' ? 'btn btn-success' : ' btn btn-warning' " data-bs-dismiss="modal">OK</button>
+                            <button type="button" @click="closeModal" v-bind:class=" timesheetMessageTitle == 'Timesheet submitted!' ? 'btn btn-success' : ' btn btn-warning' " data-bs-dismiss="modal">OK</button>
                         </div>
                     </div>
                 </div>
@@ -307,7 +311,8 @@ export default {
             timesheetMessageTitle: "",
             timesheetMessageBody: "",
             reporting_period_start: 10,
-            reporting_period_end: 9
+            reporting_period_end: 9,
+            isLoading: false,
         }
     },
     computed: {
@@ -482,18 +487,37 @@ export default {
             'lastDay': this.lastDay
             };
 
-            try {
-                this.$store.dispatch("SubmitTimesheet", this.dateAndValuesArray).then(() => {
+            this.isLoading = true;
+            this.$store.dispatch("SubmitTimesheet", this.dateAndValuesArray).then((resp) => {
+                if (resp.status !== 200) {
                     this.$store.dispatch("GetTimesheets", payload);
-                });
-                this.timesheetMessageTitle = "Timesheet submitted!"
-                this.timesheetMessageBody = "Your timesheet was submitted succesfully."
-            }
-            catch(err) {
-                this.timesheetMessageTitle = err
+                    this.timesheetMessageTitle = "Timesheet submitted!"
+                    this.timesheetMessageBody = "Your timesheet was submitted succesfully."
+                }
+                else {
+                    this.timesheetMessageTitle = "Timesheet submission error!"
+                    this.timesheetMessageBody = "There was an error with your timesheet submission."
+                }
+                this.isLoading = false;
+                this.openModal()
+            }).catch((err) => {
+                console.log(err)
+                this.isLoading = false;
+                this.timesheetMessageTitle = "Timesheet submission error!"
                 this.timesheetMessageBody = "There was an error with your timesheet submission."
-            }
-            
+                this.openModal()
+            });
+   
+        },
+
+        openModal() {
+            document.getElementById("submissionModal").style.display = "block"
+            document.getElementById("submissionModal").classList.add("show")
+        },
+
+        closeModal() {
+            document.getElementById("submissionModal").style.display = "none"
+            document.getElementById("submissionModal").classList.remove("show")
         },
 
         // Fill the input fields with any previously submitted timesheet info
@@ -600,15 +624,16 @@ export default {
     
     // Call these functions when the app has been mounted
     mounted() {
+        this.closeModal()
         this.getDaysInFirstHalf()
         this.getDaysInSecondHalf()
         this.correlateDateAndDay()
 
-        
         let payload = {
             'firstDay': this.firstDay,
             'lastDay': this.lastDay
         };
+
         this.$store.dispatch("GetTimesheets", payload).then(() => {
             this.getTimesheet()
             //console.log(this.$store.getters.RetrievedTimesheet)
