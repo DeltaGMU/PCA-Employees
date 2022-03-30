@@ -3,34 +3,30 @@
         <div class="p-2">
             <Sidebar></Sidebar>
         </div>
-        <div v-if="showModal">
-            <transition name="modal">
-                <div class="modal-mask">
-                    <div class="modal-wrapper">
-                        <div class="modal-container">                    
-                            <div class="modal-header" v-if="submissionSuccess">
-                                <h5>Account Successfully Created!</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="showModal = false"></button>
-                            </div>
-                            <div class="modal-header" v-else>
-                                <h5>Account Creation Failed!</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"  @click="showModal = false"></button>
-                            </div>
-                            <div class="modal-body" v-if="submissionSuccess">
-                                Successfully created the employee account. The primary email should receive an Employee ID and temporary password soon!
-                            </div>
-                            <div class="modal-body" v-else>
-                                Encountered an error creating the employee. Please try again and ensure the required fields are filled correctly.
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn" :class="submissionSuccess ? 'blueBtn' : 'btn-danger'" data-bs-dismiss="modal" @click="showModal = false">Ok</button>
-                            </div>
-                        </div>
+        <div class="modal fade" id="employeeModal" tabindex="-1" aria-labelledby="employeeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">                    
+                    <div class="modal-header" v-if="submissionSuccess">
+                        <h5 class="modal-title">Account Successfully Created!</h5>
+                        <button type="button" class="btn-close" aria-label="Close" @click="closeModal"></button>
+                    </div>
+                    <div class="modal-header" v-else>
+                        <h5 class="modal-title">Account Creation Failed!</h5>
+                        <button type="button" class="btn-close" aria-label="Close"  @click="closeModal"></button>
+                    </div>
+                    <div class="modal-body" v-if="submissionSuccess">
+                        Successfully created the employee account. The primary email should receive an Employee ID and temporary password soon!
+                    </div>
+                    <div class="modal-body" v-else>
+                        Encountered an error creating the employee account. Please try again and ensure the required fields are filled correctly.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn" :class="submissionSuccess ? 'blueBtn' : 'btn-danger'" @click="closeModal">Ok</button>
                     </div>
                 </div>
-            </transition>
+            </div>
         </div>
-        <div class="modal-backdrop fade d-none" ref="backdrop"></div>
+        <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
         <div class="p-2 flex-grow-1">
             <form class="needs-validation" id="employee-form" ref="form" novalidate>
                 <div>
@@ -202,7 +198,11 @@
                         </div>
                     </div>
                     <br/>
-                    <button type="button" class="btn blueBtn" @click="submit" data-bs-toggle="modal" data-bs-target="#employeeModal">Submit</button>
+                    <button type="button" id="submitEmployeeFormBtn" class="mt-3 btn formBtn smallerScreenBtn" @click="submit">
+                        <span v-show="!isLoading"> Create Employee </span>
+                        <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
+                        <span v-show="isLoading"> Loading... </span>
+                    </button>
                 </div>
             </form>
         </div>
@@ -220,7 +220,7 @@
             return {
                 enableSecondaryEmailNotificationRadios: false,
                 submissionSuccess: false,
-                showModal: false,
+                isLoading: false,
 
                 form_first_name: "",
                 form_last_name: "",
@@ -242,7 +242,21 @@
                 this.enableSecondaryEmailNotificationRadios = false;
             }
         },
+        mounted() {
+            this.closeModal();
+        },
         methods: {
+            openModal() {
+                document.getElementById("backdrop").style.display = "block"
+                document.getElementById("employeeModal").style.display = "block"
+                document.getElementById("employeeModal").classList.add("show")
+            },
+
+            closeModal() {
+                document.getElementById("backdrop").style.display = "none"
+                document.getElementById("employeeModal").style.display = "none"
+                document.getElementById("employeeModal").classList.remove("show")
+            },
             clearAllFields() {
                 this.form_first_name = "",
                 this.form_last_name = "",
@@ -254,6 +268,7 @@
                 this.form_enable_pto_hours = "true",
                 this.form_enable_extra_hours = "true",
                 this.form_enable_account = "true"
+                this.isLoading = false;
             },
             async submit(e) {
                 // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -284,23 +299,29 @@
                     "extra_hours_enabled": this.form_enable_extra_hours === 'true',
                     "is_enabled": this.form_enable_account === 'true'
                 }
-                console.log(payload)
-                await this.$store.dispatch("CreateNewEmployee", payload).then(
-                    resp => {
-                        if (resp === true) {
-                            this.submissionSuccess = true;
+
+                if (!this.isLoading) {
+                    console.log(payload)
+                    this.isLoading = true;
+                    await this.$store.dispatch("CreateNewEmployee", payload).then(
+                        resp => {
+                            if (resp === true) {
+                                this.submissionSuccess = true;
+                                this.clearAllFields();
+                            }
+                            else {
+                                this.submissionSuccess = false;
+                            }
+                            this.isLoading = false;
+                            this.openModal()
                         }
-                        else {
-                            this.submissionSuccess = false;
-                        }
-                        this.clearAllFields();
-                        this.showModal = true;
-                    }
-                ).catch(err => {
-                    console.log(err);
-                    this.showModal = false;
-                    this.submissionSuccess = false;
-                })
+                    ).catch(err => {
+                        console.log(err);
+                        this.isLoading = false;
+                        this.submissionSuccess = false;
+                        this.openModal();
+                    })
+                }
                 e.preventDefault();
             },
         }
