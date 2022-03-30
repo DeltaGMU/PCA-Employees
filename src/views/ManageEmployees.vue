@@ -28,7 +28,7 @@
                 <br>
             </div> 
             <div class="table-responsive" v-if = "!filteredEmployeesList || !filteredEmployeesList.length">
-                <table class = "table table-hover">
+                <table class = "pcaTable table-hover">
                     <thead>
                         <th class = "table-th text-center" scope = "col" >
                             Employees List
@@ -42,7 +42,7 @@
                 </table>
             </div>
             <div class="table-responsive" v-else>
-                <table class = "table table-hover">
+                <table class = "pcaTable table-hover">
                     <thead>
                         <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
                             {{ option }}

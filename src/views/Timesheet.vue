@@ -17,8 +17,8 @@
         </div>
         
         <div class="table-responsive">
-            <table class="timesheet">
-                <thead class="headingRow">
+            <table class="pcaTable" id="timesheet">
+                <thead>
                     <th class="col-1">Date</th>
                     <th class="col-1 middleCols">Day</th>
                     <th class="col-2 middleCols">Regular Hours</th>
