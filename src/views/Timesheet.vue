@@ -489,30 +489,31 @@ export default {
             'lastDay': this.lastDay
             };
 
-            this.isLoading = true;
-            this.$store.dispatch("SubmitTimesheet", this.dateAndValuesArray).then((resp) => {
-                if (resp.status !== 200) {
-                    this.$store.dispatch("GetTimesheets", payload);
-                    this.submissionSuccess = true;
-                    this.timesheetMessageTitle = "Timesheet submitted!"
-                    this.timesheetMessageBody = "Your timesheet was submitted succesfully."
-                }
-                else {
+            if (!this.isLoading) {
+                this.isLoading = true;
+                this.$store.dispatch("SubmitTimesheet", this.dateAndValuesArray).then((resp) => {
+                    if (resp.status !== 200) {
+                        this.$store.dispatch("GetTimesheets", payload);
+                        this.submissionSuccess = true;
+                        this.timesheetMessageTitle = "Timesheet submitted!"
+                        this.timesheetMessageBody = "Your timesheet was submitted succesfully."
+                    }
+                    else {
+                        this.submissionSuccess = false;
+                        this.timesheetMessageTitle = "Timesheet submission error!"
+                        this.timesheetMessageBody = "There was an error with your timesheet submission."
+                    }
+                    this.isLoading = false;
+                    this.openModal()
+                }).catch((err) => {
+                    console.log(err)
                     this.submissionSuccess = false;
+                    this.isLoading = false;
                     this.timesheetMessageTitle = "Timesheet submission error!"
                     this.timesheetMessageBody = "There was an error with your timesheet submission."
-                }
-                this.isLoading = false;
-                this.openModal()
-            }).catch((err) => {
-                console.log(err)
-                this.submissionSuccess = false;
-                this.isLoading = false;
-                this.timesheetMessageTitle = "Timesheet submission error!"
-                this.timesheetMessageBody = "There was an error with your timesheet submission."
-                this.openModal()
-            });
-   
+                    this.openModal()
+                });
+            }
         },
 
         openModal() {
