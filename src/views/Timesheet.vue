@@ -81,17 +81,18 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">{{timesheetMessageTitle}}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeModal"></button>
+                            <button type="button" class="btn-close" aria-label="Close" @click="closeModal"></button>
                         </div>
                         <div class="modal-body">
                             {{timesheetMessageBody}}
                         </div>
                         <div class="modal-footer">
-                            <button type="button" @click="closeModal" v-bind:class=" timesheetMessageTitle == 'Timesheet submitted!' ? 'btn btn-success' : ' btn btn-warning' " data-bs-dismiss="modal">OK</button>
+                            <button type="button" class="btn" @click="closeModal" :class="submissionSuccess ? 'blueBtn' : 'btn-danger'">OK</button>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
         </div>
     </div>
   </div>
@@ -312,6 +313,7 @@ export default {
             timesheetMessageBody: "",
             reporting_period_start: 10,
             reporting_period_end: 9,
+            submissionSuccess: false,
             isLoading: false,
         }
     },
@@ -491,10 +493,12 @@ export default {
             this.$store.dispatch("SubmitTimesheet", this.dateAndValuesArray).then((resp) => {
                 if (resp.status !== 200) {
                     this.$store.dispatch("GetTimesheets", payload);
+                    this.submissionSuccess = true;
                     this.timesheetMessageTitle = "Timesheet submitted!"
                     this.timesheetMessageBody = "Your timesheet was submitted succesfully."
                 }
                 else {
+                    this.submissionSuccess = false;
                     this.timesheetMessageTitle = "Timesheet submission error!"
                     this.timesheetMessageBody = "There was an error with your timesheet submission."
                 }
@@ -502,6 +506,7 @@ export default {
                 this.openModal()
             }).catch((err) => {
                 console.log(err)
+                this.submissionSuccess = false;
                 this.isLoading = false;
                 this.timesheetMessageTitle = "Timesheet submission error!"
                 this.timesheetMessageBody = "There was an error with your timesheet submission."
@@ -511,11 +516,13 @@ export default {
         },
 
         openModal() {
+            document.getElementById("backdrop").style.display = "block"
             document.getElementById("submissionModal").style.display = "block"
             document.getElementById("submissionModal").classList.add("show")
         },
 
         closeModal() {
+            document.getElementById("backdrop").style.display = "none"
             document.getElementById("submissionModal").style.display = "none"
             document.getElementById("submissionModal").classList.remove("show")
         },
