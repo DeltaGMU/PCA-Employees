@@ -37,7 +37,7 @@
 
                         <div class="form-group noSelect">
                             <div class="mb-1">
-                                <label for="role" class="text-blue formLabel leaveLabel">Select Role</label>
+                                <label for="role" class="text-blue formLabel">Select Role</label>
                             </div>
 
                             <select class="form-control" name="role" id="role">
@@ -56,7 +56,7 @@
                     
                         <div class="form-group noSelect">
                                 <div class="mb-1">
-                                    <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Secondary Email</label>
+                                    <label for="secondaryEmail" class="text-blue formLabel">Secondary Email</label>
                                 </div>
                                 
                                 <input type="text" class="form-control" id="secondaryEmail" placeholder="Optional...">
