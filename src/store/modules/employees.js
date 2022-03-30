@@ -9,6 +9,24 @@ const getters = {
 };
 
 const actions = {
+  async CreateNewEmployee(context, employee_data) {
+    console.log(employee_data);
+    let headers = {
+      headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token},    
+    }
+    return axios.post("api/v1/employees", employee_data, headers).then(
+      resp => {
+        console.log(resp)
+        if (resp.status === 201) {
+          return true;
+        }
+        return false;
+      }
+    ).catch(err => {
+      console.log(err);
+      return false;
+    });
+  },
   async GetAllEmployees(context) {
     let headers = {
       headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
