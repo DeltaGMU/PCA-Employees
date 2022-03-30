@@ -28,7 +28,7 @@
         </div>
         <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
         <div class="p-2 flex-grow-1">
-            <form class="needs-validation" id="employee-form" ref="form" novalidate>
+            <form class="needs-validation" id="employeeForm" ref="form" novalidate>
                 <div>
                     <div class="topSection noSelect">
                         <div class="mb-1">
@@ -221,6 +221,9 @@
                 enableSecondaryEmailNotificationRadios: false,
                 submissionSuccess: false,
                 isLoading: false,
+                submitButton: null,
+                employeeForm: null,
+                clickEvent: null,
 
                 form_first_name: "",
                 form_last_name: "",
@@ -244,6 +247,18 @@
         },
         mounted() {
             this.closeModal();
+            this.submitButton = document.getElementById("submitEmployeeFormBtn")
+            this.employeeForm = document.getElementById("employeeForm")
+            this.submitButton.addEventListener('click', 
+                function (event) {
+                    let form = document.getElementById("employeeForm")
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false);
+            this.clickEvent = new Event('click');
         },
         methods: {
             openModal() {
@@ -268,25 +283,10 @@
                 this.form_enable_pto_hours = "true",
                 this.form_enable_extra_hours = "true",
                 this.form_enable_account = "true"
-                this.isLoading = false;
+                this.isLoading = false
+                this.employeeForm.classList.remove('was-validated')
             },
-            async submit(e) {
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                var forms = document.querySelectorAll('.needs-validation')
-
-                // Loop over them and prevent submission
-                Array.prototype.slice.call(forms)
-                    .forEach(function (form) {
-                        form.addEventListener('submit', function (event) {
-                            if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                            }
-
-                            form.classList.add('was-validated')
-                        }, false)
-                    })       
-                
+            async submit(e) {                
                 let payload = {
                     "first_name": this.form_first_name,
                     "last_name": this.form_last_name,
@@ -300,7 +300,7 @@
                     "is_enabled": this.form_enable_account === 'true'
                 }
 
-                if (!this.isLoading) {
+                if (!this.isLoading && this.employeeForm.checkValidity()) {
                     console.log(payload)
                     this.isLoading = true;
                     await this.$store.dispatch("CreateNewEmployee", payload).then(
