@@ -4,9 +4,16 @@
             <Sidebar></Sidebar>
         </div>
         <div class = "p-2 flex-grow-1">
-            <h1 class="text-blue">Reporting Period</h1>
-            <h3 class="text-blue">XX-XX-2022 - XX-XX-2022</h3>
-            <br>
+            <div class="pb-2">
+                <h1 class="text-blue">Reporting Period</h1>
+                <h3 class="text-blue">XX-XX-2022 - XX-XX-2022</h3>
+            </div>
+
+            <div class="mb-3 input-group">
+                <input type="date" class="form-control textBox" id="absenceDateStart" :min = " min " required>
+                <span class="input-group-text">to</span>
+                <input type="date" class="form-control textBox" id="absenceDateEnd" :min=" min " required>
+            </div>
 
             <label class="form-check-label" for="reportSearchBar">
                 Filter timesheets list:
@@ -20,7 +27,6 @@
                 </button>
             </div>
              
-
             <div class="table-responsive" v-if = "!filteredReportsList || !filteredReportsList.length">
                 <table class = "table table-hover">
                     <thead>
