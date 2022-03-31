@@ -1,76 +1,79 @@
 <template>
-    <div class="d-flex">
-        <div class="p-2">
-            <Sidebar></Sidebar>
-        </div>
-        <div class = "p-2 flex-grow-1">
-            <h1 class="text-blue">Reporting Period</h1>
-            <h3 class="text-blue">XX-XX-2022 - XX-XX-2022</h3>
-            <br>
+    <div class="container">
+        <NavBar :signed_in="signedIn" :name="empName" :role="empRole" :current_page="currentPage"/>
+        <div class="d-flex">
+            <div class="p-2">
+                <Sidebar></Sidebar>
+            </div>
+            <div class = "p-2 flex-grow-1">
+                <h1 class="text-blue">Reporting Period</h1>
+                <h3 class="text-blue">XX-XX-2022 - XX-XX-2022</h3>
+                <br>
 
-            <label class="form-check-label" for="reportSearchBar">
-                Filter timesheets list:
-            </label>
-            <div class="d-flex mb-3">
-                <div class="flex-grow-1 rounded-0">
-                    <input type="text" style="border-radius: 5px 0px 0px 5px;" v-model="searchQuery" class="form-control" placeholder="Search for timesheets by First Name, Last Name..." name="reportSearchBar" id="reportSearchBar">
+                <label class="form-check-label" for="reportSearchBar">
+                    Filter timesheets list:
+                </label>
+                <div class="d-flex mb-3">
+                    <div class="flex-grow-1 rounded-0">
+                        <input type="text" style="border-radius: 5px 0px 0px 5px;" v-model="searchQuery" class="form-control" placeholder="Search for timesheets by First Name, Last Name..." name="reportSearchBar" id="reportSearchBar">
+                    </div>
+                    <button class="btn blueBtn" style="padding: 5px; border-radius: 0px 5px 5px 0px;" type="button" @click="refreshReportsTable()">
+                        Refresh Timesheets
+                    </button>
                 </div>
-                <button class="btn blueBtn" style="padding: 5px; border-radius: 0px 5px 5px 0px;" type="button" @click="refreshReportsTable()">
-                    Refresh Timesheets
-                </button>
-            </div>
-             
+                
 
-            <div class="table-responsive" v-if = "!filteredReportsList || !filteredReportsList.length">
-                <table class = "table table-hover">
-                    <thead>
-                        <th class = "table-th text-center" scope = "col" >
-                            Timesheets List
-                        </th>
-                    </thead>
-                    <tbody>
-                        <tr class = "row-striped">
-                            <td class = "column text-center">No timesheet information available...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="table-responsive" v-else>
-                <table class = "table table-hover">
-                    <thead>
-                        <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
-                            {{ option }}
-                        </th>
-                    </thead>
-                    <tbody>
-                        <!--<template v-for = "emp in empInfo" >
-                            <div v-bind:key="emp.last_name"> -->
-
-                            <tr class = "row-striped" v-for = "(emp, index) in filteredReportsList" v-bind:key="index">
-                                <td class = "column text-center">{{ emp.last_name }} </td>
-                                <td class = "column text-center">{{ emp.first_name}} </td>
-                                <td class = "column text-center">{{ emp.work_hours}} </td>
-                                <td class = "column text-center">{{ emp.pto_hours}} </td>
-                                <td class = "column text-center">{{ emp.extra_hours}} </td>
-                                <td class = "column text-center"> 
-                                    <button type="button" class="btn blueBtn">
-                                        <img src="https://s2.svgbox.net/hero-outline.svg?ic=zoom-in&color=ffffff" width="28" height="28">
-                                    </button>
-                                </td>
+                <div class="table-responsive" v-if = "!filteredReportsList || !filteredReportsList.length">
+                    <table class = "table table-hover">
+                        <thead>
+                            <th class = "table-th text-center" scope = "col" >
+                                Timesheets List
+                            </th>
+                        </thead>
+                        <tbody>
+                            <tr class = "row-striped">
+                                <td class = "column text-center">No timesheet information available...</td>
                             </tr>
-                            <!-- <tr class = "row-striped" v-for = "(item, i) in empInfo" v-bind:key="i">
-                                <td class = "column">{{ item.last_name}} </td>
-                                <td class = "column">{{ item.first_name}} </td>
-                                <td class = "column">{{ item.work_hours}} </td>
-                                <td class = "column">{{ item.pto_hours}} </td>
-                                <td class = "column">{{ item.extra_hours}} </td>
-                                <td class = "column">{{ item.sub_status}} </td>
-                            </tr> -->
-                        <!--  </div>
-                        </template> -->
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-responsive" v-else>
+                    <table class = "table table-hover">
+                        <thead>
+                            <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
+                                {{ option }}
+                            </th>
+                        </thead>
+                        <tbody>
+                            <!--<template v-for = "emp in empInfo" >
+                                <div v-bind:key="emp.last_name"> -->
+
+                                <tr class = "row-striped" v-for = "(emp, index) in filteredReportsList" v-bind:key="index">
+                                    <td class = "column text-center">{{ emp.last_name }} </td>
+                                    <td class = "column text-center">{{ emp.first_name}} </td>
+                                    <td class = "column text-center">{{ emp.work_hours}} </td>
+                                    <td class = "column text-center">{{ emp.pto_hours}} </td>
+                                    <td class = "column text-center">{{ emp.extra_hours}} </td>
+                                    <td class = "column text-center"> 
+                                        <button type="button" class="btn blueBtn">
+                                            <img src="https://s2.svgbox.net/hero-outline.svg?ic=zoom-in&color=ffffff" width="28" height="28">
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- <tr class = "row-striped" v-for = "(item, i) in empInfo" v-bind:key="i">
+                                    <td class = "column">{{ item.last_name}} </td>
+                                    <td class = "column">{{ item.first_name}} </td>
+                                    <td class = "column">{{ item.work_hours}} </td>
+                                    <td class = "column">{{ item.pto_hours}} </td>
+                                    <td class = "column">{{ item.extra_hours}} </td>
+                                    <td class = "column">{{ item.sub_status}} </td>
+                                </tr> -->
+                            <!--  </div>
+                            </template> -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -78,12 +81,20 @@
 
 <script>
     import Sidebar from "../components/Sidebar.vue";
+    import NavBar from "@/components/NavBar.vue";
+
     export default {
         components: {
-            Sidebar
+            Sidebar,
+            NavBar
         },
         data() {
             return {
+                signedIn: this.$store.getters.isAuthenticated,
+                empName: this.$store.getters.StateName,
+                empRole: this.$store.getters.StateRole,
+                currentPage: "/timesheetinfo",
+
                 searchQuery: "",
                 timesheetInfo: [
                     {

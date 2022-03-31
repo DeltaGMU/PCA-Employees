@@ -7,6 +7,7 @@ import employees from "./modules/employees";
 import timesheet from "./modules/timesheet";
 import students from "./modules/students";
 
+
 // Load Vuex
 Vue.use(Vuex);
 

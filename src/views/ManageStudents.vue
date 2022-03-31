@@ -1,85 +1,96 @@
 <template>
-    <div class="d-flex">
-        <div class="p-2">
-            <Sidebar>   </Sidebar>
-        </div>
-
-        <div class="p-2 flex-grow-1">
-
-            <h1 class="text-blue">Manage Students</h1>
-
-            <div class="d-flex mb-3">
-                <div class="me-auto p-2">
-                    <button class="btn blueBtn" @click="$router.push({ path: 'createstudent'})">
-                        Create Student 
-                    </button>
-                </div>
-                <div class="p-2"></div>
-                <div class="p-2">
-                    <button class="btn blueBtn" style="float: right;" @click="refreshStudentsTable()">
-                        Refresh Students List
-                    </button>
-                </div>
+    <div class="container">
+        <NavBar :signed_in="signedIn" :name="empName" :role="empRole" :current_page="currentPage"/>
+        <div class="d-flex">
+            <div class="p-2">
+                <Sidebar>   </Sidebar>
             </div>
 
-            <div class="col-sm-12">
-                <label class="form-check-label" for="studentSearchBar">
-                    Filter student list:
-                </label>
-                <input type="text" v-model="searchQuery" class="form-control rounded" placeholder="Search for students by ID, First Name, Last Name, or Grade..." name="studentSearchBar" id="studentSearchBar"/>
-                <br>
-            </div> 
+            <div class="p-2 flex-grow-1">
 
-            <div class="table-responsive" v-if = "!filteredStudentsList || !filteredStudentsList.length">
-                <table class = "table table-hover">
-                    <thead>
-                        <th class = "table-th text-center" scope = "col" >
-                            Students List
-                        </th>
-                    </thead>
-                    <tbody>
-                        <tr class = "row-striped">
-                            <td class = "column text-center">No student information available...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                <h1 class="text-blue">Manage Students</h1>
 
-            <div class="table-responsive" v-else>
-                <table class = "table table-hover">
-                    <thead>
-                        <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
-                            {{ option }}
-                        </th>
-                    </thead>
-                    <tbody>
-                        <tr class = "row-striped" v-for = "(student, index) in filteredStudentsList" v-bind:key="index">
-                            <td class = "column text-center">{{ student.student_id }} </td>
-                            <td class = "column text-center">{{ student.carpool_number }} </td>
-                            <td class = "column text-center">{{ student.last_name }} </td>
-                            <td class = "column text-center">{{ student.first_name}} </td>
-                            <td class = "column text-center">{{ student.grade.name}} </td>
-                            <td class = "column text-center"> 
-                                <button type="button" class="btn blueBtn" @click="$router.push({ path: 'editStudent'})">
-                                    Edit 
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="d-flex mb-3">
+                    <div class="me-auto p-2">
+                        <button class="btn blueBtn" @click="$router.push({ path: 'createstudent'})">
+                            Create Student 
+                        </button>
+                    </div>
+                    <div class="p-2"></div>
+                    <div class="p-2">
+                        <button class="btn blueBtn" style="float: right;" @click="refreshStudentsTable()">
+                            Refresh Students List
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <label class="form-check-label" for="studentSearchBar">
+                        Filter student list:
+                    </label>
+                    <input type="text" v-model="searchQuery" class="form-control rounded" placeholder="Search for students by ID, Carpool #, First Name, Last Name, or Grade..." name="studentSearchBar" id="studentSearchBar"/>
+                    <br>
+                </div> 
+
+                <div class="table-responsive" v-if = "!filteredStudentsList || !filteredStudentsList.length">
+                    <table class = "pcaTable table-hover">
+                        <thead>
+                            <th class = "table-th text-center" scope = "col" >
+                                Students List
+                            </th>
+                        </thead>
+                        <tbody>
+                            <tr class = "row-striped">
+                                <td class = "column text-center">No student information available...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-responsive" id="manageStudentTable" v-else>
+                    <table class = "pcaTable table-hover">
+                        <thead>
+                            <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
+                                {{ option }}
+                            </th>
+                        </thead>
+                        <tbody>
+                            <tr class = "row-striped" v-for = "(student, index) in filteredStudentsList" v-bind:key="index">
+                                <td class = "column text-center">{{ student.student_id }} </td>
+                                <td class = "column text-center">{{ student.carpool_number }} </td>
+                                <td class = "column text-center">{{ student.last_name }} </td>
+                                <td class = "column text-center">{{ student.first_name}} </td>
+                                <td class = "column text-center">{{ student.grade.name}} </td>
+                                <td class = "column text-center"> 
+                                    <button type="button" class="btn blueBtn" @click="$router.push({ path: 'editStudent'})">
+                                        Edit 
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </template> 
 
 <script>
-    import Sidebar from "../components/Sidebar.vue";
+    import Sidebar from "@/components/Sidebar.vue";
+    import NavBar from "@/components/NavBar.vue";
+
     export default {
         components: {
-            Sidebar
+            Sidebar,
+            NavBar
         },
         data() {
             return {
+                signedIn: this.$store.getters.isAuthenticated,
+                empName: this.$store.getters.StateName,
+                empRole: this.$store.getters.StateRole,
+                currentPage: "/managestudents",
+
                 searchQuery: "",
                 studentInfo: this.$store.getters.StateStudents,
                 columns: [
@@ -110,7 +121,8 @@
                             item.first_name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1
                             ) || (item.last_name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1) ||
                             (item.student_id.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1) ||
-                            (item.grade.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1);
+                            (item.grade.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1) ||
+                            (item.carpool_number.toString().toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1);
                     })
                 }
                 else {

@@ -2,7 +2,7 @@
   <div>
     
     <div class="container">
-
+        <NavBar/>
         <div class="row justify-content-center">
 
             <div class="col-xl-7 col-lg-8 col-md-11 col-sm-12 col-12">
@@ -21,7 +21,7 @@
                             <input type="text" class="form-control form-control-lg textBox" name="username" v-model="form.username" required>
                         </div>
                         <div class="twoBtnCol">
-                            <button class="mt-3 btn formBtn smallerScreenBtn" @click="returnToLogin">Cancel</button>
+                            <button type="button" class="mt-3 btn formBtn smallerScreenBtn" @click="returnToLogin">Cancel</button>
                             <button type="submit" class="mt-3 btn formBtn smallerScreenBtn">Send Reset Request</button>
                         </div>
                     </form>
@@ -36,34 +36,38 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-export default {
-  name: "ForgotPassword",
-  components: {},
-  data() {
-    return {
-      form: {
-        username: "",
+  import { mapActions } from "vuex";
+  import NavBar from "@/components/NavBar.vue";
+
+  export default {
+    name: "ForgotPassword",
+    components: {
+      NavBar,
+    },
+    data() {
+      return {
+        form: {
+          username: "",
+        },
+        showError: false
+      };
+    },
+    methods: {
+      ...mapActions(["LogIn"]),
+      async submit() {
+        const User = new FormData();
+        User.append("username", this.form.username);
+        try {
+            await this.LogIn(User);
+            this.$router.push("/resetpassword").catch((err) => console.log(err));
+        } 
+        catch (error) {
+          this.showError = true;
+        }
       },
-      showError: false
-    };
-  },
-  methods: {
-    ...mapActions(["LogIn"]),
-    async submit() {
-      const User = new FormData();
-      User.append("username", this.form.username);
-      try {
-          await this.LogIn(User);
-          this.$router.push("/resetpassword").catch((err) => console.log(err));
-      } 
-      catch (error) {
-        this.showError = true;
+      returnToLogin() {
+        this.$router.push("/").catch((err)=> console.log(err));
       }
     },
-    returnToLogin() {
-      this.$router.push("/").catch((err)=> console.log(err));
-    }
-  },
-};
+  };
 </script>
