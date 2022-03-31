@@ -24,8 +24,8 @@
                     <th class="col-1">Date</th>
                     <th class="col-1 middleCols">Day</th>
                     <th class="col-2 middleCols">Regular Hours</th>
-                    <th class="col-2 middleCols">PTO</th>
-                    <th class="col-2 middleCols">Extra Hours</th>
+                    <th class="col-2 middleCols" :style="!ptoHoursEnabled ? 'display: none': ''">PTO</th>
+                    <th class="col-2 middleCols" :style="!extraHoursEnabled ? 'display: none': ''">Extra Hours</th>
                     <th class="col-4 middleCols">Comments</th>
                 </thead>
 
@@ -38,8 +38,8 @@
                         <td>{{ dateAndDayArray[day-1][0] }}</td>
                         <td class="middleCols">{{ dateAndDayArray[day-1][1] }}</td>
                         <td class="middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].work_hours "></td>
-                        <td class="middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].pto_hours "></td>
-                        <td class="middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].extra_hours "></td>
+                        <td class="middleCols" :style="!ptoHoursEnabled ? 'display: none': ''"><input type="number" min="0" :disabled="!ptoHoursEnabled" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].pto_hours "></td>
+                        <td class="middleCols" :style="!extraHoursEnabled ? 'display: none': ''"><input type="number" min="0" :disabled="!extraHoursEnabled" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].extra_hours "></td>
                         <td><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[day-1].comment "></td>
                     </tr>
 
@@ -119,6 +119,9 @@
                 empName: this.$store.getters.StateName,
                 empRole: this.$store.getters.StateRole,
                 currentPage: "/timesheet",
+
+                ptoHoursEnabled: this.$store.getters.StateInfo.pto_hours_enabled,
+                extraHoursEnabled: this.$store.getters.StateInfo.extra_hours_enabled,
 
                 days: ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"],
                 dateAndDayArray: [],
@@ -693,8 +696,6 @@
 
             this.setFirstDay()
             this.setLastDay()
-
-            this.$store.dispatch("GetName")
         },
     }
 </script>
