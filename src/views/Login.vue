@@ -5,7 +5,7 @@
         <NavBar/>
         <div class="row justify-content-center">
 
-            <div class="col-xl-6 col-lg-8 col-md-10 col-sm-12 col-12">
+            <div class="col-xxl-5 col-xl-6 col-lg-7 col-md-9 col-11">
 
                 <div class="loginContainer">
     
