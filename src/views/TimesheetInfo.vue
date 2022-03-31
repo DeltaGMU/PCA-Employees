@@ -6,22 +6,26 @@
                 <Sidebar></Sidebar>
             </div>
             <div class = "p-2 flex-grow-1">
-                <h1 class="text-blue">Reporting Period</h1>
-                <h3 class="text-blue">XX-XX-2022 - XX-XX-2022</h3>
-                <br>
+                <h1 class="text-blue">Timesheet Records</h1>
+                <!--<h3 class="text-blue pb-3">{{ selectedPeriod }}</h3>-->
+
+                <label class="form-check-label" for="absenceStartDate">Please select a reporting period:</label>
+                <div class="pb-3 input-group">
+                    <input type="date" class="form-control textBox" id="absenceStartDate" required>
+                    <span class="input-group-text">to</span>
+                    <input type="date" class="form-control textBox" id="absenceEndDate" required>
+                    <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" @click="getReportingPeriod()">Submit</button>
+                </div>
 
                 <label class="form-check-label" for="reportSearchBar">
                     Filter timesheets list:
                 </label>
-                <div class="d-flex mb-3">
-                    <div class="flex-grow-1 rounded-0">
-                        <input type="text" style="border-radius: 5px 0px 0px 5px;" v-model="searchQuery" class="form-control" placeholder="Search for timesheets by First Name, Last Name..." name="reportSearchBar" id="reportSearchBar">
-                    </div>
-                    <button class="btn blueBtn" style="padding: 5px; border-radius: 0px 5px 5px 0px;" type="button" @click="refreshReportsTable()">
+                <div class="pb-3 input-group">
+                    <input type="text" style="border-radius: 5px 0px 0px 5px;" v-model="searchQuery" class="form-control" placeholder="Search for timesheets by First Name, Last Name..." name="reportSearchBar" id="reportSearchBar">
+                    <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" type="button" @click="refreshReportsTable()">
                         Refresh Timesheets
                     </button>
                 </div>
-                
 
                 <div class="table-responsive" v-if = "!filteredReportsList || !filteredReportsList.length">
                     <table class = "table table-hover">
@@ -82,6 +86,7 @@
 <script>
     import Sidebar from "../components/Sidebar.vue";
     import NavBar from "@/components/NavBar.vue";
+    //import ConvertDateToTimezone from "@/store/utility/date_format";
 
     export default {
         components: {
@@ -93,7 +98,12 @@
                 signedIn: this.$store.getters.isAuthenticated,
                 empName: this.$store.getters.StateName,
                 empRole: this.$store.getters.StateRole,
+                allEmps: this.$store.getters.StateEmployees,
+                empTotalHours: this.$store.getters.RetrievedTotalHours,
                 currentPage: "/timesheetinfo",
+                absenceStartDate: "",
+                absenceEndDate: "",
+                selectedPeriod: "",
 
                 searchQuery: "",
                 timesheetInfo: [
@@ -132,13 +142,14 @@
                 options: {
                     headings: {
                         last_name: 'Last Name',
-                        first_mame: 'First Name',
+                        first_name: 'First Name',
                         work_hours: 'Work Hours' ,
                         pto_hours: 'PTO Hours',
                         extra_hours:'Extra Hours',
                         view_details: 'View Details'
                     }
-                }
+                },
+                payload: {}
             }
         },
         computed: {
@@ -153,7 +164,7 @@
                 else {
                     return [];
                 }
-            }
+            },
         },
         methods: {
             refreshReportsTable() {
@@ -168,9 +179,32 @@
                     }
                 )
                 */
-            }
+            },
+            getReportingPeriod() {
+                this.absenceStartDate = document.getElementById("absenceStartDate").value
+                this.absenceEndDate = document.getElementById("absenceEndDate").value
+
+                this.selectedPeriod = this.absenceStartDate + " to " + this.absenceEndDate
+
+                this.payload = {
+                    'absenceDateStart': this.absenceDateStart,
+                    'absenceDateEnd': this.absenceDateEnd
+                }
+            },
+            getEmployeeHours() {
+                
+                console.log(this.allEmps)
+
+                for(let i = 0; i < this.allEmps.length; i++) {
+                    this.payload["employeeID"] = this.allEmps[i].employee_id
+                    this.$store.dispatch("GetTotalHours", this.payload)
+                    console.log("EMPLOYEE " + i + ": " + this.empTotalHours)
+                }               
+            },
         },
         mounted() {
+            this.$store.dispatch("GetAllEmployees");
+            this.getEmployeeHours();
             this.refreshReportsTable();
         }
     };
