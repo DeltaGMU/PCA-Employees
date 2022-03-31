@@ -11,11 +11,18 @@ import TimesheetInfo from "../views/TimesheetInfo";
 import ManageAdmin from "../views/ManageAdmin";
 import ManageEmployees from "../views/ManageEmployees";
 import ManageStudents from "../views/ManageStudents";
+import ManageStudentCare from "../views/ManageStudentCare";
 import EditEmployee from "../views/EditEmployee";
 import EditStudent from "../views/EditStudent";
 import CreateEmployee from "../views/CreateEmployee";
 import CreateStudent from "../views/CreateStudent";
-
+// Kiosk Imports
+import KioskHome from "../views/Kiosk/KioskHome";
+import StudentFinder from "../views/Kiosk/StudentFinder";
+import CareOptions from "../views/Kiosk/CareOptions";
+import CheckInMultiple from "../views/Kiosk/CheckInMultiple";
+import CheckInAndCheckOut from "../views/Kiosk/CheckInAndCheckOut";
+import KioskLogin from "../views/Kiosk/KioskLogin";
 
 Vue.use(VueRouter);
 
@@ -48,7 +55,7 @@ const routes = [
     path: "/resetpassword",
     name: "ResetPassword",
     component: ResetPassword,
-    meta: { requiresAuth: true },
+    meta: { guest: true },
   },
   {
     path: "/leaverequest",
@@ -81,6 +88,12 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/managestudentcare",
+    name: "ManageStudentCare",
+    component: ManageStudentCare,
+    meta: { requiresAuth: true },
+  },
+  {
     path: "/editemployee",
     name: "EditEmployee",
     component: EditEmployee,
@@ -103,6 +116,45 @@ const routes = [
     name: "CreateStudent",
     component: CreateStudent,
     meta: { requiresAuth: true },
+  },
+  // Kiosk Routes:
+  {
+    path: "/kiosk",
+    name: "KioskHome",
+    component: KioskHome,
+    meta: { guest: true },
+  },
+  {
+    path: "/kiosk/login",
+    name: "KioskLogin",
+    component: KioskLogin,
+    meta: { guest: true },
+  },
+  {
+    path: "/kiosk/checkinmultiple",
+    name: "CheckInMultiple",
+    component: CheckInMultiple,
+    meta: { requiresAuth: true },
+    props: true,
+  },
+  {
+    path: "/kiosk/studentfinder",
+    name: "StudentFinder",
+    component: StudentFinder,
+    meta: { guest: true },
+  },
+  {
+    path: "/kiosk/careoptions",
+    name: "CareOptions",
+    component: CareOptions,
+    meta: { guest: true },
+  },
+  {
+    path: "/kiosk/checkinandcheckout",
+    name: "CheckInAndCheckOut",
+    component: CheckInAndCheckOut,
+    meta: { guest: true },
+    props: true,
   },
 ];
 
@@ -127,7 +179,7 @@ router.beforeEach((to, from, next) => {
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.guest)) {
     if (store.getters.isAuthenticated) {
-      next("/timesheet");
+      next();
       return;
     }
     next();

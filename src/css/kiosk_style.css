@@ -9,18 +9,68 @@
     --pcaGrey: #E6E6E6;
 }
 
-body {
-    width: 100%;
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
-}
-
 * {
     box-sizing: border-box;
     font-family: Poppins, sans-serif;
     margin: 0px;
     padding: 0px;
+}
+
+@media only screen and (max-width: 710px) {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	.headingRow { 
+		display: none;
+	}
+	
+	tr { 
+        border: 1px solid var(--pcaDarkBlue); 
+    }
+	
+	td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+
+    .showWhenSmall {
+        display: block;
+    }
+
+    .hideWhenSmall {
+        display: none;
+    }
+
+    .twoBtnCol {
+        justify-content: center;
+    }
+
+    .smallerScreenBtn {
+        width: 100% !important;
+    }
+    
+    /* Not for timesheet */
+    .formLabel {
+        font-size: 1.3rem !important;
+    }
 }
 
 h1 {
@@ -33,12 +83,35 @@ h1.loginHeader {
     margin-bottom: 1.5rem;
 }
 
+.wrapper {
+    margin: 1.5rem 3rem 3rem;
+}
+
 .btn {
     border-radius: 5px;
     padding: 0.75rem 0.75rem;
     font-size: 1.2rem;
     font-weight: 500;
     border: none;
+}
+
+.navbar-button {
+    background-color: var(--pcaBeige);
+    color: var(--pcaDarkBlue);
+    border-radius: 5px;
+    padding: 0.5rem 0.5rem;
+    font-size: 1.0rem;
+    font-weight: 500;
+    width: 15rem;
+    border: none;
+}
+
+.navbar-button:hover {
+    background-color: var(--pcaDarkBeige);
+}
+
+.navbar-button:active {
+    color: white;
 }
 
 .noSelect {
@@ -51,47 +124,33 @@ h1.loginHeader {
     justify-content: space-between;
 }
 
-
-/* Employee Management Table */
-#manageEmployeeTable {
-    max-height: 500px;
-    overflow-y: scroll;
-    scrollbar-color: var(--pcaDarkBlue) var(--pcaBlue);
-    scrollbar-width: thin;
-}
-
-/* Student Management Table */
-#manageStudentTable {
-    max-height: 500px;
-    overflow-y: scroll;
-    scrollbar-color: var(--pcaDarkBlue) var(--pcaBlue);
-    scrollbar-width: thin;
-}
-
 @media screen and (max-width: 770px) {
     .formBtn {
         width: 13rem !important;
     }
 
     .btn {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
-
-    h1 {
-        font-size: 26px;
-    }
-
 }
 
+@media screen and (max-width: 645px) {
+    .twoBtnCol {
+        justify-content: center;
+    }
+
+    .btn {
+        width: 100% !important;
+    }
+    
+    .formLabel {
+        font-size: 1.3rem !important;
+    }
+}
 @media screen and (max-width: 520px) {
     .loginContainer {
         padding: 3rem 2.5rem !important;
     }
-}
-
-.container {
-    max-width: 100%;
-    padding: 0px;
 }
 
 /* Negate Bootstrap's CSS that applies margin-bottom: 1rem to <p> */
@@ -99,14 +158,9 @@ p {
     margin-bottom: 0;
 }
 
-.form-control-plaintext {
-    padding: 0rem;
-}
-
 .formLabel {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
-    margin-top: 1rem;
 }
 
 /* Navbar styling */
@@ -211,9 +265,6 @@ a.text-beige:hover {
     cursor: pointer;
 }
 
-.error {
-    color: red;
-}
 /* End login form styling */
 
 
@@ -230,18 +281,14 @@ a.text-beige:hover {
     user-select: none;
 }
 
-#timesheet thead {
+thead {
     background-color: var(--pcaBlue);
     border-bottom: 1px solid white;
     color: white;
 }
 
-th {
-    padding: 0.6rem 0;
-}
-
-td {
-    padding: 0.3rem 0;
+th, td {
+    padding: 0.6rem 0.6rem;
 }
 
 .middleCols {
@@ -255,6 +302,14 @@ td input.textBox {
     margin: 0 auto;
     text-align: center;
     border: 1px solid var(--pcaBlue);
+}
+
+.row-striped:nth-child(even) {
+    background-color: rgba(12, 74, 128, .15);
+}
+
+.row-striped:nth-child(odd) {
+    background-color: rgba(12, 74, 128, .29);
 }
 
 .hide {
@@ -271,10 +326,6 @@ td input.textBox {
     color: rgb(230, 230, 230);
 }
 
-.switchPageBtn {
-    padding: 0.95rem 1.7rem;
-}
-
 #submitTimesheetBtn {
     border: 0.2rem solid var(--pcaBlue);
 }
@@ -283,164 +334,16 @@ td input.textBox {
     float: right;
 }
 
-.left-align {
-    float: left;
-}
-
-@media only screen and (max-width: 710px) {
-
-    #manageEmployeeTable {
-        max-height: 100%;
-    }
-
-    #manageStudentTable {
-        max-height: 100%;
-    }
-
-	/* Force table to not be like tables anymore */
-	table#timesheet, #timesheet tbody, #timesheet th, #timesheet td, #timesheet tr { 
-		display: block; 
-	}
-	
-	#timesheet thead { 
-		display: none;
-	}
-	
-	tr { 
-        border: 1px solid var(--pcaDarkBlue); 
-    }
-	
-	#timesheet td { 
-		/* Behave  like a "row" */
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50%; 
-	}
-	
-	#timesheet td:before { 
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-        top: 0px;
-		left: 6px;
-		width: 45%;
-        height: 100%; 
-        display: flex; 
-        justify-content: center;
-        flex-direction: column; 
-	}
-
-    #timesheet td:nth-of-type(1):before { content: "Date"; }
-	#timesheet td:nth-of-type(2):before { content: "Day"; }
-	#timesheet td:nth-of-type(3):before { content: "Regular Hours"; }
-	#timesheet td:nth-of-type(4):before { content: "PTO"; }
-	#timesheet td:nth-of-type(5):before { content: "Extra Hours"; }
-	#timesheet td:nth-of-type(6):before { content: "Comments"; }
-
-    .showWhenSmall {
-        display: block;
-    }
-
-    .hideWhenSmall {
-        display: none;
-    }
-
-    .twoBtnCol {
-        justify-content: center;
-    }
-
-    .smallerScreenBtn {
-        width: 100% !important;
-    }
-    
-    /* Not for timesheet */
-    .formLabel {
-        font-size: 1.3rem !important;
-    }
-}
 .chevron {
     width: 1.3rem;
     height: 1.3rem;
 }
 /* End timesheet styling */
 
-/* Admin dashboard styling */
+/* Home page styling */
 
-.adminContainer{
-    min-height: 100%;
+img.homeLogo {
+    max-width: 10rem;
 }
 
-.mainContent{
-    margin-left: 235px;
-}
-
-#manageBtn{
-    width: 20%;
-    min-width: 200px;
-    height: 150px;
-    margin: 10px;
-    text-align: center;
-}
-.sidebar {
-    position: relative;
-}
-
-.sidebar-item {
-    background-color: var(--pcaGrey);
-    border-top: #DEDEDE;
-    width: 100%;
-}
-
-.sidebar-item a {
-    text-decoration: none;
-    padding: 1rem 1rem 1rem 1rem;
-}
-
-.sidebar-item a:hover {
-    cursor: pointer;
-    color: white;
-    background-color: var(--pcaDarkBlue);
-}
-
-.sidebar-item a:visited {
-    background-color: #c3a579;
-}
-
-.mainContent .fa-user, .mainContent .fa-users {
-    color: #DEDEDE;
-}
-
-/* End admin dashboard styling*/
-
-
-/* Employee info styling */
-
-.table {
-    border: 2px solid #0b3f6d;
-}
-
-.table-th {
-    padding: 10px;
-    border-top: solid 2px #0b3f6d;
-    border-left: solid 2px #0b3f6d;
-    border-right: solid 2px #0b3f6d;
-}
-
-.column{
-    padding: 10px;
-    border: solid 2px #0b3f6d;
-}
-
-.row-striped:nth-child(even) {
-    background-color: rgba(12, 74, 128, .15);
-}
-
-.row-striped:nth-child(odd) {
-    background-color: rgba(12, 74, 128, .29);
-}
-
-.row-disabled {
-    color: gray;
-}
 

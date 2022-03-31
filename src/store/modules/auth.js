@@ -22,6 +22,7 @@ const actions = {
     context.rootState.employees.employees = null;
     context.rootState.user.name = null;
     context.rootState.user.role = null;
+    context.rootState.user.info = null;
     context.rootState.timesheet.retrievedTimesheets = null;
     context.rootState.students.students = null;
 

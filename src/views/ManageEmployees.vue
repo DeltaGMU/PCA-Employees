@@ -1,79 +1,90 @@
 <template>
-    <div class="d-flex">
-        <div class="p-2">
-            <Sidebar>   </Sidebar>
-        </div>
-
-        <div class = "p-2 flex-grow-1">
-            <h1 class="text-blue">Manage Employees</h1>
-            <div class="d-flex mb-3">
-                <div class="me-auto p-2">
-                    <button class="btn blueBtn" @click="$router.push({ path: 'createemployee'})">
-                        Create Employee 
-                    </button>
-                </div>
-                <div class="p-2"></div>
-                <div class="p-2">
-                    <button class="btn blueBtn" style="float: right;" @click="refreshEmployeesTable()">
-                        Refresh Employees List
-                    </button>
-                </div>
+    <div class="container">
+        <NavBar :signed_in="signedIn" :name="empName" :role="empRole" :current_page="currentPage"/>
+        <div class="d-flex">
+            <div class="p-2">
+                <Sidebar/>
             </div>
 
-            <div class="col-sm-12">
-                <label class="form-check-label" for="studentSearchBar">
-                    Filter employee list:
-                </label>
-                <input type="text" v-model="searchQuery" class="form-control rounded" placeholder="Search for employees by ID, First Name, or Last Name..." name="studentSearchBar" id="studentSearchBar"/>
-                <br>
-            </div> 
-            <div class="table-responsive" v-if = "!filteredEmployeesList || !filteredEmployeesList.length">
-                <table class = "pcaTable table-hover">
-                    <thead>
-                        <th class = "table-th text-center" scope = "col" >
-                            Employees List
-                        </th>
-                    </thead>
-                    <tbody>
-                        <tr class = "row-striped">
-                            <td class = "column text-center">No employee information available...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="table-responsive" v-else>
-                <table class = "pcaTable table-hover">
-                    <thead>
-                        <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
-                            {{ option }}
-                        </th>
-                    </thead>
-                    <tbody>
-                        <tr class = "row-striped" v-for = "(employee, index) in filteredEmployeesList" v-bind:key=index>
-                            <td class = "column text-center">{{ employee.employee_id }} </td>
-                            <td class = "column text-center">{{ employee.last_name }} </td>
-                            <td class = "column text-center">{{ employee.first_name}} </td>
-                            <td class = "column text-center"> 
-                                <button class="btn blueBtn" @click="$router.push({ path: 'editEmployee'})">
-                                    Edit 
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class = "p-2 flex-grow-1">
+                <h1 class="text-blue">Manage Employees</h1>
+                <div class="d-flex mb-3">
+                    <div class="me-auto p-2">
+                        <button class="btn blueBtn" @click="$router.push({ path: 'createemployee'})">
+                            Create Employee 
+                        </button>
+                    </div>
+                    <div class="p-2"></div>
+                    <div class="p-2">
+                        <button class="btn blueBtn" style="float: right;" @click="refreshEmployeesTable()">
+                            Refresh Employees List
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <label class="form-check-label" for="studentSearchBar">
+                        Filter employee list:
+                    </label>
+                    <input type="text" v-model="searchQuery" class="form-control rounded" placeholder="Search for employees by ID, First Name, or Last Name..." name="studentSearchBar" id="studentSearchBar"/>
+                    <br>
+                </div> 
+                <div class="table-responsive" v-if="!filteredEmployeesList || !filteredEmployeesList.length">
+                    <table class = "pcaTable table-hover">
+                        <thead>
+                            <th class = "table-th text-center" scope = "col" >
+                                Employees List
+                            </th>
+                        </thead>
+                        <tbody>
+                            <tr class = "row-striped">
+                                <td class = "column text-center">No employee information available...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive" id="manageEmployeeTable" v-else>
+                    <table class = "pcaTable table-hover">
+                        <thead>
+                            <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
+                                {{ option }}
+                            </th>
+                        </thead>
+                        <tbody>
+                            <tr class = "row-striped" v-for = "(employee, index) in filteredEmployeesList" v-bind:key=index>
+                                <td class = "column text-center">{{ employee.employee_id }} </td>
+                                <td class = "column text-center">{{ employee.last_name }} </td>
+                                <td class = "column text-center">{{ employee.first_name}} </td>
+                                <td class = "column text-center"> 
+                                    <button class="btn blueBtn" @click="goToEditEmployee(option)">
+                                        Edit 
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </template> 
 
 <script>
-    import Sidebar from "../components/Sidebar.vue";
+    import Sidebar from "@/components/Sidebar.vue";
+    import NavBar from "@/components/NavBar.vue";
+    
     export default {
         components: {
-            Sidebar
+            Sidebar,
+            NavBar
         },
         data() {
             return {
+                signedIn: this.$store.getters.isAuthenticated,
+                empName: this.$store.getters.StateName,
+                empRole: this.$store.getters.StateRole,
+                currentPage: "/manageemployees",
+
                 searchQuery: '',
                 employeeInfo: this.$store.getters.StateEmployees,
                 columns: [
@@ -114,6 +125,9 @@
                         this.employeeInfo = this.$store.getters.StateEmployees
                     }
                 )
+            },
+            goToEditEmployee(option) {
+                this.$router.push({ name: 'EditEmployee', params: {employeeID: option.id}})
             }
         },
         mounted() {

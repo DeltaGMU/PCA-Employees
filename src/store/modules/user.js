@@ -2,12 +2,14 @@ import axios from "axios";
 
 const state = {
   name: null,
-  role: null
+  role: null,
+  info: null,
 };
 
 const getters = {
     StateName: (state) => state.name,
-    StateRole: (state) => state.role
+    StateRole: (state) => state.role,
+    StateInfo: (state) => state.info
 };
 
 const actions = {
@@ -18,6 +20,16 @@ const actions = {
       await axios.get("api/v1/me", headers).then(
         resp => {
           context.commit("setName", resp.data.data.user);
+        }
+      );
+    },
+    async GetUserInfo(context) {
+      let headers = {
+        headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+      }
+      await axios.get("api/v1/employees/"+context.rootState.auth.user.employee_id, headers).then(
+        resp => {
+          context.commit("setInfo", resp.data.data.employee);
         }
       );
     },
@@ -40,6 +52,9 @@ const mutations = {
     setRole(state, role) {
       state.role = role;
     },
+    setInfo(state, info) {
+      state.info = info;
+    }
 };
   
 export default {

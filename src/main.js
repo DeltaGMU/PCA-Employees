@@ -8,6 +8,7 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/js/all.js';
 import "./css/style.css";
+import "./css/kiosk_style.css";
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "https://localhost:56709/";

@@ -1,183 +1,197 @@
 <template>
-    <div class="d-flex">
-        <div class="p-2">
-            <Sidebar></Sidebar>
-        </div>
-        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deleteAccountBtnLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        Delete Student Account?
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Are you sure you want to delete the student's account?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn blueBtn" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="deleteStudentAccount()">Delete</button>
+    <div class="container">
+        <NavBar :signed_in="signedIn" :name="empName" :role="empRole" :current_page="currentPage"/>
+        <div class="d-flex">
+            <div class="p-2">
+                <Sidebar/>
+            </div>
+            <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deleteAccountBtnLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            Delete Student Account?
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete the student's account?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blueBtn" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="deleteStudentAccount()">Delete</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="p-2 flex-grow-1">
-            <form>
-                <div class="topSection noSelect">
-                    <div class="mb-1">
-                        <h1 class="text-blue">Edit Student</h1>
-                    </div>
-                </div>
-                <div>
-                    <div class="form-group noSelect">
+            <div class="p-2 flex-grow-1">
+                <form>
+                    <div class="topSection noSelect">
                         <div class="mb-1">
-                            <label for="firstNameStudent" class="text-blue formLabel">Student First Name</label>
+                            <h1 class="text-blue">Edit Student</h1>
                         </div>
-                        
-                        <input type="text" class="form-control" id="firstName" required>
-                        
                     </div>
-
-                    <div class="form-group noSelect">
-                        <div class="mb-1">
-                            <label for="lastNameStudent" class="text-blue formLabel">Student Last Name</label>
-                        </div>
-                        
-                        <input type="text" class="form-control" id="lastName" required>
-                    </div>
-
-                    <div class="form-group noSelect">
-                        <div class="mb-1">
-                            <label for="carpool" class="text-blue formLabel">Carpool Number</label>
-                        </div>
-                        
-                        <input type="text" class="form-control" id="carpool" required>
-                    </div>
-                    <br>
-                    <hr>
-                    <div class="form-group noSelect">
-                        <div class="mb-1">
-                            <label for="firstNameParent" class="text-blue formLabel">Parent #1 First Name</label>
-                        </div>
-                        
-                        <input type="text" class="form-control" id="firstName" required>
-                    </div>
-
-                    <div class="form-group noSelect">
-                        <div class="mb-1">
-                            <label for="lastNameParent" class="text-blue formLabel">Parent #1 Last Name</label>
-                        </div>
-                        
-                        <input type="text" class="form-control" id="lastName" required>
-                    </div>
-
-                    <div class="form-group noSelect">
+                    <div>
+                        <div class="form-group noSelect">
                             <div class="mb-1">
-                                <label for="primaryEmail" class="text-blue formLabel">Parent #1 Email</label>
+                                <label for="firstNameStudent" class="text-blue formLabel">Student First Name</label>
                             </div>
                             
-                            <input type="text" class="form-control" id="primaryMail">
-                    </div>
+                            <input type="text" class="form-control" id="firstName" required>
+                            
+                        </div>
 
-                    <div class="form-group noSelect">
-                        <div class="mb-1">
-                            <label for="pass" class="text-blue formLabel">Enable email notifications for Parent #1 email?</label>
-                        </div>
-                        
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault1" id="pass flexRadioDefault1">
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                Yes
-                            </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault1" id="pass flexRadioDefault1">
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                No
-                            </label>
-                        </div>
-                    </div>
-                    <br>
-                    <hr>
-                    <div class="form-group noSelect">
-                        <div class="mb-1">
-                            <label for="firstNameParent" class="text-blue formLabel">Parent #2 First Name</label>
-                        </div>
-                        
-                        <input type="text" class="form-control" id="firstName" placeholder="Optional...">
-                    </div>
-
-                    <div class="form-group noSelect">
-                        <div class="mb-1">
-                            <label for="lastNameParent" class="text-blue formLabel">Parent #2 Last Name</label>
-                        </div>
-                        
-                        <input type="text" class="form-control" id="lastName" placeholder="Optional...">
-                    </div>                   
-                
-                    <div class="form-group noSelect">
+                        <div class="form-group noSelect">
                             <div class="mb-1">
-                                <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Parent #2 Email</label>
+                                <label for="lastNameStudent" class="text-blue formLabel">Student Last Name</label>
                             </div>
                             
-                            <input type="text" class="form-control leaveInput" id="secondaryEmail" placeholder="Optional...">
-                    </div>
+                            <input type="text" class="form-control" id="lastName" required>
+                        </div>
 
-                    <div class="form-group noSelect">
-                        <div class="mb-1">
-                            <label for="notification" class="text-blue formLabel">Enable email notifications for Parent #2 email?</label>
-                        </div>
-                        
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault2" id="notification flexRadioDefault2">
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                Yes
-                            </label>
+                        <div class="form-group noSelect">
+                            <div class="mb-1">
+                                <label for="carpool" class="text-blue formLabel">Carpool Number</label>
                             </div>
-                            <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault2" id="notification flexRadioDefault2">
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                No
-                            </label>
+                            
+                            <input type="text" class="form-control" id="carpool" required>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="form-group noSelect">
-                        <div class="mb-1">
-                            <label for="deleteStudentAccountBtn" class="text-blue formLabel">Delete Student Account:</label><br/>
-                            <button type="button" class="btn btn-danger" name="deleteStudentAccountBtn" id="deleteStudentAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Student Account</button>
-                        </div>
-                    </div>
-                    <div class="form-group noSelect">
-                        <div class="mb-1">
-                            <label for="notification" class="text-blue formLabel">Enable or disable student account:</label>
-                        </div>
-                        
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault3" id="notification flexRadioDefault3">
-                            <label class="form-check-label" for="flexRadioDefault3">
-                                Enable Account
-                            </label>
+                        <br>
+                        <hr>
+                        <div class="form-group noSelect">
+                            <div class="mb-1">
+                                <label for="firstNameParent" class="text-blue formLabel">Parent #1 First Name</label>
                             </div>
-                            <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault3" id="notification flexRadioDefault3">
-                            <label class="form-check-label" for="flexRadioDefault3">
-                                Disable Account
-                            </label>
+                            
+                            <input type="text" class="form-control" id="firstName" required>
                         </div>
+
+                        <div class="form-group noSelect">
+                            <div class="mb-1">
+                                <label for="lastNameParent" class="text-blue formLabel">Parent #1 Last Name</label>
+                            </div>
+                            
+                            <input type="text" class="form-control" id="lastName" required>
+                        </div>
+
+                        <div class="form-group noSelect">
+                                <div class="mb-1">
+                                    <label for="primaryEmail" class="text-blue formLabel">Parent #1 Email</label>
+                                </div>
+                                
+                                <input type="text" class="form-control" id="primaryMail">
+                        </div>
+
+                        <div class="form-group noSelect">
+                            <div class="mb-1">
+                                <label for="pass" class="text-blue formLabel">Enable email notifications for Parent #1 email?</label>
+                            </div>
+                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault1" id="pass flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Yes
+                                </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault1" id="pass flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                        <br>
+                        <hr>
+                        <div class="form-group noSelect">
+                            <div class="mb-1">
+                                <label for="firstNameParent" class="text-blue formLabel">Parent #2 First Name</label>
+                            </div>
+                            
+                            <input type="text" class="form-control" id="firstName" placeholder="Optional...">
+                        </div>
+
+                        <div class="form-group noSelect">
+                            <div class="mb-1">
+                                <label for="lastNameParent" class="text-blue formLabel">Parent #2 Last Name</label>
+                            </div>
+                            
+                            <input type="text" class="form-control" id="lastName" placeholder="Optional...">
+                        </div>                   
+                    
+                        <div class="form-group noSelect">
+                                <div class="mb-1">
+                                    <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Parent #2 Email</label>
+                                </div>
+                                
+                                <input type="text" class="form-control leaveInput" id="secondaryEmail" placeholder="Optional...">
+                        </div>
+
+                        <div class="form-group noSelect">
+                            <div class="mb-1">
+                                <label for="notification" class="text-blue formLabel">Enable email notifications for Parent #2 email?</label>
+                            </div>
+                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault2" id="notification flexRadioDefault2">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Yes
+                                </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault2" id="notification flexRadioDefault2">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group noSelect">
+                            <div class="mb-1">
+                                <label for="deleteStudentAccountBtn" class="text-blue formLabel">Delete Student Account:</label><br/>
+                                <button type="button" class="btn btn-danger" name="deleteStudentAccountBtn" id="deleteStudentAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Student Account</button>
+                            </div>
+                        </div>
+                        <div class="form-group noSelect">
+                            <div class="mb-1">
+                                <label for="notification" class="text-blue formLabel">Enable or disable student account:</label>
+                            </div>
+                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault3" id="notification flexRadioDefault3">
+                                <label class="form-check-label" for="flexRadioDefault3">
+                                    Enable Account
+                                </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault3" id="notification flexRadioDefault3">
+                                <label class="form-check-label" for="flexRadioDefault3">
+                                    Disable Account
+                                </label>
+                            </div>
+                        </div>
+                        <br/>
+                        <button class="btn blueBtn">Submit</button>
                     </div>
-                    <br/>
-                    <button class="btn blueBtn">Submit</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-    import Sidebar from "../components/Sidebar.vue";
+    import Sidebar from "@/components/Sidebar.vue";
+    import NavBar from "@/components/NavBar.vue";
+
     export default {
         components: {
-            Sidebar
+            Sidebar,
+            NavBar
+        },
+        data() {
+            return {
+                signedIn: this.$store.getters.isAuthenticated,
+                empName: this.$store.getters.StateName,
+                empRole: this.$store.getters.StateRole,
+                currentPage: "/editstudent",                       
+            }
         },
         methods: {
             deleteStudentAccount: function() {
