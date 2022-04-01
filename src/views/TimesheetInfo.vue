@@ -13,7 +13,7 @@
                 <div class="pb-3 input-group">
                     <input type="date" class="form-control textBox" id="absenceStartDate" v-model="absenceStartDate" required>
                     <span class="input-group-text">to</span>
-                    <input type="date" class="form-control textBox" id="absenceEndDate" v-model="absenceEndDate" required>
+                    <input type="date" class="form-control textBox" id="absenceEndDate" v-model="absenceEndDate" :min="absenceStartDate" :disabled="!absenceStartDate" required>
                     
                     <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" @click="getReportingPeriod()" :disabled="!absenceStartDate || !absenceEndDate">
                         <span v-show="!isLoading"> Submit</span>
@@ -22,6 +22,7 @@
                     </button>
                 </div>
                 <div class="pb-3" v-if=" selectedPeriod != ''">
+                    <hr>
                     <h4 class="text-blue">Reporting Period: {{ selectedPeriod }}</h4>
                 </div>
 
@@ -66,7 +67,7 @@
                                 <td class = "middleCols">{{ emp.total_hours.pto_hours}} </td>
                                 <td class = "middleCols">{{ emp.total_hours.extra_hours}} </td>
                                 <td> 
-                                    <button type="button" class="btn blueBtn">
+                                    <button type="button" class="btn blueBtn p-2">
                                         <img src="https://s2.svgbox.net/hero-outline.svg?ic=zoom-in&color=ffffff" width="28" height="28">
                                     </button>
                                 </td>
@@ -143,12 +144,24 @@
             },
         },
         methods: {
+            formatDate(rangeDate){
+                let newDate = new Date(rangeDate).toISOString().slice(0, 10);
+                let formatedDate = newDate.slice(5,7) + "/" + newDate.slice(8, 10) + "/" + newDate.slice(0,4);
+                return formatedDate;
+            },
+            formatRange(rangeStart, rangeEnd){
+                let formatedStart = this.formatDate(rangeStart); 
+                let formatedEnd = this.formatDate(rangeEnd);
+                let formatedRange = formatedStart + " to " + formatedEnd;
+                return formatedRange;
+            },
             getReportingPeriod() {
                 if (!this.isLoading) {
                     this.isLoading = true;
                     this.resetInformation();
 
-                    this.selectedPeriod = this.absenceStartDate + " to " + this.absenceEndDate
+                    // this.selectedPeriod = this.absenceStartDate + " to " + this.absenceEndDate
+                    this.selectedPeriod = this.formatRange(this.absenceStartDate, this.absenceEndDate)
 
                     this.payload = {
                         'absenceDateStart': this.absenceStartDate,

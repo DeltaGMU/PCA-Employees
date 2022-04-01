@@ -51,22 +51,6 @@ h1.loginHeader {
 }
 
 
-/* Employee Management Table */
-#manageEmployeeTable {
-    max-height: 500px;
-    overflow-y: scroll;
-    scrollbar-color: var(--pcaDarkBlue) var(--pcaBlue);
-    scrollbar-width: thin;
-}
-
-/* Student Management Table */
-#manageStudentTable {
-    max-height: 500px;
-    overflow-y: scroll;
-    scrollbar-color: var(--pcaDarkBlue) var(--pcaBlue);
-    scrollbar-width: thin;
-}
-
 @media screen and (max-width: 770px) {
     .formBtn {
         width: 13rem !important;
@@ -231,6 +215,8 @@ a.text-beige:hover {
     text-align: center;
     margin-bottom: 1rem;
     user-select: none;
+    max-height: 500px;
+    overflow-y: scroll;
 }
 
 .pcaTable thead {
@@ -288,15 +274,11 @@ td input.textBox {
 
 @media only screen and (max-width: 710px) {
 
-    #manageEmployeeTable {
-        max-height: 100%;
-    }
-
-    #manageStudentTable {
-        max-height: 100%;
-    }
-
 	/* Force table to not be like tables anymore */
+    .pcaTable {
+        max-height: 100%;
+    }
+
 	table.pcaTable, .pcaTable tbody, .pcaTable td, .pcaTable tr { 
 		display: block; 
 	}
