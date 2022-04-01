@@ -211,6 +211,9 @@ a.text-beige:hover {
     text-align: center;
     margin-bottom: 1rem;
     user-select: none;
+}
+
+.table-responsive {
     max-height: 500px;
     overflow-y: scroll;
 }
@@ -271,7 +274,7 @@ td input.textBox {
 @media only screen and (max-width: 710px) {
 
 	/* Force table to not be like tables anymore */
-    .pcaTable {
+    .table-responsive {
         max-height: 100%;
     }
 
