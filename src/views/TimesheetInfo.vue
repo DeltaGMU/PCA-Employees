@@ -21,7 +21,7 @@
                         <span v-show="isLoading"> Loading... </span>
                     </button>
                 </div>
-
+ 
                 <label class="form-check-label" for="reportSearchBar">
                     Filter timesheets list:
                 </label>
@@ -30,53 +30,44 @@
                 </div>
 
                 <div class="table-responsive" v-if="!filteredReportsList || Object.keys(filteredReportsList).length == 0">
-                    <table class = "table table-hover">
+                    <table class = "pcaTable table-hover">
                         <thead>
-                            <th class = "table-th text-center" scope = "col" >
+                            <th scope = "col">
                                 Timesheets List
                             </th>
                         </thead>
                         <tbody>
                             <tr class = "row-striped">
-                                <td class = "column text-center">No timesheet information available...</td>
+                                <td class="noInfo">No timesheet information available...</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="table-responsive" v-else>
-                    <table class = "table table-hover">
+                    <table id="timesheetRecordsTable" class = "pcaTable table-hover">
                         <thead>
-                            <th class = "table-th text-center" v-for="option in options.headings" v-bind:key = "option" scope = "col" >
-                                {{ option }}
-                            </th>
+                            <th scope = "col">Last Name</th>
+                            <th class="middleCols" scope = "col">First Name</th>
+                            <th class="middleCols" scope = "col">Work Hours</th>
+                            <th class="middleCols" scope = "col">PTO Hours</th>
+                            <th class="middleCols" scope = "col">Extra Hours</th>
+                            <th scope = "col">View Details</th>
                         </thead>
                         <tbody>
-                            <!--<template v-for = "emp in empInfo" >
-                                <div v-bind:key="emp.last_name"> -->
 
-                                <tr class = "row-striped" v-for="(emp, index) in filteredReportsList" v-bind:key="index">
-                                    <td class = "column text-center">{{ emp.last_name.charAt(0).toUpperCase() + emp.last_name.slice(1) }} </td>
-                                    <td class = "column text-center">{{ emp.first_name.charAt(0).toUpperCase() + emp.first_name.slice(1)}} </td>
-                                    <td class = "column text-center">{{ emp.total_hours.work_hours}} </td>
-                                    <td class = "column text-center">{{ emp.total_hours.pto_hours}} </td>
-                                    <td class = "column text-center">{{ emp.total_hours.extra_hours}} </td>
-                                    <td class = "column text-center"> 
-                                        <button type="button" class="btn blueBtn">
-                                            <img src="https://s2.svgbox.net/hero-outline.svg?ic=zoom-in&color=ffffff" width="28" height="28">
-                                        </button>
-                                    </td>
-                                </tr>
-                                <!-- <tr class = "row-striped" v-for = "(item, i) in empInfo" v-bind:key="i">
-                                    <td class = "column">{{ item.last_name}} </td>
-                                    <td class = "column">{{ item.first_name}} </td>
-                                    <td class = "column">{{ item.work_hours}} </td>
-                                    <td class = "column">{{ item.pto_hours}} </td>
-                                    <td class = "column">{{ item.extra_hours}} </td>
-                                    <td class = "column">{{ item.sub_status}} </td>
-                                </tr> -->
-                            <!--  </div>
-                            </template> -->
+                            <tr class = "row-striped" v-for="(emp, index) in filteredReportsList" v-bind:key="index">
+                                <td>{{ emp.last_name.charAt(0).toUpperCase() + emp.last_name.slice(1) }} </td>
+                                <td class = "middleCols">{{ emp.first_name.charAt(0).toUpperCase() + emp.first_name.slice(1)}} </td>
+                                <td class = "middleCols">{{ emp.total_hours.work_hours}} </td>
+                                <td class = "middleCols">{{ emp.total_hours.pto_hours}} </td>
+                                <td class = "middleCols">{{ emp.total_hours.extra_hours}} </td>
+                                <td> 
+                                    <button type="button" class="btn blueBtn">
+                                        <img src="https://s2.svgbox.net/hero-outline.svg?ic=zoom-in&color=ffffff" width="28" height="28">
+                                    </button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -88,7 +79,6 @@
 <script>
     import Sidebar from "../components/Sidebar.vue";
     import NavBar from "@/components/NavBar.vue";
-    //import ConvertDateToTimezone from "@/store/utility/date_format";
 
     export default {
         components: {
@@ -172,7 +162,6 @@
             },
             getEmployeeHours() {
                 
-                console.log(this.allEmps)
                 this.payload["employees"] = []
                 for (let emp in Object.keys(this.allEmps)) {
                     this.payload["employees"].push({
@@ -183,18 +172,10 @@
                 }
                 console.log(this.payload)
                 this.$store.dispatch("GetTotalHoursForEmployees", this.payload).then(() => {
-                    console.log("AFTER RETRIEVING HOURS")
+                    //console.log("AFTER RETRIEVING HOURS")
                     this.empTotalHours = this.$store.getters.RetrievedTotalHours
-                    console.log(this.empTotalHours)
+                    //console.log(this.empTotalHours)
                 })
-                /*
-                for(let i = 0; i < this.allEmps.length; i++) {
-                    this.payload["employeeID"] = this.allEmps[i].employee_id
-                    this.$store.dispatch("GetTotalHours", this.payload).then(() => {
-                        console.log("EMPLOYEE " + i + ": " + this.empTotalHours)
-                    })
-                }
-                */  
             },
             resetInformation() {
                 this.allEmps = []

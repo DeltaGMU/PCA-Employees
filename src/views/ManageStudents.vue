@@ -50,18 +50,21 @@
                 <div class="table-responsive" id="manageStudentTable" v-else>
                     <table class = "pcaTable table-hover">
                         <thead>
-                            <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
-                                {{ option }}
-                            </th>
+                            <th scope = "col">ID</th>
+                            <th scope = "col" class="middleCols"> Carpool # </th>
+                            <th scope = "col" class="middleCols"> Last Name </th>
+                            <th scope = "col" class="middleCols"> First Name </th>
+                            <th scope = "col" class="middleCols"> Grade </th>
+                            <th scope = "col"> Edit Student </th>
                         </thead>
                         <tbody>
                             <tr class = "row-striped" v-for = "(student, index) in filteredStudentsList" v-bind:key="index">
-                                <td class = "column text-center">{{ student.student_id }} </td>
-                                <td class = "column text-center">{{ student.carpool_number }} </td>
-                                <td class = "column text-center">{{ student.last_name }} </td>
-                                <td class = "column text-center">{{ student.first_name}} </td>
-                                <td class = "column text-center">{{ student.grade.name}} </td>
-                                <td class = "column text-center"> 
+                                <td>{{ student.student_id }} </td>
+                                <td class = "middleCols">{{ student.carpool_number }} </td>
+                                <td class = "middleCols">{{ student.last_name }} </td>
+                                <td class = "middleCols">{{ student.first_name}} </td>
+                                <td class = "middleCols">{{ student.grade.name}} </td>
+                                <td> 
                                     <button type="button" class="btn blueBtn" @click="$router.push({ path: 'editStudent'})">
                                         Edit 
                                     </button>
