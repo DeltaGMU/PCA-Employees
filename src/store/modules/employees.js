@@ -10,7 +10,6 @@ const getters = {
 
 const actions = {
   async CreateNewEmployee(context, employee_data) {
-    console.log(employee_data);
     let headers = {
       headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token},    
     }
@@ -37,6 +36,23 @@ const actions = {
       }
     );
   },
+  async UpdateEmployee(context, employee_data) {
+    let headers = {
+      headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token},    
+    }
+    return axios.put("api/v1/employees/"+context.rootState.auth.user.employee_id, employee_data, headers).then(
+      resp => {
+        console.log(resp)
+        if (resp.status === 200) {
+          return true;
+        }
+        return false;
+      }
+    ).catch(err => {
+      console.log(err);
+      return false;
+    });
+  }
 };
 
 const mutations = {
