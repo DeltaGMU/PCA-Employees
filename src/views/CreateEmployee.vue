@@ -83,7 +83,7 @@
                                     <label for="primaryEmail" class="text-blue formLabel">Primary Email</label>
                                 </div>
                                 
-                                <input type="text" class="form-control" id="primaryEmail" autocomplete="off" v-model="form_primary_email" placeholder="Employee primary email..." required maxlength="100">
+                                <input type="text" class="form-control" id="primaryEmail" autocomplete="off" v-model="form_primary_email" placeholder="Employee primary email..." maxlength="100" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid email address under 100 characters.
                                 </div>
@@ -111,8 +111,8 @@
                                     <label class="form-check-label" for="primaryEmailNotificationEnabled">
                                         Yes
                                     </label>
-                                    </div>
-                                    <div class="form-check">
+                                </div>
+                                <div class="form-check">
                                     <input class="form-check-input" name="primaryEmailNotification" type="radio" v-model="form_enable_primary_email_notifications" value="false" id="primaryEmailNotificationDisabled" required>
                                     <label class="form-check-label" for="primaryEmailNotificationDisabled">
                                         No
@@ -200,7 +200,7 @@
                             </div>
                         </div>
                         <br/>
-                        <button type="button" id="submitEmployeeFormBtn" class="mb-3 btn blueBtn" @click="submit">
+                        <button type="button" id="submitEmployeeFormBtn" class="mb-3 btn formBtn blueBorder" @click="submit">
                             <span v-show="!isLoading"> Create Employee </span>
                             <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                             <span v-show="isLoading"> Loading... </span>
