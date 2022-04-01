@@ -50,7 +50,30 @@ const actions = {
       }
     })
   },
-
+  async GetTimesheetsForEmployee(context, payload) {
+    //console.log("start day in payload: " + payload.firstDay);
+    //console.log("end day in payload: " + payload.lastDay);
+    console.log(payload)
+    return await axios({
+      method: 'get',
+      url: "api/v1/timesheet/" + payload.employee_id,
+      params: {
+          "date_start": payload.date_start,
+          "date_end": payload.date_end
+      },
+      headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+    }).then(resp => {
+      if (resp !== undefined) {
+        console.log(resp.data.data)
+        return resp.data.data
+      }
+      else {
+        console.log("No employee time sheet records exist for the provided date range!")
+        return {}
+      }
+    })
+  },
+  
   async GetTotalHours(context, payload) {
     //console.log(payload.employeeID)
     return await axios({
@@ -80,8 +103,8 @@ const actions = {
     let employee_ids = payload.employees
     for(let employee in Object.keys(employee_ids)) {
       let new_payload = {
-        date_start: payload.absenceDateStart,
-        date_end: payload.absenceDateEnd,
+        date_start: payload.reportStartDate,
+        date_end: payload.reportEndDate,
         employee_id: employee_ids[employee].employee_id
       }
       console.log(new_payload)
