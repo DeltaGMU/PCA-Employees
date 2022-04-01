@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                             <br/>
-                            <button class="mt-2 btn blueBtn">Submit</button>
+                            <button class="mb-2 btn blueBtn">Submit</button>
                         </div>
                     </div>
                 </form>
