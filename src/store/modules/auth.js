@@ -11,11 +11,24 @@ const getters = {
 
 const actions = {
   async LogIn({commit}, credentials) {
-    await axios.post("api/v1/login", credentials).then(
+    return await axios.post("api/v1/login", credentials).then(
       resp => {
-        commit("setUser", resp.data.data);
+        console.log(resp.status);
+        if (resp && resp.status === 200) {
+          commit("setUser", resp.data.data);
+          return 0;
+        }
+        else if (resp) {
+          return resp.status;
+        }
+        return -1;
       }
-    ).catch(e => console.log(e));
+    ).catch((err) => {
+      if (err) {
+        return err.status
+      }
+      return -1;
+    });
   },
   
   async LogOut(context) {

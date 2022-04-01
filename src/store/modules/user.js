@@ -17,31 +17,52 @@ const actions = {
       let headers = {
         headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
       }
-      await axios.get("api/v1/me", headers).then(
+      return await axios.get("api/v1/me", headers).then(
         resp => {
-          context.commit("setName", resp.data.data.user);
+          if (resp && resp.status == 200) {
+            context.commit("setName", resp.data.data.user);
+            return true;
+          }
+          return false;
         }
-      );
+      ).catch(err => {
+        console.log(err)
+        return false;
+      });
     },
     async GetUserInfo(context) {
       let headers = {
         headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
       }
-      await axios.get("api/v1/employees/"+context.rootState.auth.user.employee_id, headers).then(
+      return await axios.get("api/v1/employees/"+context.rootState.auth.user.employee_id, headers).then(
         resp => {
-          context.commit("setInfo", resp.data.data.employee);
+          if (resp && resp.status == 200) {
+            context.commit("setInfo", resp.data.data.employee);
+            return true;
+          }
+          return false;
         }
-      );
+      ).catch(err => {
+        console.log(err)
+        return false;
+      });
     },
     async GetRole(context) {
       let headers = {
         headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
       }
-      await axios.get("api/v1/employees/" + context.rootState.auth.user.employee_id, headers).then(
+      return await axios.get("api/v1/employees/" + context.rootState.auth.user.employee_id, headers).then(
         resp => {
-          context.commit("setRole", resp.data.data.employee.role.name);
+          if (resp && resp.status == 200) {
+            context.commit("setRole", resp.data.data.employee.role.name);
+            return true;
+          }
+          return false;
         }
-      );
+      ).catch(err => {
+        console.log(err)
+        return false;
+      });
     },
 };
   

@@ -22,7 +22,7 @@
                         </div>
                         <div class="twoBtnCol">
                             <button type="button" class="mt-3 btn formBtn smallerScreenBtn" @click="returnToLogin">Cancel</button>
-                            <button type="submit" class="mt-3 btn formBtn smallerScreenBtn">Send Reset Request</button>
+                            <button type="submit" class="mt-3 btn formBtn smallerScreenBtn">Send Reset Code</button>
                         </div>
                     </form>
                 </div>

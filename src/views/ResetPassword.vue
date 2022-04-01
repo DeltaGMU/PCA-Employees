@@ -18,11 +18,11 @@
                     
                     <form @submit.prevent="submit">
                         <div class="mb-3">
-                            <label for="new_password" class="text-beige">Enter New Password</label>
+                            <label for="new_password" class="formLabel text-beige">Enter New Password</label>
                             <input type="text" class="form-control form-control-lg textBox" name="new_password" v-model="form.new_password" required>
                         </div>
                         <div class="mb-3">
-                            <label for="reset_token" class="text-beige">Enter Reset Code</label>
+                            <label for="reset_token" class="formLabel text-beige">Enter Reset Code</label>
                             <input type="text" class="form-control form-control-lg textBox" name="reset_token" v-model="form.reset_token" required>
                         </div>
                         <div class="twoBtnCol">
