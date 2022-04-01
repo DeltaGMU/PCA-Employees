@@ -18,7 +18,7 @@
             </div>       
         </div>
         
-        <div class="table-responsive">
+        <div class="table-responsive" style="max-height: 100%; overflow: none;">
             <table class="pcaTable" id="timesheet">
                 <thead>
                     <th class="col-1">Date</th>
