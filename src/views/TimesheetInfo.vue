@@ -158,9 +158,8 @@
                     this.$store.dispatch("GetAllEmployees").then(() => {
                         this.allEmps = this.$store.getters.StateEmployees
                         this.getEmployeeHours();
-                        this.refreshReportsTable();
                         this.isLoading = false;
-                    })
+                    });
                 }
             },
             getEmployeeHours() {
