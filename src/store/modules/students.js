@@ -93,7 +93,22 @@ const actions = {
         console.log(err);
         return false;
       });
-    }
+    },
+    async CheckInStudent(context, payload) {
+      console.log(context)
+      console.log(payload)
+      return await axios.post("api/v1/care/checkin", payload).then(
+        resp => {
+          if (resp && resp.status == 201) {
+            return true;
+          }
+          return false;
+        }
+      ).catch(err => {
+        console.log(err);
+        return false;
+      })
+    },
 };
   
 const mutations = {

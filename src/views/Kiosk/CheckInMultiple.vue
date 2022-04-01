@@ -48,8 +48,13 @@
                     </tbody>
                 </table>
             </div> 
+
             <div class="pt-2">
-                <button class="btn blueBtn">Check In</button>
+                <button type="button" class="mt-3 btn formBtn blueBorder smallerScreenBtn" @click="checkInSelectedStudents">
+                    <span v-show="!isLoading"> Check In Selected Students </span>
+                    <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
+                    <span v-show="isLoading"> Loading... </span>
+                </button>
             </div>
         </div>
     </div>
@@ -71,16 +76,17 @@ export default {
             empName: this.$store.getters.StateName,
             empRole: this.$store.getters.StateRole,
             currentPage: "/kiosk/checkinmultiple",
+            isLoading: false,
 
             isCheckAll: false,
             selected: '',
             students: [],
             grades: [],
-            selectedStudents: []
+            selectedStudents: [],
         }        
     },
     methods: {
-        checkAll: function(){
+        checkAll() {
 
             this.isCheckAll = !this.isCheckAll;
             this.selectedStudents = [];
@@ -91,7 +97,7 @@ export default {
                 }
             }
         },
-        updateCheckall: function() {
+        updateCheckall() {
             if(this.students.length == this.selectedStudents.length) {
                 this.isCheckAll = true;
             }
@@ -99,6 +105,49 @@ export default {
                 this.isCheckAll = false;
             }
         },
+        checkInSelectedStudents() {
+            if (!this.isLoading) {
+                this.isLoading = true;
+                console.log(this.selectedStudents)
+                for (let index in this.selectedStudents) {
+                    let date_test = new Date('April 1, 2022 15:30:00')
+                    let student = this.selectedStudents[index]
+                    let currentDate = ConvertDateToTimezone(date_test).slice(0, 10)
+                    let currentTime = ('0'  +  date_test.getHours()).slice(-2)+':'+('0' + date_test.getMinutes()).slice(-2);
+                    console.log(student)
+                    console.log(currentDate)
+                    console.log(currentTime)
+                    let payload = {
+                        'student_id': student.student.student_id,
+                        'check_in_time': currentTime,
+                        'check_in_date': currentDate,
+                        'care_type': true,
+                        'check_in_signature': this.$store.getters.StateName 
+                    }
+                    console.log(payload)
+                    this.$store.dispatch("CheckInStudent", payload).then(resp => {
+                        console.log(resp)
+                    }).catch(err => {
+                        console.log(err)
+                    });
+                }
+                this.isLoading = false;
+                console.log(this.selected)
+                this.$store.dispatch("GetStudentsByGrade", {
+                    student_grade: this.selected.name, 
+                    care_type: true, 
+                    care_date: ConvertDateToTimezone(new Date()).slice(0, 10),
+                }).then(
+                    (resp) => {
+                        if (resp !== undefined) {
+                            this.students = resp
+                            this.studentsTwo = [];
+                            this.isCheckAll = false;
+                        }
+                    }
+                )
+            }
+        }
     },
     watch: {
         selected(value) {
