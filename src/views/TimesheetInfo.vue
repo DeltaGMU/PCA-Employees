@@ -11,23 +11,20 @@
 
                 <label class="form-check-label" for="absenceStartDate">Please select a reporting period:</label>
                 <div class="pb-3 input-group">
-                    <input type="date" class="form-control textBox" id="absenceStartDate" required>
+                    <input type="date" class="form-control textBox" id="absenceStartDate" v-model="absenceStartDate" required>
                     <span class="input-group-text">to</span>
-                    <input type="date" class="form-control textBox" id="absenceEndDate" required>
-                    <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" @click="getReportingPeriod()">Submit</button>
+                    <input type="date" class="form-control textBox" id="absenceEndDate" v-model="absenceEndDate" required>
+                    <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" @click="getReportingPeriod()" :disabled="!absenceStartDate || !absenceEndDate">Submit</button>
                 </div>
 
                 <label class="form-check-label" for="reportSearchBar">
                     Filter timesheets list:
                 </label>
                 <div class="pb-3 input-group">
-                    <input type="text" style="border-radius: 5px 0px 0px 5px;" v-model="searchQuery" class="form-control" placeholder="Search for timesheets by First Name, Last Name..." name="reportSearchBar" id="reportSearchBar">
-                    <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" type="button" @click="refreshReportsTable()">
-                        Refresh Timesheets
-                    </button>
+                    <input type="text" v-model="searchQuery" class="form-control" placeholder="Search for timesheets by First Name, Last Name..." name="reportSearchBar" id="reportSearchBar">
                 </div>
 
-                <div class="table-responsive" v-if = "!filteredReportsList || !filteredReportsList.length">
+                <div class="table-responsive" v-if="!filteredReportsList || Object.keys(filteredReportsList).length == 0">
                     <table class = "table table-hover">
                         <thead>
                             <th class = "table-th text-center" scope = "col" >
@@ -45,7 +42,7 @@
                 <div class="table-responsive" v-else>
                     <table class = "table table-hover">
                         <thead>
-                            <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
+                            <th class = "table-th text-center" v-for="option in options.headings" v-bind:key = "option" scope = "col" >
                                 {{ option }}
                             </th>
                         </thead>
@@ -53,12 +50,12 @@
                             <!--<template v-for = "emp in empInfo" >
                                 <div v-bind:key="emp.last_name"> -->
 
-                                <tr class = "row-striped" v-for = "(emp, index) in filteredReportsList" v-bind:key="index">
-                                    <td class = "column text-center">{{ emp.last_name }} </td>
-                                    <td class = "column text-center">{{ emp.first_name}} </td>
-                                    <td class = "column text-center">{{ emp.work_hours}} </td>
-                                    <td class = "column text-center">{{ emp.pto_hours}} </td>
-                                    <td class = "column text-center">{{ emp.extra_hours}} </td>
+                                <tr class = "row-striped" v-for="(emp, index) in filteredReportsList" v-bind:key="index">
+                                    <td class = "column text-center">{{ emp.last_name.charAt(0).toUpperCase() + emp.last_name.slice(1) }} </td>
+                                    <td class = "column text-center">{{ emp.first_name.charAt(0).toUpperCase() + emp.first_name.slice(1)}} </td>
+                                    <td class = "column text-center">{{ emp.total_hours.work_hours}} </td>
+                                    <td class = "column text-center">{{ emp.total_hours.pto_hours}} </td>
+                                    <td class = "column text-center">{{ emp.total_hours.extra_hours}} </td>
                                     <td class = "column text-center"> 
                                         <button type="button" class="btn blueBtn">
                                             <img src="https://s2.svgbox.net/hero-outline.svg?ic=zoom-in&color=ffffff" width="28" height="28">
@@ -98,40 +95,16 @@
                 signedIn: this.$store.getters.isAuthenticated,
                 empName: this.$store.getters.StateName,
                 empRole: this.$store.getters.StateRole,
-                allEmps: this.$store.getters.StateEmployees,
-                empTotalHours: this.$store.getters.RetrievedTotalHours,
                 currentPage: "/timesheetinfo",
+
+                allEmps: [],
+                empTotalHours: {},
                 absenceStartDate: "",
                 absenceEndDate: "",
                 selectedPeriod: "",
 
                 searchQuery: "",
-                timesheetInfo: [
-                    {
-                        'last_name':'Adams',
-                        'first_name': 'Jane',
-                        'work_hours': 30,
-                        'pto_hours': 0,
-                        'extra_hours': 0
-                    },
-                    {
-                        'last_name':'Smith',
-                        'first_name': 'Amy',
-                        'work_hours': 30,
-                        'pto_hours': 0,
-                        'extra_hours': 0
-                    },
-                    {
-                        'last_name':'Jones',
-                        'first_name': 'Sam',
-                        'work_hours': 30,
-                        'pto_hours': 0,
-                        'extra_hours': 0
-                    },
-                    
-                    
-                    
-                ],
+
                 columns: [
                     'last_name',
                     'first_name',
@@ -154,15 +127,19 @@
         },
         computed: {
             filteredReportsList() {
-                if (this.timesheetInfo !== null) {
-                    return this.timesheetInfo.filter(item => {
+                if (this.empTotalHours !== null) {
+                    return Object.keys(this.empTotalHours).filter(key => {
                         return (
-                            item.first_name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1
-                            ) || (item.last_name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1);
-                    })
+                            this.empTotalHours[key].first_name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1 ||
+                            this.empTotalHours[key].last_name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1
+                        );                    
+                    }).reduce((cur, key) => {
+                        cur[key] = this.empTotalHours[key];
+                        return cur;
+                    }, {})
                 }
                 else {
-                    return [];
+                    return {};
                 }
             },
         },
@@ -181,31 +158,59 @@
                 */
             },
             getReportingPeriod() {
-                this.absenceStartDate = document.getElementById("absenceStartDate").value
-                this.absenceEndDate = document.getElementById("absenceEndDate").value
+                this.resetInformation();
 
+                // this.absenceStartDate = document.getElementById("absenceStartDate").value
+                // this.absenceEndDate = document.getElementById("absenceEndDate").value
                 this.selectedPeriod = this.absenceStartDate + " to " + this.absenceEndDate
 
                 this.payload = {
-                    'absenceDateStart': this.absenceDateStart,
-                    'absenceDateEnd': this.absenceDateEnd
+                    'absenceDateStart': this.absenceStartDate,
+                    'absenceDateEnd': this.absenceEndDate
                 }
+                console.log(this.payload)
+                this.$store.dispatch("GetAllEmployees").then(() => {
+                    this.allEmps = this.$store.getters.StateEmployees
+                    this.getEmployeeHours();
+                    this.refreshReportsTable();
+                })
             },
             getEmployeeHours() {
                 
                 console.log(this.allEmps)
-
+                this.payload["employees"] = []
+                for (let emp in Object.keys(this.allEmps)) {
+                    this.payload["employees"].push({
+                        first_name: this.allEmps[emp].first_name,
+                        last_name: this.allEmps[emp].last_name,
+                        employee_id: this.allEmps[emp].employee_id
+                    })
+                }
+                console.log(this.payload)
+                this.$store.dispatch("GetTotalHoursForEmployees", this.payload).then(() => {
+                    console.log("AFTER RETRIEVING HOURS")
+                    this.empTotalHours = this.$store.getters.RetrievedTotalHours
+                    console.log(this.empTotalHours)
+                })
+                /*
                 for(let i = 0; i < this.allEmps.length; i++) {
                     this.payload["employeeID"] = this.allEmps[i].employee_id
-                    this.$store.dispatch("GetTotalHours", this.payload)
-                    console.log("EMPLOYEE " + i + ": " + this.empTotalHours)
-                }               
+                    this.$store.dispatch("GetTotalHours", this.payload).then(() => {
+                        console.log("EMPLOYEE " + i + ": " + this.empTotalHours)
+                    })
+                }
+                */  
+            },
+            resetInformation() {
+                this.allEmps = []
+                this.empTotalHours = {}
+                this.selectedPeriod = ""
             },
         },
         mounted() {
-            this.$store.dispatch("GetAllEmployees");
-            this.getEmployeeHours();
-            this.refreshReportsTable();
+            this.resetInformation();
+            this.absenceStartDate = ""
+            this.absenceEndDate = ""
         }
     };
 </script>

@@ -53,24 +53,54 @@ const actions = {
 
   async GetTotalHours(context, payload) {
     //console.log(payload.employeeID)
-    await axios({
+    return await axios({
       method: 'get',
-      url: "api/v1/timesheet/hours/" + payload.employeeID,
+      url: "api/v1/timesheet/hours/" + payload.employee_id,
       params: {
-        "absenceDateStart": payload.absenceDateStart,
-        "absenceDateEnd": payload.absenceDateEnd
+        "date_start": payload.date_start,
+        "date_end": payload.date_end
       },
      headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
     }).then(resp => {
       if (resp !== undefined) {
-        context.commit("retrievedTotalHours", resp.data.data.total_hours)
+        console.log(resp.data.data.total_hours)
+        return resp.data.data.total_hours
+        // context.commit("retrievedTotalHours", resp.data)
       }
       else {
         console.log("No employee time sheet records exist for the provided date range!")
-        context.commit("retrievedTotalHours", {})
+        return {}
+        // context.commit("retrievedTotalHours", {})
       }
     })
- }
+  },
+
+  async GetTotalHoursForEmployees(context, payload) {
+    let employee_hours_obj = {}
+    let employee_ids = payload.employees
+    for(let employee in Object.keys(employee_ids)) {
+      let new_payload = {
+        date_start: payload.absenceDateStart,
+        date_end: payload.absenceDateEnd,
+        employee_id: employee_ids[employee].employee_id
+      }
+      console.log(new_payload)
+      await context.dispatch("GetTotalHours", new_payload).then(resp => {
+        if(resp !== undefined) {
+          employee_hours_obj[new_payload.employee_id] = {
+            first_name: employee_ids[employee].first_name,
+            last_name: employee_ids[employee].last_name,
+            total_hours: resp
+          }
+        }
+        else {
+          console.log("MISSING DATA FOR - " + new_payload.employee_id)
+        }
+      }).then(() => {
+        context.commit("retrievedTotalHours", employee_hours_obj)
+      })
+    }
+  }
 };
 
 const mutations = {
