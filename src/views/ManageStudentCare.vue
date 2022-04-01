@@ -5,6 +5,23 @@
             <div class="p-2">
                 <Sidebar>   </Sidebar>
             </div>
+            <div class="modal fade" id="no-records-found" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="noRecordsFoundLbl" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>No Student Records Found!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeModal"></button>
+                        </div>
+                        <div class="modal-body">
+                            No student records were found for the provided student ID in the last 30 days.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blueBtn" data-bs-dismiss="modal" @click="closeModal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
             <div class="modal fade" id="delete-finished" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deleteFinishedLbl" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -16,7 +33,7 @@
                             {{ modalDeleteMessage }}
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Ok</button>
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Ok</button>
                         </div>
                     </div>
                 </div>
@@ -86,7 +103,7 @@
                         </div>
                         
                         <div class="d-flex justify-content-center">
-                            <button type="button" id="studentSearchBtn" :disabled="student_id.length == 0" class="mt-3 btn formBtn blueBorder smallerScreenBtn" @click="checkStudentInfo">
+                            <button type="button" id="studentSearchBtn" :disabled="student_id.length == 0" class="mt-3 btn formBtn blueBorder smallerScreenBtn" @click="checkStudentInfo(true)">
                                 <span v-show="!isLoading"> Search </span>
                                 <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                                 <span v-show="isLoading"> Loading... </span>
@@ -223,14 +240,25 @@
         },
         methods: {
             ...mapActions(["GetStudentCareRecords", "DeleteStudentCareRecord"]),
-            checkStudentInfo() {
+            openModal() {
+                document.getElementById("backdrop").style.display = "block"
+                document.getElementById("no-records-found").style.display = "block"
+                document.getElementById("no-records-found").classList.add("show")
+            },
+
+            closeModal() {
+                document.getElementById("backdrop").style.display = "none"
+                document.getElementById("no-records-found").style.display = "none"
+                document.getElementById("no-records-found").classList.remove("show")
+            },
+            checkStudentInfo(showNoStudentsFoundModal = false) {
                 if (!this.isLoading) {
                     this.isLoading = true;
                     this.GetStudentCareRecords({
                         student_id: this.student_id.trim(), 
                         start_date: this.thirty_days_ago, 
                         end_date: this.today
-                    }).then((resp) => {
+                    }).then(resp => {
                         this.records = resp;
                         this.showError = false;
                         this.incorrect_id = "";
@@ -238,7 +266,10 @@
                         this.selected_record = {};
                         this.selected_care = 0;
                         console.log(this.records);
-                    }).catch((err) => {
+                        if (showNoStudentsFoundModal && Object.keys(this.records).length === 0) {
+                            this.openModal();
+                        }
+                    }).catch(err => {
                         console.log(err);
                         this.showError = true;
                         this.incorrect_id = this.student_id;
