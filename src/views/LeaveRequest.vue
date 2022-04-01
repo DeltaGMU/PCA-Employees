@@ -38,9 +38,9 @@
                         </div>
                         
                         <div class="mb-3 input-group">
-                            <input type="date" class="form-control textBox" id="absenceDateStart" :min = " min " required>
+                            <input type="date" class="form-control textBox" id="absenceDateStart" :min = "min" required>
                             <span class="input-group-text">to</span>
-                            <input type="date" class="form-control textBox" id="absenceDateEnd" :min=" min " required>
+                            <input type="date" class="form-control textBox" id="absenceDateEnd" :min="min" required>
                         </div>
 
                         <div class="mb-3 row">
