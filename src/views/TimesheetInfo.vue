@@ -163,21 +163,22 @@
                 }
             },
             getEmployeeHours() {
-                
                 this.payload["employees"] = []
-                for (let emp in Object.keys(this.allEmps)) {
-                    this.payload["employees"].push({
-                        first_name: this.allEmps[emp].first_name,
-                        last_name: this.allEmps[emp].last_name,
-                        employee_id: this.allEmps[emp].employee_id
+                if (this.allEmps.length > 0) {
+                    for (let emp in Object.keys(this.allEmps)) {
+                        this.payload["employees"].push({
+                            first_name: this.allEmps[emp].first_name,
+                            last_name: this.allEmps[emp].last_name,
+                            employee_id: this.allEmps[emp].employee_id
+                        })
+                    }
+                    console.log(this.payload)
+                    this.$store.dispatch("GetTotalHoursForEmployees", this.payload).then(() => {
+                        //console.log("AFTER RETRIEVING HOURS")
+                        this.empTotalHours = this.$store.getters.RetrievedTotalHours
+                        //console.log(this.empTotalHours)
                     })
                 }
-                console.log(this.payload)
-                this.$store.dispatch("GetTotalHoursForEmployees", this.payload).then(() => {
-                    //console.log("AFTER RETRIEVING HOURS")
-                    this.empTotalHours = this.$store.getters.RetrievedTotalHours
-                    //console.log(this.empTotalHours)
-                })
             },
             resetInformation() {
                 this.allEmps = []
