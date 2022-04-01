@@ -5,6 +5,22 @@
             <div class="p-2">
                 <Sidebar>   </Sidebar>
             </div>
+            <div class="modal fade" id="delete-finished" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deleteFinishedLbl" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>Student Record Deletion Notice</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{ modalDeleteMessage }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deleteStudentRecordLbl" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -49,7 +65,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn blueBtn" data-bs-dismiss="modal" @click="clearSelectedCareRecord()">Cancel</button>
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="deleteSelectedCareRecord()">Delete</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#delete-finished" @click="deleteSelectedCareRecord()">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -167,6 +183,7 @@
                 empRole: this.$store.getters.StateRole,
                 currentPage: "/managestudentcare",
 
+                modalDeleteMessage: "",
                 searchQuery: "",
                 incorrect_id: "",
                 student_id: "",
@@ -250,14 +267,19 @@
                     }).then(resp => {
                         if (!resp) {
                             console.log("Error deleting student record!");
+                            this.modalDeleteMessage = "Error deleting student record!"
+                            return false;
                         }
                         else {
                             console.log("Deleted student record!");
+                            this.modalDeleteMessage = "Deleted student record!"
+                            return true;
                         }
                     })
                     this.clearSelectedCareRecord();
                     this.checkStudentInfo();
                 }
+                return false;
             }
         },
     };
