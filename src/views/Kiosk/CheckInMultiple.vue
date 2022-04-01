@@ -3,16 +3,19 @@
         <NavBar :signed_in="signedIn" :name="empName" :role="empRole" :current_page="currentPage"/>
         <div class="p-3">
             <h1 class="text-blue noSelect">Check In Students for After Care</h1>
-            <div class="pb-2 noSelect">
+            <div class="mb-3 noSelect">
                 <div>
                     <label for="role" class="text-blue formLabel">Select Grade</label>
                 </div>
 
-                <select class="form-select" v-model="selected" name="selectGrades" id="selectGrades">
+                <select class="form-select p-1 ms-1" v-model="selected" name="selectGrades" id="selectGrades">
                     <option value="" selected disabled>Select an option...</option>
                     <option v-for="(grade, index) in grades" :value="grades[index]" v-bind:key = "grade.id">{{ grades[index].name.toUpperCase() }}</option>
                 </select>
-
+                <br>
+                <button class="btn blueBtn p-2" type="button" @click="refreshStudentList(selected.name)" v-if="selected.name">
+                    Refresh Reports
+                </button>
             </div>
             <div class="table-responsive noSelect" v-if = "!students || !students.length">
                 <table class="pcaTable table-hover">
@@ -79,7 +82,7 @@ export default {
             isLoading: false,
 
             isCheckAll: false,
-            selected: '',
+            selected: {name: ""},
             students: [],
             grades: [],
             selectedStudents: [],
@@ -87,7 +90,6 @@ export default {
     },
     methods: {
         checkAll() {
-
             this.isCheckAll = !this.isCheckAll;
             this.selectedStudents = [];
             
@@ -114,9 +116,6 @@ export default {
                     let student = this.selectedStudents[index]
                     let currentDate = ConvertDateToTimezone(date_test).slice(0, 10)
                     let currentTime = ('0'  +  date_test.getHours()).slice(-2)+':'+('0' + date_test.getMinutes()).slice(-2);
-                    console.log(student)
-                    console.log(currentDate)
-                    console.log(currentTime)
                     let payload = {
                         'student_id': student.student.student_id,
                         'check_in_time': currentTime,
@@ -127,44 +126,46 @@ export default {
                     console.log(payload)
                     this.$store.dispatch("CheckInStudent", payload).then(resp => {
                         console.log(resp)
+                        this.refreshStudentList(this.selected.name);
+                        this.isLoading = false;  
                     }).catch(err => {
                         console.log(err)
                     });
                 }
-                this.isLoading = false;
-                console.log(this.selected)
+                this.isLoading = false;                
+            }
+        },
+        refreshStudentList(selected_grade) {
+            if (!this.isLoading) {
+                this.isLoading = true;
+                if (!selected_grade || selected_grade.length === 0 ) {
+                    this.isLoading = false;
+                    return;
+                }
                 this.$store.dispatch("GetStudentsByGrade", {
-                    student_grade: this.selected.name, 
+                    student_grade: selected_grade, 
                     care_type: true, 
                     care_date: ConvertDateToTimezone(new Date()).slice(0, 10),
                 }).then(
                     (resp) => {
                         if (resp !== undefined) {
                             this.students = resp
-                            this.studentsTwo = [];
+                            this.selectedStudents = [];
                             this.isCheckAll = false;
                         }
+                        this.isLoading = false;
                     }
-                )
+                ).catch(err => {
+                    console.log(err)
+                    this.isLoading = false;
+                });
             }
         }
     },
     watch: {
         selected(value) {
             // console.log("selected grade: " + value.name);
-            this.$store.dispatch("GetStudentsByGrade", {
-                student_grade: value.name, 
-                care_type: true, 
-                care_date: ConvertDateToTimezone(new Date()).slice(0, 10),
-            }).then(
-                (resp) => {
-                    if (resp !== undefined) {
-                        this.students = resp
-                        this.studentsTwo = [];
-                        this.isCheckAll = false;
-                    }
-                }
-            )
+            this.refreshStudentList(value.name);
         }
     },
     beforeMount() {
