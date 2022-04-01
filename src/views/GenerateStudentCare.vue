@@ -17,43 +17,40 @@
                         <span class="input-group-text">to</span>
                         <input v-model = "rangeEnd" type="date" class="form-control textBox" id="rangeDateEnd" required>
                         
-            </div>
-            <button class="btn blueBtn"  @click = "submitReportingPeriod()">
-                Submit
-            </button>
+                </div>
+                <button type="button" class="btn blueBtn"  @click="submitReportingPeriod()">
+                    Submit
+                </button>
             </form>
 
-            <div v-if= "isSubmitted == true">
+            <div v-if="isSubmitted == true">
+                <div class = "p-2" >
+                    <h2>Reporting Period for Student Care: </h2> 
+                    <h3> {{ formatRange(rangeStart, rangeEnd) }}</h3>
+                </div>
 
-            <div class = "p-2" >
-                <h2>Reporting Period for Student Care: </h2> 
-                <h3> {{ formatRange(rangeStart, rangeEnd) }}</h3>
-            </div>
+                <div class = "p-2" >
+                    <img class = "float-start w-50 h-75" v-bind:src= "report" style = "display: inline-block, position: absolute" />
+                
+                    <button id= "btn blueBtn" class="btn blueBtn">
+                        Download .PDF
+                    </button>
 
-            <div class = "p-2" >
-                <img class = "float-start w-50 h-75" v-bind:src= "report" style = "display: inline-block, position: absolute" />
-            
-                <button id= "btn blueBtn" class="btn blueBtn">
-                    Download .PDF
-                </button>
+                    <br> <br>
 
-                <br> <br>
-
-                <button id= "btn blueBtn" class="btn blueBtn">
-                    Download .CSV 
-                </button>
-            </div>
-            </div>
+                    <button id= "btn blueBtn" class="btn blueBtn">
+                        Download .CSV 
+                    </button>
+                </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import Sidebar from "../components/Sidebar.vue";
+    import Sidebar from "@/components/Sidebar.vue";
     import NavBar from "@/components/NavBar.vue";
-    import ConvertDateToTimezone from "@/store/utility/date_format";
-
 
     export default {
         components: {
@@ -77,7 +74,7 @@
     
         methods: {
             formatDate(rangeDate){
-                let newDate = ConvertDateToTimezone(new Date(rangeDate)).slice(0, 10);
+                let newDate = new Date(rangeDate).toISOString().slice(0, 10);
                 let formatedDate = newDate.slice(5,7) + "/" + newDate.slice(8, 10) + "/" + newDate.slice(0,4);
                 return formatedDate;
             },

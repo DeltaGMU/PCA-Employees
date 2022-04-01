@@ -16,6 +16,7 @@ import EditEmployee from "../views/EditEmployee";
 import EditStudent from "../views/EditStudent";
 import CreateEmployee from "../views/CreateEmployee";
 import CreateStudent from "../views/CreateStudent";
+import GenerateStudentCare from "../views/GenerateStudentCare";
 // Kiosk Imports
 import KioskHome from "../views/Kiosk/KioskHome";
 import StudentFinder from "../views/Kiosk/StudentFinder";
@@ -116,6 +117,12 @@ const routes = [
     name: "CreateStudent",
     component: CreateStudent,
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/generatestudentcare",
+    name: "GenerateStudentCare",
+    component: GenerateStudentCare,
+    meta: { requiredAuth: true }
   },
   // Kiosk Routes:
   {
