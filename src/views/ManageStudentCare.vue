@@ -80,16 +80,8 @@
                 </div>
 
                 <hr>
-                <div class="input-group mb-3" v-if="Object.keys(records).length > 0">
-                    <br>
-                    <input type="text" style="border-radius: 5px 0px 0px 5px;" v-model="searchQuery" class="form-control" placeholder="Search for records by Date..." name="recordSearchBar" id="recordSearchBar"/>
-                    <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" type="button" @click="checkStudentInfo()">
-                        Refresh Reports
-                    </button>
-                    <br>
-                </div>
-                
                 <div class="table-responsive noSelect" v-if="!filteredRecordsList || Object.keys(filteredRecordsList).length == 0">
+                    <h4 class="text-blue">Records period: {{ this.thirty_days_ago }} to {{ this.today }}</h4>
                     <table class="pcaTable table-hover">
                         <thead>
                             <th scope = "col" >
@@ -105,6 +97,14 @@
                 </div>
                 <div class="table-responsive noSelect" v-else>
                     <h4 class="text-blue">Records period: {{ this.thirty_days_ago }} to {{ this.today }}</h4>
+                    <div class="input-group mb-3" v-if="Object.keys(records).length > 0">
+                        <br>
+                        <input type="text" style="border-radius: 5px 0px 0px 5px;" v-model="searchQuery" class="form-control p-1 ms-1" placeholder="Search for records by Date..." name="recordSearchBar" id="recordSearchBar"/>
+                        <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" type="button" @click="checkStudentInfo()">
+                            Refresh Reports
+                        </button>
+                        <br>
+                    </div>
                     <table id="manageStudentCareTable" class="pcaTable table-hover">
                         <thead>
                             <th scope = "col">Date</th>
@@ -119,8 +119,8 @@
                             <tr class="row-striped text-center" v-for="(record, index) in filteredRecordsList" :key="index">
                                 <td>{{ index }}</td>
                                 <td class="middleCols">{{ record.student.first_name }} {{ record.student.last_name }}</td>
-                                <td class="middleCols"><input class="form-check-input" type="checkbox" onClick="return false;" :checked="!!record.before_care"></td>
-                                <td class="middleCols"><input class="form-check-input" type="checkbox" onClick="return false;" :checked="!!record.after_care"></td>
+                                <td class="middleCols"><input class="form-check-input" type="checkbox" onClick="return false;" :checked="!!record.before_care" disabled></td>
+                                <td class="middleCols"><input class="form-check-input" type="checkbox" onClick="return false;" :checked="!!record.after_care" disabled></td>
                                 <td class="middleCols mobilePadding">
                                     <button type="button" v-if="!!record.before_care" class="btn btn-danger" id="deleteStudentBCButton" data-bs-toggle="modal" data-bs-target="#confirm-delete" @click="setSelectedCareRecord(record, 0)">
                                         <span class="fa-solid fa-xmark">
@@ -210,7 +210,7 @@
                 if (!this.isLoading) {
                     this.isLoading = true;
                     this.GetStudentCareRecords({
-                        student_id: this.student_id, 
+                        student_id: this.student_id.trim(), 
                         start_date: this.thirty_days_ago, 
                         end_date: this.today
                     }).then((resp) => {
