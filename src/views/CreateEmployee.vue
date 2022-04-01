@@ -107,13 +107,13 @@
                                 </div>
                                 
                                 <div class="form-check">
-                                    <input class="form-check-input" name="primaryEmailNotification" type="radio" v-model="form_enable_primary_email_notifications" value="true" id="primaryEmailNotificationEnabled" required>
+                                    <input class="form-check-input" name="primaryEmailNotification" value="true" type="radio" v-model="form_enable_primary_email_notifications" id="primaryEmailNotificationEnabled" required>
                                     <label class="form-check-label" for="primaryEmailNotificationEnabled">
                                         Yes
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" name="primaryEmailNotification" type="radio" v-model="form_enable_primary_email_notifications" value="false" id="primaryEmailNotificationDisabled" required>
+                                    <input class="form-check-input" name="primaryEmailNotification" value="false" type="radio" v-model="form_enable_primary_email_notifications" id="primaryEmailNotificationDisabled" required>
                                     <label class="form-check-label" for="primaryEmailNotificationDisabled">
                                         No
                                     </label>
@@ -127,13 +127,13 @@
                                 </div>
                                 
                                 <div class="form-check">
-                                    <input class="form-check-input" name="secondaryEmailNotification" value="true" :disabled="enableSecondaryEmailNotificationRadios == 'true'" type="radio" v-model="form_enable_secondary_email_notifications" id="secondaryEmailNotificationEnabled">
+                                    <input class="form-check-input" name="secondaryEmailNotification" value="true" :disabled="!enableSecondaryEmailNotificationRadios" type="radio" v-model="form_enable_secondary_email_notifications" id="secondaryEmailNotificationEnabled">
                                     <label class="form-check-label" for="secondaryEmailNotificationEnabled">
                                         Yes
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" name="secondaryEmailNotification" value="false" :disabled="enableSecondaryEmailNotificationRadios == 'true'" type="radio" v-model="form_enable_secondary_email_notifications" id="secondaryEmailNotificationDisabled">
+                                    <input class="form-check-input" name="secondaryEmailNotification" value="false" :disabled="!enableSecondaryEmailNotificationRadios" type="radio" v-model="form_enable_secondary_email_notifications" id="secondaryEmailNotificationDisabled">
                                     <label class="form-check-label" for="secondaryEmailNotificationDisabled">
                                         No
                                     </label>
@@ -252,7 +252,9 @@
                 if (secondary_email.length > 0) {
                     this.enableSecondaryEmailNotificationRadios = true;
                 }
-                this.enableSecondaryEmailNotificationRadios = false;
+                else {
+                    this.enableSecondaryEmailNotificationRadios = false;
+                }
             }
         },
         mounted() {
@@ -304,10 +306,12 @@
                     "secondary_email": this.form_secondary_email,
                     "role": this.form_role_selection,
                     "enable_primary_email_notifications": this.form_enable_primary_email_notifications === 'true',
-                    "enable_secondary_email_notifications": this.form_enable_secondary_email_notifications === 'true',
                     "pto_hours_enabled": this.form_enable_pto_hours === 'true',
                     "extra_hours_enabled": this.form_enable_extra_hours === 'true',
                     "is_enabled": this.form_enable_account === 'true'
+                }
+                if (this.enableSecondaryEmailNotificationRadios) {
+                    payload["enable_secondary_email_notifications"] = this.form_enable_secondary_email_notifications === 'true'
                 }
 
                 if (!this.isLoading && this.employeeForm.checkValidity()) {
