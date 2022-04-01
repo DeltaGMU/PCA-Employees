@@ -197,10 +197,6 @@ a.text-beige:hover {
     color: var(--pcaDarkBeige);
     cursor: pointer;
 }
-
-.error {
-    color: red;
-}
 /* End login form styling */
 
 
