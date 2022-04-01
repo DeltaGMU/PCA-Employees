@@ -14,7 +14,12 @@
                     <input type="date" class="form-control textBox" id="absenceStartDate" v-model="absenceStartDate" required>
                     <span class="input-group-text">to</span>
                     <input type="date" class="form-control textBox" id="absenceEndDate" v-model="absenceEndDate" required>
-                    <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" @click="getReportingPeriod()" :disabled="!absenceStartDate || !absenceEndDate">Submit</button>
+                    
+                    <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" @click="getReportingPeriod()" :disabled="!absenceStartDate || !absenceEndDate">
+                        <span v-show="!isLoading"> Submit</span>
+                        <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
+                        <span v-show="isLoading"> Loading... </span>
+                    </button>
                 </div>
 
                 <label class="form-check-label" for="reportSearchBar">
@@ -96,6 +101,7 @@
                 empName: this.$store.getters.StateName,
                 empRole: this.$store.getters.StateRole,
                 currentPage: "/timesheetinfo",
+                isLoading: false,
 
                 allEmps: [],
                 empTotalHours: {},
@@ -144,36 +150,25 @@
             },
         },
         methods: {
-            refreshReportsTable() {
-                /*
-                You would dispatch a function that sends a request to the server API to retrieve
-                reports for a given time period (YYYY-MM-DD to YYYY-MM-DD), and then retrieve
-                those results.
-
-                this.$store.dispatch("GetAllReports").then(
-                    () => {
-                        this.reportsInfo = this.$store.getters.StateReports
-                    }
-                )
-                */
-            },
             getReportingPeriod() {
-                this.resetInformation();
+                if (!this.isLoading) {
+                    this.isLoading = true;
+                    this.resetInformation();
 
-                // this.absenceStartDate = document.getElementById("absenceStartDate").value
-                // this.absenceEndDate = document.getElementById("absenceEndDate").value
-                this.selectedPeriod = this.absenceStartDate + " to " + this.absenceEndDate
+                    this.selectedPeriod = this.absenceStartDate + " to " + this.absenceEndDate
 
-                this.payload = {
-                    'absenceDateStart': this.absenceStartDate,
-                    'absenceDateEnd': this.absenceEndDate
+                    this.payload = {
+                        'absenceDateStart': this.absenceStartDate,
+                        'absenceDateEnd': this.absenceEndDate
+                    }
+                    console.log(this.payload)
+                    this.$store.dispatch("GetAllEmployees").then(() => {
+                        this.allEmps = this.$store.getters.StateEmployees
+                        this.getEmployeeHours();
+                        this.refreshReportsTable();
+                        this.isLoading = false;
+                    })
                 }
-                console.log(this.payload)
-                this.$store.dispatch("GetAllEmployees").then(() => {
-                    this.allEmps = this.$store.getters.StateEmployees
-                    this.getEmployeeHours();
-                    this.refreshReportsTable();
-                })
             },
             getEmployeeHours() {
                 
@@ -211,6 +206,7 @@
             this.resetInformation();
             this.absenceStartDate = ""
             this.absenceEndDate = ""
+            this.isLoading = false
         }
     };
 </script>
