@@ -38,7 +38,6 @@ h1.loginHeader {
     padding: 0.75rem 0.75rem;
     font-size: 1.2rem;
     font-weight: 500;
-    border: none;
 }
 
 .noSelect {
@@ -192,6 +191,10 @@ p {
     background-color: var(--pcaBeige);
 }
 
+.blueBorder {
+    border: 0.2rem solid var(--pcaBlue);
+}
+
 .formBtn:hover {
     color: var(--pcaDarkBlue);
     background-color: var(--pcaDarkBeige);
@@ -230,7 +233,7 @@ a.text-beige:hover {
     user-select: none;
 }
 
-#timesheet thead {
+.pcaTable thead {
     background-color: var(--pcaBlue);
     border-bottom: 1px solid white;
     color: white;
@@ -275,10 +278,6 @@ td input.textBox {
     padding: 0.95rem 1.7rem;
 }
 
-#submitTimesheetBtn {
-    border: 0.2rem solid var(--pcaBlue);
-}
-
 .right-align {
     float: right;
 }
@@ -298,27 +297,31 @@ td input.textBox {
     }
 
 	/* Force table to not be like tables anymore */
-	table#timesheet, #timesheet tbody, #timesheet th, #timesheet td, #timesheet tr { 
+	table.pcaTable, .pcaTable tbody, .pcaTable td, .pcaTable tr { 
 		display: block; 
 	}
 	
-	#timesheet thead { 
-		display: none;
+	thead { 
+		display: none !important;
 	}
 	
 	tr { 
         border: 1px solid var(--pcaDarkBlue); 
     }
 	
-	#timesheet td { 
+	.pcaTable td { 
 		/* Behave  like a "row" */
 		border: none;
 		border-bottom: 1px solid #eee; 
 		position: relative;
 		padding-left: 50%; 
 	}
+
+    .pcaTable .noInfo {
+        padding-left: 0 !important;
+    }
 	
-	#timesheet td:before { 
+	.pcaTable td:before { 
 		/* Now like a table header */
 		position: absolute;
 		/* Top/left values mimic padding */
@@ -331,12 +334,39 @@ td input.textBox {
         flex-direction: column; 
 	}
 
-    #timesheet td:nth-of-type(1):before { content: "Date"; }
-	#timesheet td:nth-of-type(2):before { content: "Day"; }
-	#timesheet td:nth-of-type(3):before { content: "Regular Hours"; }
-	#timesheet td:nth-of-type(4):before { content: "PTO"; }
-	#timesheet td:nth-of-type(5):before { content: "Extra Hours"; }
-	#timesheet td:nth-of-type(6):before { content: "Comments"; }
+    #timesheet td:nth-of-type(1):before { content: "Date"; font-weight: 700; }
+	#timesheet td:nth-of-type(2):before { content: "Day"; font-weight: 700; }
+	#timesheet td:nth-of-type(3):before { content: "Regular Hours"; font-weight: 700; }
+	#timesheet td:nth-of-type(4):before { content: "PTO"; font-weight: 700; }
+	#timesheet td:nth-of-type(5):before { content: "Extra Hours"; font-weight: 700; }
+	#timesheet td:nth-of-type(6):before { content: "Comments"; font-weight: 700; }
+
+    #manageStudentTable td:nth-of-type(1):before { content: "ID"; font-weight: 700; }
+	#manageStudentTable td:nth-of-type(2):before { content: "Carpool #"; font-weight: 700; }
+	#manageStudentTable td:nth-of-type(3):before { content: "Last Name"; font-weight: 700; }
+	#manageStudentTable td:nth-of-type(4):before { content: "First Name"; font-weight: 700; }
+	#manageStudentTable td:nth-of-type(5):before { content: "Grade"; font-weight: 700; }
+	#manageStudentTable td:nth-of-type(6):before { content: "Edit Student"; font-weight: 700; }
+
+    #manageEmployeeTable td:nth-of-type(1):before { content: "Employee ID"; font-weight: 700; }
+	#manageEmployeeTable td:nth-of-type(2):before { content: "Last Name"; font-weight: 700; }
+	#manageEmployeeTable td:nth-of-type(3):before { content: "First Name"; font-weight: 700; }
+	#manageEmployeeTable td:nth-of-type(4):before { content: "Edit Employee"; font-weight: 700; }
+
+    #manageStudentCareTable td:nth-of-type(1):before { content: "Date"; font-weight: 700; }
+	#manageStudentCareTable td:nth-of-type(2):before { content: "Student Name"; font-weight: 700; }
+	#manageStudentCareTable td:nth-of-type(3):before { content: "Before-Care"; font-weight: 700; }
+	#manageStudentCareTable td:nth-of-type(4):before { content: "After-Care"; font-weight: 700; }
+	#manageStudentCareTable td:nth-of-type(5):before { content: "Delete BC"; font-weight: 700; }
+	#manageStudentCareTable td:nth-of-type(6):before { content: "Delete AC"; font-weight: 700; }
+    #manageStudentCareTable td:nth-of-type(7):before { content: "Delete Both"; font-weight: 700; }
+
+    #timesheetRecordsTable td:nth-of-type(1):before { content: "Last Name"; font-weight: 700; }
+	#timesheetRecordsTable td:nth-of-type(2):before { content: "First Name"; font-weight: 700; }
+	#timesheetRecordsTable td:nth-of-type(3):before { content: "Work Hours"; font-weight: 700; }
+	#timesheetRecordsTable td:nth-of-type(4):before { content: "PTO Hours"; font-weight: 700; }
+	#timesheetRecordsTable td:nth-of-type(5):before { content: "Extra Hours"; font-weight: 700; }
+	#timesheetRecordsTable td:nth-of-type(6):before { content: "View Details"; font-weight: 700; }
 
     .showWhenSmall {
         display: block;
@@ -354,9 +384,16 @@ td input.textBox {
         width: 100% !important;
     }
     
-    /* Not for timesheet */
     .formLabel {
         font-size: 1.3rem !important;
+    }
+
+    .input-group .btn {
+        border-radius: 5px !important;
+    }
+
+    .mobilePadding {
+        padding: 12px 0px;
     }
 }
 .chevron {

@@ -70,7 +70,7 @@
                         </div>
                         
                         <div class="d-flex justify-content-center">
-                            <button type="button" id="studentSearchBtn" :disabled="student_id.length == 0" class="mt-3 btn formBtn smallerScreenBtn" @click="checkStudentInfo">
+                            <button type="button" id="studentSearchBtn" :disabled="student_id.length == 0" class="mt-3 btn formBtn blueBorder smallerScreenBtn" @click="checkStudentInfo">
                                 <span v-show="!isLoading"> Search </span>
                                 <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                                 <span v-show="isLoading"> Loading... </span>
@@ -80,12 +80,10 @@
                 </div>
 
                 <hr>
-                <div class="d-flex mb-3" v-if="Object.keys(records).length > 0">
+                <div class="input-group mb-3" v-if="Object.keys(records).length > 0">
                     <br>
-                    <div class="flex-grow-1 rounded-0">
-                        <input type="text" style="border-radius: 5px 0px 0px 5px;" v-model="searchQuery" class="form-control" placeholder="Search for records by Date..." name="recordSearchBar" id="recordSearchBar"/>
-                    </div>
-                    <button class="btn blueBtn" style="padding: 5px; border-radius: 0px 5px 5px 0px;" type="button" @click="checkStudentInfo()">
+                    <input type="text" style="border-radius: 5px 0px 0px 5px;" v-model="searchQuery" class="form-control" placeholder="Search for records by Date..." name="recordSearchBar" id="recordSearchBar"/>
+                    <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" type="button" @click="checkStudentInfo()">
                         Refresh Reports
                     </button>
                     <br>
@@ -94,20 +92,20 @@
                 <div class="table-responsive noSelect" v-if="!filteredRecordsList || Object.keys(filteredRecordsList).length == 0">
                     <table class="pcaTable table-hover">
                         <thead>
-                            <th class = "table-th text-center" scope = "col" >
+                            <th scope = "col" >
                                 Student Care Records
                             </th>
                         </thead>
                         <tbody>
                             <tr class = "row-striped">
-                                <td class = "column text-center">No student information available for the selected ID...</td>
+                                <td class = "noInfo">No student information available for the selected ID...</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="table-responsive noSelect" v-else>
                     <h4 class="text-blue">Records period: {{ this.thirty_days_ago }} to {{ this.today }}</h4>
-                    <table class="pcaTable table-hover">
+                    <table id="manageStudentCareTable" class="pcaTable table-hover">
                         <thead>
                             <th scope = "col">Date</th>
                             <th class="middleCols" scope = "col">Student Name</th>
@@ -123,19 +121,19 @@
                                 <td class="middleCols">{{ record.student.first_name }} {{ record.student.last_name }}</td>
                                 <td class="middleCols"><input class="form-check-input" type="checkbox" onClick="return false;" :checked="!!record.before_care"></td>
                                 <td class="middleCols"><input class="form-check-input" type="checkbox" onClick="return false;" :checked="!!record.after_care"></td>
-                                <td class="middleCols">
+                                <td class="middleCols mobilePadding">
                                     <button type="button" v-if="!!record.before_care" class="btn btn-danger" id="deleteStudentBCButton" data-bs-toggle="modal" data-bs-target="#confirm-delete" @click="setSelectedCareRecord(record, 0)">
                                         <span class="fa-solid fa-xmark">
                                         </span>
                                     </button>
                                 </td>
-                                <td class="middleCols">
+                                <td class="middleCols mobilePadding">
                                     <button type="button" v-if="!!record.after_care" class="btn btn-danger" id="deleteStudentACButton" data-bs-toggle="modal" data-bs-target="#confirm-delete" @click="setSelectedCareRecord(record, 1)">
                                         <span class="fa-solid fa-xmark">
                                         </span>
                                     </button>
                                 </td>
-                                <td>
+                                <td class = "mobilePadding">
                                     <button type="button" v-if="!!record.before_care && !!record.after_care" class="btn btn-danger" id="deleteStudentBothButton" data-bs-toggle="modal" data-bs-target="#confirm-delete" @click="setSelectedCareRecord(record, 2)">
                                         <span class="fa-solid fa-xmark">
                                         </span>

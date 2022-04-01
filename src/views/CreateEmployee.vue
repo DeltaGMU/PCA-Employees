@@ -200,7 +200,7 @@
                             </div>
                         </div>
                         <br/>
-                        <button type="button" id="submitEmployeeFormBtn" class="mt-3 btn formBtn smallerScreenBtn" @click="submit">
+                        <button type="button" id="submitEmployeeFormBtn" class="mb-3 btn blueBtn" @click="submit">
                             <span v-show="!isLoading"> Create Employee </span>
                             <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                             <span v-show="isLoading"> Loading... </span>

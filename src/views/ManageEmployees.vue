@@ -32,13 +32,13 @@
                 <div class="table-responsive" v-if="!filteredEmployeesList || !filteredEmployeesList.length">
                     <table class = "pcaTable table-hover">
                         <thead>
-                            <th class = "table-th text-center" scope = "col" >
+                            <th scope = "col" >
                                 Employees List
                             </th>
                         </thead>
                         <tbody>
                             <tr class = "row-striped">
-                                <td class = "column text-center">No employee information available...</td>
+                                <td>No employee information available...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -46,16 +46,17 @@
                 <div class="table-responsive" id="manageEmployeeTable" v-else>
                     <table class = "pcaTable table-hover">
                         <thead>
-                            <th class = "table-th text-center" v-for = "option in options.headings" v-bind:key = "option" scope = "col" >
-                                {{ option }}
-                            </th>
+                            <th scope = "col"> Employee ID </th>
+                            <th scope = "col" class="middleCols"> Last Name </th>
+                            <th scope = "col" class="middleCols"> First Name </th>
+                            <th scope = "col"> Edit Employee </th>
                         </thead>
                         <tbody>
                             <tr class = "row-striped" v-for = "(employee, index) in filteredEmployeesList" v-bind:key=index>
-                                <td class = "column text-center">{{ employee.employee_id }} </td>
-                                <td class = "column text-center">{{ employee.last_name }} </td>
-                                <td class = "column text-center">{{ employee.first_name}} </td>
-                                <td class = "column text-center"> 
+                                <td>{{ employee.employee_id }} </td>
+                                <td class = "middleCols">{{ employee.last_name }} </td>
+                                <td class = "middleCols">{{ employee.first_name}} </td>
+                                <td> 
                                     <button class="btn blueBtn" @click="goToEditEmployee(option)">
                                         Edit 
                                     </button>

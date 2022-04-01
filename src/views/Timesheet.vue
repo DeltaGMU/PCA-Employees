@@ -71,7 +71,7 @@
                     <i class="fa fa-chevron-left chevron" alt="Chevron Left"></i>
                     View Previous Page
                 </button>
-                <button id="submitTimesheetBtn" class="mt-3 btn formBtn smallerScreenBtn" @click="submitTimesheet">
+                <button id="submitTimesheetBtn" class="mt-3 btn formBtn blueBorder smallerScreenBtn" @click="submitTimesheet">
                     <span v-show="!isLoading"> Submit Timesheet </span>
                     <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                     <span v-show="isLoading"> Loading... </span>
