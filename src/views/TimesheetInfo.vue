@@ -21,7 +21,10 @@
                         <span v-show="isLoading"> Loading... </span>
                     </button>
                 </div>
- 
+                <div class="pb-3" v-if=" selectedPeriod != ''">
+                    <h4 class="text-blue">Reporting Period: {{ selectedPeriod }}</h4>
+                </div>
+
                 <label class="form-check-label" for="reportSearchBar">
                     Filter timesheets list:
                 </label>
