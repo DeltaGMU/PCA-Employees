@@ -23,7 +23,7 @@
                             Encountered an error creating the student account. Please try again and ensure the required fields are filled correctly.
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn" :class="creationSuccess ? 'blueBtn' : 'btn-danger'" @click="closeModal">OK</button>
+                            <button type="button" class="btn" :class="creationSuccess ? 'btn-success' : 'btn-danger'" @click="closeModal">OK</button>
                         </div>
                     </div>
                 </div>
@@ -199,7 +199,7 @@
                             </div>
                         </div>
                         <br/>
-                        <button type="button" id="submitStudentFormBtn" class="btn blueBtn" @click="createStudent()">
+                        <button type="button" id="submitStudentFormBtn" class="btn blueBtn mb-3" @click="createStudent()">
                             <span v-show="!isLoading"> Create Student </span>
                             <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                             <span v-show="isLoading"> Loading... </span>
@@ -269,11 +269,11 @@
                     "car_pool_number": this.car_pool_number,
                     "parent_one_first_name": this.parent_one_first_name,
                     "parent_one_last_name": this.parent_one_last_name,
-                    "parent_two_first_name": this.parent_two_first_name,
-                    "parent_two_last_name": this.parent_two_last_name,
+                    "parent_two_first_name": this.parent_two_first_name.length > 0 ? this.parent_two_first_name: null,
+                    "parent_two_last_name": this.parent_two_last_name.length > 0 ? this.parent_two_last_name: null,
                     "primary_email": this.primary_email,
-                    "secondary_email": this.secondary_email,
-                    "grade": this.grade,
+                    "secondary_email": this.secondary_email.length > 0 ? this.secondary_email: null,
+                    "grade": this.grade.name,
                     "is_enabled": this.is_enabled === "true",
                     "enable_primary_email_notifications": this.enable_primary_email_notifications === "true",
                 }
@@ -292,12 +292,12 @@
                             this.creationSuccess = false
                         }
                         this.isLoading = false
-                        this.openModel()
+                        this.openModal()
                     }).catch(err => {
                         console.log(err)
                         this.creationSuccess = false
                         this.isLoading = false
-                        this.openModel()
+                        this.openModal()
                     })
                 }
                 //e.preventDefault()
