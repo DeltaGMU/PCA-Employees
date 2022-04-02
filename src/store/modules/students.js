@@ -14,7 +14,7 @@ const actions = {
         headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
       }
       let payload = {
-        "grade": items.student_grade,
+        "student_grade": items.student_grade,
         "care_type": items.care_type,
         "care_date": items.care_date
       }
@@ -25,21 +25,28 @@ const actions = {
         }
       );
     },
-    async GetStudentRecordsByGrade(context, items) {
+    async GetStudentCareHours(context, items) {
       let headers = {
         headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
       }
       let payload = {
-        "grade": items.student_grade,
+        "grade": items.grade,
         "start_date": items.start_date,
         "end_date": items.end_date
       }
-      return await axios.post("api/v1/care", payload, headers).then(
+      console.log(payload)
+      return await axios.post("api/v1/care/records/total", payload, headers).then(
         resp => {
-          console.log(resp.data.data.students)
-          return resp.data.data.students;
+          if (resp && resp.status === 200) {
+            console.log(resp.data.data.students)
+            return resp.data.data.students;
+          }
+          return {}
         }
-      );
+      ).catch(err => {
+        console.log(err)
+        return {}
+      });
     },
     async GetAllStudentGrades(context) {
       let headers = {
@@ -131,6 +138,7 @@ const actions = {
       console.log(payload)
       return await axios.post("api/v1/care/checkin", payload).then(
         resp => {
+          console.log(resp)
           if (resp && resp.status == 201) {
             return true;
           }
