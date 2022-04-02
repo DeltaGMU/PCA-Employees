@@ -14,30 +14,40 @@
                     <input type="date" class="form-control textBox" id="reportStartDate" v-model="reportStartDate" required>
                     <span class="input-group-text">to</span>
                     <input type="date" class="form-control textBox" id="reportEndDate" v-model="reportEndDate" :min="reportStartDate" :disabled="!reportStartDate" required>    
-                    <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" @click="getReportingPeriod()" :disabled="!reportStartDate || !reportEndDate ">
-                        <span v-show="!isLoading"> Submit</span>
-                        <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
-                        <span v-show="isLoading"> Loading... </span>
+                </div>
+
+                <div v-if="reportStartDate && reportEndDate">
+                    <label for="role" class="text-blue formLabel">Select Grade</label>
+                </div>
+                <div class="pb-1 input-group noSelect" v-if="reportStartDate && reportEndDate">
+                    <select class="form-select" v-model= "selected" name= "selectGrades" id= "selectGrades">
+                        <option value= "" selected disabled>Select an option...</option>
+                        <option v-for="(grade, index) in grades" :value="grades[index]" v-bind:key="grade.id">{{ grades[index].name.toUpperCase() }}</option>
+                    </select>
+                    <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" @click="getReportingPeriod()" :disabled="!reportStartDate || !reportEndDate || selected === ''">
+                         Submit
                     </button>
+                    <hr>
                 </div>
                 
 
                 <div v-if= "selectedPeriod != '' ">
+                    <hr>
                     <div class = "p-2" v-if= "selectedPeriod != '' ">
                         <h2>Reporting Period for Student Care: </h2> 
                         <h3> {{  selectedPeriod  }}</h3>
+                        <h3 v-if="selected !== ''"> Selected Grade: {{  selected.name  }}</h3>
                     </div>
-
                     <div class = "p-2" >
-                        <img class = "float-start w-50 h-75" v-bind:src= "report" style = "display: inline-block, position: absolute" />
-                    
-                        <button id= "btn blueBtn" class="btn blueBtn">
-                            Download .PDF
+                        <button type="button" id= "btn formBtn blueBorder" class="btn blueBtn" @click="downloadPDF">
+                            <span v-show="!isLoadingPDF"> Download PDF </span>
+                            <span v-show="isLoadingPDF" class="spinner-border spinner-border-sm" role="status"></span>
+                            <span v-show="isLoadingPDF"> Loading... </span>
                         </button>
 
                         <br> <br>
 
-                        <button id= "btn blueBtn" class="btn blueBtn">
+                        <button type="button" id= "btn formBtn blueBorder" class="btn blueBtn" @click="downloadCSV">
                             Download .CSV 
                         </button>
                     </div>
@@ -63,17 +73,19 @@
                 empName: this.$store.getters.StateName,
                 empRole: this.$store.getters.StateRole,
                 currentPage: "/generatestudentcare",
-        
-                report: 'https://www.slideteam.net/media/catalog/product/cache/1280x720/c/o/competitive_landscape_analysis_report_template_example_ppt_presentation_Slide01.jpg',
-                
-                isLoading: false,
+                        
+                grades: [],
+                selected: '',
+                studentsByGrade: {},
+
+                isLoadingPDF: false,
+                isLoadingCSV: false,
 
                 reportStartDate: "",
                 reportEndDate: "",
                 selectedPeriod: ""
             }
         },
-    
         methods: {
             formatDate(rangeDate){
                 let newDate = new Date(rangeDate).toISOString().slice(0, 10);
@@ -87,25 +99,95 @@
                 let formatedRange = formatedStart + " to " + formatedEnd;
                 return formatedRange;
             },
-
             getReportingPeriod(){
-                if (!this.isLoading) {
-                    this.isLoading = true;
-                    this.resetInformation();
-                    this.selectedPeriod = this.formatRange(this.reportStartDate, this.reportEndDate);
-                    this.isLoading = false;
-                }
+                this.resetInformation();
+                this.selectedPeriod = this.formatRange(this.reportStartDate, this.reportEndDate);
             },
             resetInformation() {
                 this.selectedPeriod = ""
             },
-            mounted() {
+            downloadPDF() {
+                let pdfData = null
+                if (!this.isLoadingPDF) {
+                    this.isLoadingPDF = true;
+                    let payload = {
+                        start_date: this.reportStartDate,
+                        end_date: this.reportEndDate,
+                        grade: this.selected.name,
+                    }
+                    this.$store.dispatch("GetStudentCarePDFReport", payload).then(resp => {
+                        if (resp !== null) {
+                            console.log(resp)
+                            pdfData = resp
+                            this.isLoadingPDF = false;
+                        }
+                        else {
+                            this.isLoadingPDF = false;
+                        }
+                    }).catch(err => {
+                        console.log(err)
+                        this.isLoadingPDF = false;
+                    }).then(() => {
+                        if (pdfData !== null) {
+                            const url = window.URL.createObjectURL(new Blob([pdfData] ,{type: "application/pdf"}))
+                            var link = document.createElement('a');
+                            link.href = url;
+                            link.setAttribute('download', 'StudentCareReport.pdf');
+                            document.body.appendChild(link);
+                            link.click();
+                        }
+                    })
+                }
+            },
+            downloadCSV() {
+                let csvData = null
+                if (!this.isLoadingCSV) {
+                    this.isLoadingCSV = true;
+                    let payload = {
+                        start_date: this.reportStartDate,
+                        end_date: this.reportEndDate,
+                        grade: this.selected.name,
+                    }
+                    this.$store.dispatch("GetStudentCareCSVReport", payload).then(resp => {
+                        if (resp !== null) {
+                            console.log(resp)
+                            csvData = resp
+                            this.isLoadingCSV = false;
+                        }
+                        else {
+                            this.isLoadingCSV = false;
+                        }
+                    }).catch(err => {
+                        console.log(err)
+                        this.isLoadingCSV = false;
+                    }).then(() => {
+                        if (csvData !== null) {
+                            const url = window.URL.createObjectURL(new Blob([csvData] ,{type: "text/csv"}))
+                            var link = document.createElement('a');
+                            link.href = url;
+                            link.setAttribute('download', 'StudentCareReport.csv');
+                            document.body.appendChild(link);
+                            link.click();
+                        }
+                    })
+                }
+            },
+        },
+        mounted() {
             this.resetInformation();
             this.reportStartDate = ""
             this.reportEndDate = ""
             this.isLoading = false
-            },
+        },
+        beforeMount() {
+            this.$store.dispatch("GetAllStudentGrades").then(
+                (resp) => {
+                    if (resp !== undefined) {
+                        this.grades = resp
+                    }
+                }
+            );
         }
-}
+    }
 </script>
 

@@ -6,6 +6,7 @@ import user from "./modules/user";
 import employees from "./modules/employees";
 import timesheet from "./modules/timesheet";
 import students from "./modules/students";
+import reports from "./modules/reports";
 
 
 // Load Vuex
@@ -18,7 +19,8 @@ export default new Vuex.Store({
     user,
     employees,
     timesheet,
-    students
+    students,
+    reports
   },
   plugins: [createPersistedState({
     key: 'pca-project',
