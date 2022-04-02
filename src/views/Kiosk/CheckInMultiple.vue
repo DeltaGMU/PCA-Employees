@@ -67,6 +67,7 @@
 //import { mapActions, mapGetters } from "vuex";
 import NavBar from "@/components/NavBar.vue";
 import ConvertDateToTimezone from "@/store/utility/date_format";
+import config from "../../server_config";
 
 
 export default {
@@ -112,10 +113,11 @@ export default {
                 this.isLoading = true;
                 console.log(this.selectedStudents)
                 for (let index in this.selectedStudents) {
-                    let date_test = new Date('April 1, 2022 15:30:00')
+                    let setDate = config.debug_mode ? config.test_date() : new Date()
+                    console.log(setDate)
                     let student = this.selectedStudents[index]
-                    let currentDate = ConvertDateToTimezone(date_test).slice(0, 10)
-                    let currentTime = ('0'  +  date_test.getHours()).slice(-2)+':'+('0' + date_test.getMinutes()).slice(-2);
+                    let currentDate = ConvertDateToTimezone(setDate).slice(0, 10)
+                    let currentTime = ('0'  +  setDate.getHours()).slice(-2)+':'+('0' + setDate.getMinutes()).slice(-2);
                     let payload = {
                         'student_id': student.student.student_id,
                         'check_in_time': currentTime,
