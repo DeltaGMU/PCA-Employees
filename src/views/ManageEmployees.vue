@@ -57,7 +57,7 @@
                                 <td class = "middleCols">{{ employee.last_name }} </td>
                                 <td class = "middleCols">{{ employee.first_name}} </td>
                                 <td> 
-                                    <button class="btn blueBtn" @click="goToEditEmployee(option)">
+                                    <button class="btn blueBtn" @click="goToEditEmployee(employee.employee_id)">
                                         Edit 
                                     </button>
                                 </td>
@@ -128,7 +128,7 @@
                 )
             },
             goToEditEmployee(option) {
-                this.$router.push({ name: 'EditEmployee', params: {employeeID: option.id}})
+                this.$router.push({ name: 'EditEmployee', params: {employeeID: option}})
             }
         },
         mounted() {

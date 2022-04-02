@@ -3,25 +3,61 @@
         <NavBar :signed_in="signedIn" :name="empName" :role="empRole" :current_page="currentPage"/>
         <div class="d-flex">
             <div class="p-2">
-                <Sidebar></Sidebar>
+                <Sidebar/>
+            </div>
+            <div class="modal fade" id="timesheetModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="timesheetModalLbl" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            Timesheet Records
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table id="timesheetRecordsModalTable" class = "pcaTable table-hover">
+                                    <thead>
+                                        <th scope = "col">Date</th>
+                                        <th class="middleCols" scope = "col">Work Hours</th>
+                                        <th class="middleCols" scope = "col">PTO Hours</th>
+                                        <th class="middleCols" scope = "col">Extra Hours</th>
+                                        <th scope = "col">Comments</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr class = "row-striped" v-for="(record, index) in timesheetRecords" :key="index">
+                                            <td>{{ record.date_worked }} </td>
+                                            <td class = "middleCols">{{ record.work_hours }} </td>
+                                            <td class = "middleCols">{{ record.pto_hours }} </td>
+                                            <td class = "middleCols">{{ record.extra_hours}} </td>
+                                            <td class = "middleCols">{{ record.comment }} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blueBtn" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class = "p-2 flex-grow-1">
                 <h1 class="text-blue">Timesheet Records</h1>
                 <!--<h3 class="text-blue pb-3">{{ selectedPeriod }}</h3>-->
 
-                <label class="form-check-label" for="absenceStartDate">Please select a reporting period:</label>
+                <label class="form-check-label" for="reportStartDateInput">Please select a reporting period:</label>
                 <div class="pb-3 input-group">
-                    <input type="date" class="form-control textBox" id="absenceStartDate" v-model="absenceStartDate" required>
+                    <input type="date" class="form-control textBox" id="reportStartDateInput" v-model="reportStartDate" required>
                     <span class="input-group-text">to</span>
-                    <input type="date" class="form-control textBox" id="absenceEndDate" v-model="absenceEndDate" required>
+                    <input type="date" class="form-control textBox" id="reportEndDate" v-model="reportEndDate" :min="reportStartDate" :disabled="!reportStartDate" required>
                     
-                    <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" @click="getReportingPeriod()" :disabled="!absenceStartDate || !absenceEndDate">
+                    <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" @click="getReportingPeriod()" :disabled="!reportStartDate || !reportEndDate">
                         <span v-show="!isLoading"> Submit</span>
                         <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                         <span v-show="isLoading"> Loading... </span>
                     </button>
                 </div>
                 <div class="pb-3" v-if=" selectedPeriod != ''">
+                    <hr>
                     <h4 class="text-blue">Reporting Period: {{ selectedPeriod }}</h4>
                 </div>
 
@@ -47,8 +83,8 @@
                     </table>
                 </div>
 
-                <div class="table-responsive" v-else>
-                    <table id="timesheetRecordsTable" class = "pcaTable table-hover">
+                <div class="table-responsive" id="timesheetRecordsTable" v-else>
+                    <table class = "pcaTable table-hover">
                         <thead>
                             <th scope = "col">Last Name</th>
                             <th class="middleCols" scope = "col">First Name</th>
@@ -66,7 +102,7 @@
                                 <td class = "middleCols">{{ emp.total_hours.pto_hours}} </td>
                                 <td class = "middleCols">{{ emp.total_hours.extra_hours}} </td>
                                 <td> 
-                                    <button type="button" class="btn blueBtn">
+                                    <button type="button" class="btn blueBtn p-2" data-bs-toggle="modal" data-bs-target="#timesheetModal" @click="viewTimesheetRecords(index)">
                                         <img src="https://s2.svgbox.net/hero-outline.svg?ic=zoom-in&color=ffffff" width="28" height="28">
                                     </button>
                                 </td>
@@ -96,10 +132,11 @@
                 currentPage: "/timesheetinfo",
                 isLoading: false,
 
+                timesheetRecords: {},
                 allEmps: [],
                 empTotalHours: {},
-                absenceStartDate: "",
-                absenceEndDate: "",
+                reportStartDate: "",
+                reportEndDate: "",
                 selectedPeriod: "",
 
                 searchQuery: "",
@@ -121,7 +158,6 @@
                         view_details: 'View Details'
                     }
                 },
-                payload: {}
             }
         },
         computed: {
@@ -143,18 +179,35 @@
             },
         },
         methods: {
+            formatDate(rangeDate){
+                let newDate = new Date(rangeDate).toISOString().slice(0, 10);
+                let formatedDate = newDate.slice(5,7) + "/" + newDate.slice(8, 10) + "/" + newDate.slice(0,4);
+                return formatedDate;
+            },
+            formatRange(rangeStart, rangeEnd){
+                let formatedStart = this.formatDate(rangeStart); 
+                let formatedEnd = this.formatDate(rangeEnd);
+                let formatedRange = formatedStart + " to " + formatedEnd;
+                return formatedRange;
+            },
+            viewTimesheetRecords(employee_id) {
+                console.log(employee_id)
+                let payload = {
+                    date_start: this.reportStartDate,
+                    date_end: this.reportEndDate,
+                    employee_id: employee_id
+                }
+                this.$store.dispatch("GetTimesheetsForEmployee", payload).then(resp => {
+                    this.timesheetRecords = resp.time_sheets
+                })
+            },
             getReportingPeriod() {
                 if (!this.isLoading) {
                     this.isLoading = true;
                     this.resetInformation();
 
-                    this.selectedPeriod = this.absenceStartDate + " to " + this.absenceEndDate
-
-                    this.payload = {
-                        'absenceDateStart': this.absenceStartDate,
-                        'absenceDateEnd': this.absenceEndDate
-                    }
-                    console.log(this.payload)
+                    // this.selectedPeriod = this.reportStartDate + " to " + this.reportEndDate
+                    this.selectedPeriod = this.formatRange(this.reportStartDate, this.reportEndDate)
                     this.$store.dispatch("GetAllEmployees").then(() => {
                         this.allEmps = this.$store.getters.StateEmployees
                         this.getEmployeeHours();
@@ -163,17 +216,21 @@
                 }
             },
             getEmployeeHours() {
-                this.payload["employees"] = []
-                if (this.allEmps.length > 0) {
+                let payload = {
+                    'reportStartDate': this.reportStartDate,
+                    'reportEndDate': this.reportEndDate
+                }
+                payload["employees"] = []
+                if (this.allEmps && this.allEmps.length > 0) {
                     for (let emp in Object.keys(this.allEmps)) {
-                        this.payload["employees"].push({
+                        payload["employees"].push({
                             first_name: this.allEmps[emp].first_name,
                             last_name: this.allEmps[emp].last_name,
                             employee_id: this.allEmps[emp].employee_id
                         })
                     }
-                    console.log(this.payload)
-                    this.$store.dispatch("GetTotalHoursForEmployees", this.payload).then(() => {
+                    console.log(payload)
+                    this.$store.dispatch("GetTotalHoursForEmployees", payload).then(() => {
                         //console.log("AFTER RETRIEVING HOURS")
                         this.empTotalHours = this.$store.getters.RetrievedTotalHours
                         //console.log(this.empTotalHours)
@@ -183,13 +240,14 @@
             resetInformation() {
                 this.allEmps = []
                 this.empTotalHours = {}
+                this.timesheetRecords = {}
                 this.selectedPeriod = ""
             },
         },
         mounted() {
             this.resetInformation();
-            this.absenceStartDate = ""
-            this.absenceEndDate = ""
+            this.reportStartDate = ""
+            this.reportEndDate = ""
             this.isLoading = false
         }
     };

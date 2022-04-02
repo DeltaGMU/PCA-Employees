@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import axios from "axios";
+import config from "./server_config";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -11,28 +12,7 @@ import "./css/style.css";
 import "./css/kiosk_style.css";
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "https://localhost:56709/";
-
-/*
-try {
-  let retrieved_cert = '';
-  axios.get("https://localhost:8080/cert.pem").then(
-    resp => {
-      retrieved_cert = resp.data;
-    }
-  ).then(() => {
-    console.log(retrieved_cert);
-    axios.defaults.httpsAgent = axios.defaults.httpsAgent = new https.Agent({ 
-      rejectUnauthorized: false,
-      requestCert: false,
-      agent: false,
-      ca: retrieved_cert
-    })
-  })
-} catch(err) {
-  console.log("Error retrieving CA cert");
-}
-*/
+axios.defaults.baseURL = `${config.python_server.https ? 'https' : 'http'}://${config.python_server.host}:${config.python_server.port}/`;
 
 axios.interceptors.response.use(undefined, function(error) {
   if (error) {

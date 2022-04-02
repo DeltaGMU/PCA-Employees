@@ -83,10 +83,30 @@
                                     <label for="primaryEmail" class="text-blue formLabel">Primary Email</label>
                                 </div>
                                 
-                                <input type="text" class="form-control" id="primaryEmail" autocomplete="off" v-model="form_primary_email" placeholder="Employee primary email..." required maxlength="100">
+                                <input type="text" class="form-control" id="primaryEmail" autocomplete="off" v-model="form_primary_email" placeholder="Employee primary email..." maxlength="100" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid email address under 100 characters.
                                 </div>
+                            </div>
+
+                            <div class="form-group noSelect">
+                                <div class="mb-1">
+                                    <label for="primaryEmailNotification" class="text-blue formLabel">Enable email notifications for primary email?</label>
+                                </div>
+                                
+                                <div class="form-check">
+                                    <input class="form-check-input" name="primaryEmailNotification" value="true" type="radio" v-model="form_enable_primary_email_notifications" id="primaryEmailNotificationEnabled" required>
+                                    <label class="form-check-label" for="primaryEmailNotificationEnabled">
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" name="primaryEmailNotification" value="false" type="radio" v-model="form_enable_primary_email_notifications" id="primaryEmailNotificationDisabled" required>
+                                    <label class="form-check-label" for="primaryEmailNotificationDisabled">
+                                        No
+                                    </label>
+                                </div>
+                                <div class="invalid-feedback">Please select one of the provided options.</div>
                             </div>
                         
                             <div class="form-group noSelect">
@@ -100,40 +120,19 @@
                                 </div>
                             </div>
 
-
-                            <div class="form-group noSelect">
-                                <div class="mb-1">
-                                    <label for="primaryEmailNotification" class="text-blue formLabel">Enable email notifications for primary email?</label>
-                                </div>
-                                
-                                <div class="form-check">
-                                    <input class="form-check-input" name="primaryEmailNotification" type="radio" v-model="form_enable_primary_email_notifications" value="true" id="primaryEmailNotificationEnabled" required>
-                                    <label class="form-check-label" for="primaryEmailNotificationEnabled">
-                                        Yes
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" name="primaryEmailNotification" type="radio" v-model="form_enable_primary_email_notifications" value="false" id="primaryEmailNotificationDisabled" required>
-                                    <label class="form-check-label" for="primaryEmailNotificationDisabled">
-                                        No
-                                    </label>
-                                </div>
-                                <div class="invalid-feedback">Please select one of the provided options.</div>
-                            </div>
-
                             <div class="form-group noSelect">
                                 <div class="mb-1">
                                     <label for="secondaryEmailNotification" class="text-blue formLabel">Enable email notifications for secondary email?</label>
                                 </div>
                                 
                                 <div class="form-check">
-                                    <input class="form-check-input" name="secondaryEmailNotification" value="true" :disabled="enableSecondaryEmailNotificationRadios == 'true'" type="radio" v-model="form_enable_secondary_email_notifications" id="secondaryEmailNotificationEnabled">
+                                    <input class="form-check-input" name="secondaryEmailNotification" value="true" :disabled="!enableSecondaryEmailNotificationRadios" type="radio" v-model="form_enable_secondary_email_notifications" id="secondaryEmailNotificationEnabled">
                                     <label class="form-check-label" for="secondaryEmailNotificationEnabled">
                                         Yes
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" name="secondaryEmailNotification" value="false" :disabled="enableSecondaryEmailNotificationRadios == 'true'" type="radio" v-model="form_enable_secondary_email_notifications" id="secondaryEmailNotificationDisabled">
+                                    <input class="form-check-input" name="secondaryEmailNotification" value="false" :disabled="!enableSecondaryEmailNotificationRadios" type="radio" v-model="form_enable_secondary_email_notifications" id="secondaryEmailNotificationDisabled">
                                     <label class="form-check-label" for="secondaryEmailNotificationDisabled">
                                         No
                                     </label>
@@ -166,13 +165,13 @@
                                 </div>
                                 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" v-model="form_enable_extra_hours" value="true" name="extraHoursOptions" id="extraHoursOptions extraHoursEnabled" required>
+                                    <input class="form-check-input" type="radio" v-model="form_enable_extra_hours" value="true" name="extraHoursOptions" id="extraHoursEnabled" required>
                                     <label class="form-check-label" for="extraHoursEnabled">
                                         Enable Extra Hours
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" v-model="form_enable_extra_hours" value="false" name="extraHoursOptions" id="extraHoursOptions extraHoursDisabled" required>
+                                    <input class="form-check-input" type="radio" v-model="form_enable_extra_hours" value="false" name="extraHoursOptions" id="extraHoursDisabled" required>
                                     <label class="form-check-label" for="extraHoursDisabled">
                                         Disable Extra Hours
                                     </label>
@@ -185,13 +184,13 @@
                                 </div>
                                 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" v-model="form_enable_account" value="true" name="employeeAccountActivation" id="employeeAccountActivation employeeAccountEnabled" required>
+                                    <input class="form-check-input" type="radio" v-model="form_enable_account" value="true" name="employeeAccountActivation" id="employeeAccountEnabled" required>
                                     <label class="form-check-label" for="employeeAccountEnabled">
                                         Enable Account
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" v-model="form_enable_account" value="false" name="employeeAccountActivation" id="employeeAccountActivation employeeAccountDisabled" required>
+                                    <input class="form-check-input" type="radio" v-model="form_enable_account" value="false" name="employeeAccountActivation" id="employeeAccountDisabled" required>
                                     <label class="form-check-label" for="employeeAccountDisabled">
                                         Disable Account
                                     </label>
@@ -200,7 +199,7 @@
                             </div>
                         </div>
                         <br/>
-                        <button type="button" id="submitEmployeeFormBtn" class="mb-3 btn blueBtn" @click="submit">
+                        <button type="button" id="submitEmployeeFormBtn" class="mb-3 btn formBtn blueBorder" @click="submit">
                             <span v-show="!isLoading"> Create Employee </span>
                             <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                             <span v-show="isLoading"> Loading... </span>
@@ -249,10 +248,12 @@
         },
         watch: {
             form_secondary_email(secondary_email) {
-                if (secondary_email.length > 0) {
+                if (secondary_email && secondary_email.length > 0) {
                     this.enableSecondaryEmailNotificationRadios = true;
                 }
-                this.enableSecondaryEmailNotificationRadios = false;
+                else {
+                    this.enableSecondaryEmailNotificationRadios = false;
+                }
             }
         },
         mounted() {
@@ -304,10 +305,12 @@
                     "secondary_email": this.form_secondary_email,
                     "role": this.form_role_selection,
                     "enable_primary_email_notifications": this.form_enable_primary_email_notifications === 'true',
-                    "enable_secondary_email_notifications": this.form_enable_secondary_email_notifications === 'true',
                     "pto_hours_enabled": this.form_enable_pto_hours === 'true',
                     "extra_hours_enabled": this.form_enable_extra_hours === 'true',
                     "is_enabled": this.form_enable_account === 'true'
+                }
+                if (this.enableSecondaryEmailNotificationRadios) {
+                    payload["enable_secondary_email_notifications"] = this.form_enable_secondary_email_notifications === 'true'
                 }
 
                 if (!this.isLoading && this.employeeForm.checkValidity()) {

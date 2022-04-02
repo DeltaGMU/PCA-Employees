@@ -3,16 +3,19 @@
         <NavBar :signed_in="signedIn" :name="empName" :role="empRole" :current_page="currentPage"/>
         <div class="p-3">
             <h1 class="text-blue noSelect">Check In Students for After Care</h1>
-            <div class="pb-2 noSelect">
+            <div class="mb-3 noSelect">
                 <div>
                     <label for="role" class="text-blue formLabel">Select Grade</label>
                 </div>
 
-                <select class="form-select" v-model="selected" name="selectGrades" id="selectGrades">
+                <select class="form-select p-1 ms-1" v-model="selected" name="selectGrades" id="selectGrades">
                     <option value="" selected disabled>Select an option...</option>
                     <option v-for="(grade, index) in grades" :value="grades[index]" v-bind:key = "grade.id">{{ grades[index].name.toUpperCase() }}</option>
                 </select>
-
+                <br>
+                <button class="btn blueBtn p-2" type="button" @click="refreshStudentList(selected.name)" v-if="selected.name">
+                    Refresh Reports
+                </button>
             </div>
             <div class="table-responsive noSelect" v-if = "!students || !students.length">
                 <table class="pcaTable table-hover">
@@ -48,8 +51,13 @@
                     </tbody>
                 </table>
             </div> 
+
             <div class="pt-2">
-                <button class="btn blueBtn">Check In</button>
+                <button type="button" class="mt-3 btn formBtn blueBorder smallerScreenBtn" @click="checkInSelectedStudents">
+                    <span v-show="!isLoading"> Check In Selected Students </span>
+                    <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
+                    <span v-show="isLoading"> Loading... </span>
+                </button>
             </div>
         </div>
     </div>
@@ -71,17 +79,17 @@ export default {
             empName: this.$store.getters.StateName,
             empRole: this.$store.getters.StateRole,
             currentPage: "/kiosk/checkinmultiple",
+            isLoading: false,
 
             isCheckAll: false,
-            selected: '',
+            selected: {name: ""},
             students: [],
             grades: [],
-            selectedStudents: []
+            selectedStudents: [],
         }        
     },
     methods: {
-        checkAll: function(){
-
+        checkAll() {
             this.isCheckAll = !this.isCheckAll;
             this.selectedStudents = [];
             
@@ -91,7 +99,7 @@ export default {
                 }
             }
         },
-        updateCheckall: function() {
+        updateCheckall() {
             if(this.students.length == this.selectedStudents.length) {
                 this.isCheckAll = true;
             }
@@ -99,23 +107,65 @@ export default {
                 this.isCheckAll = false;
             }
         },
+        checkInSelectedStudents() {
+            if (!this.isLoading) {
+                this.isLoading = true;
+                console.log(this.selectedStudents)
+                for (let index in this.selectedStudents) {
+                    let date_test = new Date('April 1, 2022 15:30:00')
+                    let student = this.selectedStudents[index]
+                    let currentDate = ConvertDateToTimezone(date_test).slice(0, 10)
+                    let currentTime = ('0'  +  date_test.getHours()).slice(-2)+':'+('0' + date_test.getMinutes()).slice(-2);
+                    let payload = {
+                        'student_id': student.student.student_id,
+                        'check_in_time': currentTime,
+                        'check_in_date': currentDate,
+                        'care_type': true,
+                        'check_in_signature': this.$store.getters.StateName 
+                    }
+                    console.log(payload)
+                    this.$store.dispatch("CheckInStudent", payload).then(resp => {
+                        console.log(resp)
+                        this.refreshStudentList(this.selected.name);
+                        this.isLoading = false;  
+                    }).catch(err => {
+                        console.log(err)
+                    });
+                }
+                this.isLoading = false;                
+            }
+        },
+        refreshStudentList(selected_grade) {
+            if (!this.isLoading) {
+                this.isLoading = true;
+                if (!selected_grade || selected_grade.length === 0 ) {
+                    this.isLoading = false;
+                    return;
+                }
+                this.$store.dispatch("GetStudentsByGrade", {
+                    student_grade: selected_grade, 
+                    care_type: true, 
+                    care_date: ConvertDateToTimezone(new Date()).slice(0, 10),
+                }).then(
+                    (resp) => {
+                        if (resp !== undefined) {
+                            this.students = resp
+                            this.selectedStudents = [];
+                            this.isCheckAll = false;
+                        }
+                        this.isLoading = false;
+                    }
+                ).catch(err => {
+                    console.log(err)
+                    this.isLoading = false;
+                });
+            }
+        }
     },
     watch: {
         selected(value) {
             // console.log("selected grade: " + value.name);
-            this.$store.dispatch("GetStudentsByGrade", {
-                student_grade: value.name, 
-                care_type: true, 
-                care_date: ConvertDateToTimezone(new Date()).slice(0, 10),
-            }).then(
-                (resp) => {
-                    if (resp !== undefined) {
-                        this.students = resp
-                        this.studentsTwo = [];
-                        this.isCheckAll = false;
-                    }
-                }
-            )
+            this.refreshStudentList(value.name);
         }
     },
     beforeMount() {

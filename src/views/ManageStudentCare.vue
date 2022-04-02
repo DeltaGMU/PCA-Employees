@@ -5,6 +5,39 @@
             <div class="p-2">
                 <Sidebar>   </Sidebar>
             </div>
+            <div class="modal fade" id="no-records-found" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="noRecordsFoundLbl" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>No Student Records Found!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeModal"></button>
+                        </div>
+                        <div class="modal-body">
+                            No student records were found for the provided student ID in the last 30 days.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blueBtn" data-bs-dismiss="modal" @click="closeModal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
+            <div class="modal fade" id="delete-finished" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deleteFinishedLbl" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>Student Record Deletion Notice</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{ modalDeleteMessage }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deleteStudentRecordLbl" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -49,7 +82,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn blueBtn" data-bs-dismiss="modal" @click="clearSelectedCareRecord()">Cancel</button>
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="deleteSelectedCareRecord()">Delete</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#delete-finished" @click="deleteSelectedCareRecord()">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -70,7 +103,7 @@
                         </div>
                         
                         <div class="d-flex justify-content-center">
-                            <button type="button" id="studentSearchBtn" :disabled="student_id.length == 0" class="mt-3 btn formBtn blueBorder smallerScreenBtn" @click="checkStudentInfo">
+                            <button type="button" id="studentSearchBtn" :disabled="student_id.length == 0" class="mt-3 btn formBtn blueBorder smallerScreenBtn" @click="checkStudentInfo(true)">
                                 <span v-show="!isLoading"> Search </span>
                                 <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                                 <span v-show="isLoading"> Loading... </span>
@@ -80,16 +113,8 @@
                 </div>
 
                 <hr>
-                <div class="input-group mb-3" v-if="Object.keys(records).length > 0">
-                    <br>
-                    <input type="text" style="border-radius: 5px 0px 0px 5px;" v-model="searchQuery" class="form-control" placeholder="Search for records by Date..." name="recordSearchBar" id="recordSearchBar"/>
-                    <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" type="button" @click="checkStudentInfo()">
-                        Refresh Reports
-                    </button>
-                    <br>
-                </div>
-                
                 <div class="table-responsive noSelect" v-if="!filteredRecordsList || Object.keys(filteredRecordsList).length == 0">
+                    <h4 class="text-blue">Records period: {{ this.thirty_days_ago }} to {{ this.today }}</h4>
                     <table class="pcaTable table-hover">
                         <thead>
                             <th scope = "col" >
@@ -105,6 +130,14 @@
                 </div>
                 <div class="table-responsive noSelect" v-else>
                     <h4 class="text-blue">Records period: {{ this.thirty_days_ago }} to {{ this.today }}</h4>
+                    <div class="input-group mb-3" v-if="Object.keys(records).length > 0">
+                        <br>
+                        <input type="text" style="border-radius: 5px 0px 0px 5px;" v-model="searchQuery" class="form-control p-1 ms-1" placeholder="Search for records by Date..." name="recordSearchBar" id="recordSearchBar"/>
+                        <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" type="button" @click="checkStudentInfo()">
+                            Refresh Reports
+                        </button>
+                        <br>
+                    </div>
                     <table id="manageStudentCareTable" class="pcaTable table-hover">
                         <thead>
                             <th scope = "col">Date</th>
@@ -119,8 +152,8 @@
                             <tr class="row-striped text-center" v-for="(record, index) in filteredRecordsList" :key="index">
                                 <td>{{ index }}</td>
                                 <td class="middleCols">{{ record.student.first_name }} {{ record.student.last_name }}</td>
-                                <td class="middleCols"><input class="form-check-input" type="checkbox" onClick="return false;" :checked="!!record.before_care"></td>
-                                <td class="middleCols"><input class="form-check-input" type="checkbox" onClick="return false;" :checked="!!record.after_care"></td>
+                                <td class="middleCols"><input class="form-check-input" type="checkbox" onClick="return false;" :checked="!!record.before_care" disabled></td>
+                                <td class="middleCols"><input class="form-check-input" type="checkbox" onClick="return false;" :checked="!!record.after_care" disabled></td>
                                 <td class="middleCols mobilePadding">
                                     <button type="button" v-if="!!record.before_care" class="btn btn-danger" id="deleteStudentBCButton" data-bs-toggle="modal" data-bs-target="#confirm-delete" @click="setSelectedCareRecord(record, 0)">
                                         <span class="fa-solid fa-xmark">
@@ -167,6 +200,7 @@
                 empRole: this.$store.getters.StateRole,
                 currentPage: "/managestudentcare",
 
+                modalDeleteMessage: "",
                 searchQuery: "",
                 incorrect_id: "",
                 student_id: "",
@@ -206,14 +240,25 @@
         },
         methods: {
             ...mapActions(["GetStudentCareRecords", "DeleteStudentCareRecord"]),
-            checkStudentInfo() {
+            openModal() {
+                document.getElementById("backdrop").style.display = "block"
+                document.getElementById("no-records-found").style.display = "block"
+                document.getElementById("no-records-found").classList.add("show")
+            },
+
+            closeModal() {
+                document.getElementById("backdrop").style.display = "none"
+                document.getElementById("no-records-found").style.display = "none"
+                document.getElementById("no-records-found").classList.remove("show")
+            },
+            checkStudentInfo(showNoStudentsFoundModal = false) {
                 if (!this.isLoading) {
                     this.isLoading = true;
                     this.GetStudentCareRecords({
-                        student_id: this.student_id, 
+                        student_id: this.student_id.trim(), 
                         start_date: this.thirty_days_ago, 
                         end_date: this.today
-                    }).then((resp) => {
+                    }).then(resp => {
                         this.records = resp;
                         this.showError = false;
                         this.incorrect_id = "";
@@ -221,7 +266,10 @@
                         this.selected_record = {};
                         this.selected_care = 0;
                         console.log(this.records);
-                    }).catch((err) => {
+                        if (showNoStudentsFoundModal && Object.keys(this.records).length === 0) {
+                            this.openModal();
+                        }
+                    }).catch(err => {
                         console.log(err);
                         this.showError = true;
                         this.incorrect_id = this.student_id;
@@ -250,14 +298,19 @@
                     }).then(resp => {
                         if (!resp) {
                             console.log("Error deleting student record!");
+                            this.modalDeleteMessage = "Error deleting student record!"
+                            return false;
                         }
                         else {
                             console.log("Deleted student record!");
+                            this.modalDeleteMessage = "Deleted student record!"
+                            return true;
                         }
                     })
                     this.clearSelectedCareRecord();
                     this.checkStudentInfo();
                 }
+                return false;
             }
         },
     };
