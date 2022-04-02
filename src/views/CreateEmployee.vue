@@ -88,18 +88,6 @@
                                     Please provide a valid email address under 100 characters.
                                 </div>
                             </div>
-                        
-                            <div class="form-group noSelect">
-                                <div class="mb-1">
-                                    <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Secondary Email [Optional]</label>
-                                </div>
-                                
-                                <input type="text" class="form-control" id="secondaryEmail" autocomplete="off" v-model="form_secondary_email" placeholder="Optional employee secondary email..." maxlength="100">
-                                <div class="invalid-feedback">
-                                    Please provide a valid email address under 100 characters.
-                                </div>
-                            </div>
-
 
                             <div class="form-group noSelect">
                                 <div class="mb-1">
@@ -119,6 +107,17 @@
                                     </label>
                                 </div>
                                 <div class="invalid-feedback">Please select one of the provided options.</div>
+                            </div>
+                        
+                            <div class="form-group noSelect">
+                                <div class="mb-1">
+                                    <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Secondary Email [Optional]</label>
+                                </div>
+                                
+                                <input type="text" class="form-control" id="secondaryEmail" autocomplete="off" v-model="form_secondary_email" placeholder="Optional employee secondary email..." maxlength="100">
+                                <div class="invalid-feedback">
+                                    Please provide a valid email address under 100 characters.
+                                </div>
                             </div>
 
                             <div class="form-group noSelect">
