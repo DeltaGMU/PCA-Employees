@@ -20,7 +20,7 @@
                     </ul>
                     <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                         <li>
-                            <a class="nav-link align-middle noSelect" @click="() => {}">
+                            <a class="nav-link align-middle noSelect" @click="studentCareInfo">
                                 <i class="d-block d-sm-none fa-solid fa-school"></i> <span class="d-none d-sm-inline">Student Care Records</span>
                             </a>
                         </li>
@@ -61,15 +61,16 @@ export default {
     timesheetInfo() {
         this.$router.push("/timesheetinfo");
     },
+    studentCareInfo() {
+        this.$router.push("/studentcareinfo")
+    },
+    
     rotateChevron(idOfChevron, value) {
-        //let recordsMenu = document.getElementById("recordsMenu")
         let menu = document.getElementById(idOfChevron)
-
 
         menu.classList.toggle(value)
         menu.classList.toggle("pb-1")
-    }
-
+    },   
   },
 };
 </script>

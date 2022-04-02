@@ -3,45 +3,45 @@
         <NavBar :signed_in= "signedIn" :name= "empName" :role= "empRole" :current_page= "currentPage"/>
         <div class = "d-flex">
             <div class = "p-2">
-                <Sidebar> </Sidebar>
+                <Sidebar/>
             </div>
 
             <div class= "p-2">
             
-            <form>
-                <div class="p-2 mb-2">
-                            <label class="text-blue formLabel">Pick a Reporting Period</label>
-                        </div>
-                <div class=" p-2 mb-3 input-group">
-                        <input v-model = "rangeStart" type="date" class="form-control textBox" id="rangeDateStart" required>
-                        <span class="input-group-text">to</span>
-                        <input v-model = "rangeEnd" type="date" class="form-control textBox" id="rangeDateEnd" required>
-                        
-                </div>
-                <button type="button" class="btn blueBtn"  @click="submitReportingPeriod()">
-                    Submit
-                </button>
-            </form>
-
-            <div v-if="isSubmitted == true">
-                <div class = "p-2" >
-                    <h2>Reporting Period for Student Care: </h2> 
-                    <h3> {{ formatRange(rangeStart, rangeEnd) }}</h3>
-                </div>
-
-                <div class = "p-2" >
-                    <img class = "float-start w-50 h-75" v-bind:src= "report" style = "display: inline-block, position: absolute" />
-                
-                    <button id= "btn blueBtn" class="btn blueBtn">
-                        Download .PDF
+                <form>
+                    <div class="p-2 mb-2">
+                                <label class="text-blue formLabel">Pick a Reporting Period</label>
+                            </div>
+                    <div class=" p-2 mb-3 input-group">
+                            <input v-model="rangeStart" type="date" class="form-control textBox" id="rangeDateStart" required>
+                            <span class="input-group-text">to</span>
+                            <input v-model="rangeEnd" type="date" class="form-control textBox" id="rangeDateEnd" required>
+                            
+                    </div>
+                    <button type="button" class="btn blueBtn"  @click="submitReportingPeriod()">
+                        Submit
                     </button>
+                </form>
 
-                    <br> <br>
+                <div v-if="isSubmitted == true">
+                    <div class = "p-2" >
+                        <h2>Reporting Period for Student Care: </h2> 
+                        <h3> {{ formatRange(rangeStart, rangeEnd) }}</h3>
+                    </div>
 
-                    <button id= "btn blueBtn" class="btn blueBtn">
-                        Download .CSV 
-                    </button>
-                </div>
+                    <div class = "p-2" >
+                        <img class = "float-start w-50 h-75" v-bind:src= "report" style = "display: inline-block, position: absolute" />
+                    
+                        <button id= "btn blueBtn" class="btn blueBtn">
+                            Download .PDF
+                        </button>
+
+                        <br> <br>
+
+                        <button id= "btn blueBtn" class="btn blueBtn">
+                            Download .CSV 
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
