@@ -20,7 +20,7 @@
                     </ul>
                     <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                         <li>
-                            <a class="nav-link align-middle noSelect" @click="() => {}">
+                            <a class="nav-link align-middle noSelect" @click="studentCareInfo">
                                 <i class="fa-solid fa-school"></i> <span class="d-none d-sm-inline">Student Care Info</span>
                             </a>
                         </li>
@@ -56,11 +56,14 @@ export default {
   name: "Sidebar",
   methods: {
     home() {
-      this.$router.push("/admindashboard");
+        this.$router.push("/admindashboard");
     },
     timesheetInfo() {
-      this.$router.push("/timesheetinfo");
+        this.$router.push("/timesheetinfo");
     },
+    studentCareInfo() {
+        this.$router.push("/studentcareinfo")
+    }   
   },
 };
 </script>
