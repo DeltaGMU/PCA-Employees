@@ -76,6 +76,9 @@
                                     <option value="administrator">Administrator</option>
                                     <option value="employee">Employee</option>
                                 </select>
+                                <div class="invalid-feedback">
+                                    Please select an employee role.
+                                </div>
                             </div>
 
                             <div class="form-group noSelect">
