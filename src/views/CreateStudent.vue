@@ -134,7 +134,7 @@
                             </div>
                             <br>
                             <hr>
-                            <div class="form-group noSelect">
+                            <div class="noSelect">
                                 <div class="mb-1">
                                     <label for="firstName2" class="text-blue formLabel">Parent #2 First Name</label>
                                 </div>
@@ -142,7 +142,7 @@
                                 <input type="text" class="form-control" id="firstName2" v-model="parent_two_first_name" placeholder="Optional...">
                             </div>
 
-                            <div class="form-group noSelect">
+                            <div class="noSelect">
                                 <div class="mb-1">
                                     <label for="lastName2" class="text-blue formLabel">Parent #2 Last Name</label>
                                 </div>
@@ -150,7 +150,7 @@
                                 <input type="text" class="form-control" id="lastName2" v-model="parent_two_last_name" placeholder="Optional...">
                             </div>                   
                         
-                            <div class="form-group noSelect">
+                            <div class="noSelect">
                                 <div class="mb-1">
                                     <label for="secondaryEmail" class="text-blue formLabel">Parent #2 Email</label>
                                 </div>
@@ -158,7 +158,7 @@
                                 <input type="text" class="form-control" id="secondaryEmail" v-model="secondary_email" placeholder="Optional...">
                             </div>
 
-                            <div class="form-group noSelect">
+                            <div class="noSelect">
                                 <div class="mb-1">
                                     <label for="enable_secondary_email_notification" class="text-blue formLabel">Enable email notifications for Parent #2 email?</label>
                                 </div>
@@ -178,7 +178,7 @@
                                 <div class="invalid-feedback">Please select one of the provided options.</div>
                             </div>
                             <hr>
-                            <div class="form-group noSelect">
+                            <div class="noSelect">
                                 <div class="mb-1">
                                     <label for="enable_student_account" class="text-blue formLabel">Enable or disable student account after creation:</label>
                                 </div>

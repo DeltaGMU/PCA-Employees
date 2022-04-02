@@ -65,6 +65,16 @@ const actions = {
         }
       );
     },
+    async GetStudentInfo(context, studentID) {
+      let headers = {
+        headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+      }
+      return await axios.get("api/v1/students/"+studentID, headers).then(
+        resp => {
+          return resp.data.data.student;
+        }
+      );
+    },
     async GetAllStudents(context) {
       let headers = {
         headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
