@@ -406,6 +406,7 @@ td input.textBox {
 }
 .sidebar {
     position: relative;
+    min-width: 12rem;
 }
 
 .sidebar-item {
@@ -431,6 +432,30 @@ td input.textBox {
 
 .mainContent .fa-user, .mainContent .fa-users {
     color: #DEDEDE;
+}
+
+@media screen and (max-width: 576px) {
+    .sidebar-item a {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+    }
+
+    .sidebar {
+        min-width: 1rem;
+    }
+}
+
+.rotate {
+    -moz-transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    transition: all .1s linear;
+}
+.rotate .down {
+    -moz-transform:rotate(90deg);
+    -webkit-transform:rotate(90deg);
+    transform:rotate(90deg);
 }
 
 /* End admin dashboard styling*/
