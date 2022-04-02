@@ -155,7 +155,6 @@
 <script>
     import Sidebar from "../components/Sidebar.vue";
     import NavBar from "@/components/NavBar.vue";
-    import ConvertDateToTimezone from "@/store/utility/date_format";
 
     export default {
         components: {
@@ -173,7 +172,6 @@
                 studentCareRecords: {},
                 studentsByGrade: {},
                 studentTotalHours: {},
-                studentsTwo: [],
                 reportStartDate: "",
                 reportEndDate: "",
                 selectedPeriod: "",
@@ -283,23 +281,6 @@
                 this.studentRecords = {}
                 this.selectedPeriod = ""
             },
-        },
-        watch: {
-            selected(value) {
-                // console.log("selected grade: " + value.name);
-                this.$store.dispatch("GetStudentsByGrade", {
-                    student_grade: value.name, 
-                    care_type: true, 
-                    care_date: ConvertDateToTimezone(new Date()).slice(0, 10),
-                }).then(
-                    (resp) => {
-                        if (resp !== undefined) {
-                            this.students = resp
-                            this.studentsTwo = [];
-                        }
-                    }
-                )
-            }
         },
         mounted() {
             this.resetInformation();
