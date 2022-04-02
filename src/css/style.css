@@ -57,7 +57,7 @@ h1.loginHeader {
     }
 
     .btn {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
 
     h1 {
@@ -69,6 +69,10 @@ h1.loginHeader {
 @media screen and (max-width: 520px) {
     .loginContainer {
         padding: 3rem 2.5rem !important;
+    }
+
+    .manageButtonsDiv {
+        text-align: center;
     }
 }
 
