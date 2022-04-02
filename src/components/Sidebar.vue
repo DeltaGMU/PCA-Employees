@@ -4,44 +4,44 @@
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" style="border-radius: 5px 5px 0px 0px;" id="menu">
                 <li class="sidebar-item" style="border-radius: 5px 5px 0px 0px;">
                     <a class="nav-link align-middle noSelect" @click=" home ">
-                        <i class="fas fa-home"></i> <span class="d-none d-sm-inline">Home</span>
+                        <i class="d-block d-sm-none fas fa-home"></i> <span class="d-none d-sm-inline">Home</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#submenu1" data-bs-toggle="collapse" class="nav-link align-middle">
-                        <i class="fas fa-info-circle"></i> <span class="d-none d-sm-inline">View Information</span>
+                    <a href="#submenu1" id="recordsMenu" @click='rotateChevron("recordsChevron", "down")' data-bs-toggle="collapse" class="nav-link align-middle">
+                        <i class="d-block d-sm-none fas fa-info-circle"></i> <span class="d-none d-sm-inline">View Records <i id="recordsChevron" class="fas fa-chevron-right rotate"></i></span>
                     </a>
                     <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                         <li>
                             <a class="nav-link align-middle noSelect" @click="timesheetInfo">
-                                <i class="fa-solid fa-hourglass"></i> <span class="d-none d-sm-inline">Timesheet Info</span>
+                                <i class="d-block d-sm-none fa-solid fa-hourglass"></i> <span class="d-none d-sm-inline">Timesheet Records</span>
                             </a>
                         </li>
                     </ul>
                     <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                         <li>
                             <a class="nav-link align-middle noSelect" @click="() => {}">
-                                <i class="fa-solid fa-school"></i> <span class="d-none d-sm-inline">Student Care Info</span>
+                                <i class="d-block d-sm-none fa-solid fa-school"></i> <span class="d-none d-sm-inline">Student Care Records</span>
                             </a>
                         </li>
                     </ul>                  
                 </li>
                 
                 <li class="sidebar-item" style="border-radius: 0px 0px 5px 5px;">
-                    <a href="#submenu2" data-bs-toggle="collapse" class="nav-link align-middle">
-                        <i class="fas fa-file-alt"></i> <span class="d-none d-sm-inline">Generate Report</span>
+                    <a href="#submenu2" id="reportsMenu" data-bs-toggle="collapse" @click='rotateChevron("reportsChevron", "down")' class="nav-link align-middle">
+                        <i class="d-block d-sm-none fas fa-file-alt"></i> <span class="d-none d-sm-inline">Generate Report <i id="reportsChevron" class="fas fa-chevron-right rotate"></i></span>
                     </a>
                     <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                         <li>
                             <a class="nav-link align-middle noSelect" @click="() => {}">
-                                <i class="fa-solid fa-hourglass"></i> <span class="d-none d-sm-inline">Timesheet Report</span>
+                                <i class="d-block d-sm-none fa-solid fa-hourglass"></i> <span class="d-none d-sm-inline">Timesheet Report</span>
                             </a>
                         </li>
                     </ul>
                     <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                         <li>
                             <a class="nav-link align-middle noSelect" @click="() => {}">
-                                <i class="fa-solid fa-school"></i> <span class="d-none d-sm-inline">Student Care Report</span>
+                                <i class="d-block d-sm-none fa-solid fa-school"></i> <span class="d-none d-sm-inline">Student Care Report</span>
                             </a>
                         </li>
                     </ul>                      
@@ -56,11 +56,20 @@ export default {
   name: "Sidebar",
   methods: {
     home() {
-      this.$router.push("/admindashboard");
+        this.$router.push("/admindashboard");
     },
     timesheetInfo() {
-      this.$router.push("/timesheetinfo");
+        this.$router.push("/timesheetinfo");
     },
+    rotateChevron(idOfChevron, value) {
+        //let recordsMenu = document.getElementById("recordsMenu")
+        let menu = document.getElementById(idOfChevron)
+
+
+        menu.classList.toggle(value)
+        menu.classList.toggle("pb-1")
+    }
+
   },
 };
 </script>

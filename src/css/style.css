@@ -330,8 +330,7 @@ td input.textBox {
 	#manageStudentTable td:nth-of-type(2):before { content: "Carpool #"; font-weight: 700; }
 	#manageStudentTable td:nth-of-type(3):before { content: "Last Name"; font-weight: 700; }
 	#manageStudentTable td:nth-of-type(4):before { content: "First Name"; font-weight: 700; }
-	#manageStudentTable td:nth-of-type(5):before { content: "Grade"; font-weight: 700; }
-	#manageStudentTable td:nth-of-type(6):before { content: "Edit Student"; font-weight: 700; }
+	#manageStudentTable td:nth-of-type(5):before { content: "Edit Student"; font-weight: 700; }
 
     #manageEmployeeTable td:nth-of-type(1):before { content: "Employee ID"; font-weight: 700; }
 	#manageEmployeeTable td:nth-of-type(2):before { content: "Last Name"; font-weight: 700; }
@@ -448,11 +447,11 @@ td input.textBox {
 }
 
 .rotate {
-    -moz-transition: all .1s linear;
-    -webkit-transition: all .1s linear;
-    transition: all .1s linear;
+    -moz-transition: all .5s linear;
+    -webkit-transition: all .5s linear;
+    transition: all .5s linear;
 }
-.rotate .down {
+.rotate.down {
     -moz-transform:rotate(90deg);
     -webkit-transform:rotate(90deg);
     transform:rotate(90deg);
