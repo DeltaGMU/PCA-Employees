@@ -6,21 +6,20 @@
                 <Sidebar/>
             </div>
 
-            <div class= "p-2">
-                <div class="p-2 flex-grow-1">
-                    <h1 class="text-blue">Generate Student Care Report</h1>
-                    <label class="form-check-label" for = "reportStartDateInput">Pick a Reporting Period</label>
-                        </div>
-                    <div class="pb-1 input-group">
-                        <input type="date" class="form-control textBox" id="reportStartDate" v-model="reportStartDate" required>
-                        <span class="input-group-text">to</span>
-                        <input type="date" class="form-control textBox" id="reportEndDate" v-model="reportEndDate" :min="reportStartDate" :disabled="!reportStartDate" required>    
-                        <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" @click="getReportingPeriod()" :disabled="!reportStartDate || !reportEndDate ">
-                            <span v-show="!isLoading"> Submit</span>
-                            <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
-                            <span v-show="isLoading"> Loading... </span>
+            <div class="p-2 flex-grow-1">
+                <h1 class="text-blue">Generate Student Care Report</h1>
+                <label class="form-check-label" for = "reportStartDateInput">Pick a Reporting Period</label>
+        
+                <div class="pb-3 input-group">
+                    <input type="date" class="form-control textBox" id="reportStartDate" v-model="reportStartDate" required>
+                    <span class="input-group-text">to</span>
+                    <input type="date" class="form-control textBox" id="reportEndDate" v-model="reportEndDate" :min="reportStartDate" :disabled="!reportStartDate" required>    
+                    <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" @click="getReportingPeriod()" :disabled="!reportStartDate || !reportEndDate ">
+                        <span v-show="!isLoading"> Submit</span>
+                        <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
+                        <span v-show="isLoading"> Loading... </span>
                     </button>
-                    </div>
+                </div>
                 
 
                 <div v-if= "selectedPeriod != '' ">
