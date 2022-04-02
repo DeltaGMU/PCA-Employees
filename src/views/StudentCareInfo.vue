@@ -23,6 +23,7 @@
                                         <th class="middleCols" scope = "col">After Care Hours</th> 
                                         <th class="middleCols" scope = "col">After Care Check-in Time</th>
                                         <th scope = "col">After Care Check-out Time</th>
+                                        
                                     </thead>
                                     <tbody>
                                         <tr class = "row-striped" v-for="(record, index) in studentCareRecords" :key="index">
@@ -53,8 +54,8 @@
                     <label for="role" class="text-blue formLabel">Select Grade</label>
                 </div>
 
-                <select class="form-select" v-model= "selected" name="selectGrades" id="selectGrades">
-                    <option value="" selected disabled>Select an option...</option>
+                <select class="form-select" v-model= "selected" name= "selectGrades" id= "selectGrades">
+                    <option value= "" selected disabled>Select an option...</option>
                     <option v-for= "(grade, index) in grades" :value= "grades[index]" v-bind:key = "grade.id">{{ grades[index].name.toUpperCase() }}</option>
                 </select>
 
@@ -292,12 +293,12 @@
                     'reportEndDate': this.reportEndDate
                 }
                 payload["students"] = []
-                if (this.allStudents && this.allStudents.length > 0) {
-                    for (let student in Object.keys(this.allStudents)) {
+                if (this.studentsByGrade && this.studentsByGrade.length > 0) {
+                    for (let student in Object.keys(this.studentsByGrade)) {
                         payload["students"].push({
-                            first_name: this.allStudents[student].first_name,
-                            last_name: this.allStudents[student].last_name,
-                            students_id: this.allStudents[student].student_id
+                            first_name: this.studentsByGrade[student].first_name,
+                            last_name: this.studentsByGrade[student].last_name,
+                            students_id: this.studentsByGrade[student].student_id
                         })
                     }
                     console.log(payload)
@@ -309,7 +310,7 @@
                 }
             },
             resetInformation() {
-                this.allStudents = []
+                this.studentsByGrade = []
                 this.studentTotalHours = {}
                 this.studentRecords = {}
                 this.selectedPeriod = ""
