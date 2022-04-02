@@ -8,6 +8,7 @@ import ResetPassword from "../views/ResetPassword";
 import LeaveRequest from "../views/LeaveRequest";
 import AdminDashboard from "../views/AdminDashboard";
 import TimesheetInfo from "../views/TimesheetInfo";
+import StudentCareInfo from "../views/StudentCareInfo";
 import ManageAdmin from "../views/ManageAdmin";
 import ManageEmployees from "../views/ManageEmployees";
 import ManageStudents from "../views/ManageStudents";
@@ -68,6 +69,12 @@ const routes = [
     path: "/timesheetinfo",
     name: "TimesheetInfo",
     component: TimesheetInfo,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/studentcareinfo",
+    name: "StudentCareInfo",
+    component: StudentCareInfo,
     meta: { requiresAuth: true },
   },
   {
