@@ -166,13 +166,13 @@
                                 </div>
                                 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" v-model="form_enable_extra_hours" value="true" name="extraHoursOptions" id="extraHoursOptions extraHoursEnabled" required>
+                                    <input class="form-check-input" type="radio" v-model="form_enable_extra_hours" value="true" name="extraHoursOptions" id="extraHoursEnabled" required>
                                     <label class="form-check-label" for="extraHoursEnabled">
                                         Enable Extra Hours
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" v-model="form_enable_extra_hours" value="false" name="extraHoursOptions" id="extraHoursOptions extraHoursDisabled" required>
+                                    <input class="form-check-input" type="radio" v-model="form_enable_extra_hours" value="false" name="extraHoursOptions" id="extraHoursDisabled" required>
                                     <label class="form-check-label" for="extraHoursDisabled">
                                         Disable Extra Hours
                                     </label>
@@ -185,13 +185,13 @@
                                 </div>
                                 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" v-model="form_enable_account" value="true" name="employeeAccountActivation" id="employeeAccountActivation employeeAccountEnabled" required>
+                                    <input class="form-check-input" type="radio" v-model="form_enable_account" value="true" name="employeeAccountActivation" id="employeeAccountEnabled" required>
                                     <label class="form-check-label" for="employeeAccountEnabled">
                                         Enable Account
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" v-model="form_enable_account" value="false" name="employeeAccountActivation" id="employeeAccountActivation employeeAccountDisabled" required>
+                                    <input class="form-check-input" type="radio" v-model="form_enable_account" value="false" name="employeeAccountActivation" id="employeeAccountDisabled" required>
                                     <label class="form-check-label" for="employeeAccountDisabled">
                                         Disable Account
                                     </label>
