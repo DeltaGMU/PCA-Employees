@@ -54,12 +54,12 @@
                     <label for="role" class="text-blue formLabel">Select Grade</label>
                 </div>
 
-                <select class="form-select" v-model="selected" name="selectGrades" id="selectGrades">
+                <select class="form-select" v-model= "selected" name="selectGrades" id="selectGrades">
                     <option value="" selected disabled>Select an option...</option>
-                    <option v-for="(grade, index) in grades" :value="grades[index]" v-bind:key = "grade.id">{{ grades[index].name.toUpperCase() }}</option>
+                    <option v-for= "(grade, index) in grades" :value= "grades[index]" v-bind:key = "grade.id">{{ grades[index].name.toUpperCase() }}</option>
                 </select>
 
-            </div>
+                </div>
 
                 <label class="form-check-label" for="reportStartDateInput">Please select a reporting period:</label>
                 <div class="pb-3 input-group">
@@ -135,6 +135,7 @@
 <script>
     import Sidebar from "../components/Sidebar.vue";
     import NavBar from "@/components/NavBar.vue";
+    import ConvertDateToTimezone from "@/store/utility/date_format";
 
     export default {
         components: {
@@ -150,7 +151,7 @@
                 isLoading: false,
 
                 studentCareRecords: {},
-                allStudents: [],
+                studentsByGrade: [],
                 studentTotalHours: {},
                 studentsTwo: [],
                 reportStartDate: "",
@@ -161,6 +162,7 @@
                 studentInfo: [],
                 selected: '',
                 grades: [],
+
                 columns: [
                     'student_id',
                     'last_name',
@@ -188,8 +190,7 @@
                         return (
                             item.first_name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1
                             ) || (item.last_name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1) ||
-                            (item.student_id.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1) ||
-                            (item.grade.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1);
+                            (item.student_id.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1);
                     })
                 }
                 else {
@@ -210,7 +211,7 @@
                 let formatedRange = formatedStart + " to " + formatedEnd;
                 return formatedRange;
             },
-
+            /*
              checkStudentInfo() {
                 if (!this.isLoading) {
                     this.isLoading = true;
@@ -238,6 +239,7 @@
                     });
                 }
             },
+            */
             viewStudentCareRecords(student_id) {
                 console.log(student_id)
                 let payload = {
@@ -246,9 +248,10 @@
                     student_id: student_id
                 }
                 this.$store.dispatch("GetStudentCareRecords", payload).then(resp => {
-                    this.studentCareRecords = resp
+                    this.studentCareRecords = resp.records
                 })
             },
+            /*
             getReportingPeriod() {
                 if (!this.isLoading) {
                     this.isLoading = true;
@@ -256,14 +259,34 @@
 
                     
                     this.selectedPeriod = this.formatRange(this.reportStartDate, this.reportEndDate)
-                    this.$store.dispatch("GetAllStudents").then(() => {
-                        this.allStudents = this.$store.getters.StateStudents
+                    this.$store.dispatch("GetStudentsByGrade").then(() => {
+                        this.studentsByGrade = this.$store.getters.StateStudents
                         this.getStudentCareHours();
                         this.isLoading = false;
                     });
                 }
             },
-            
+            */
+           getReportingPeriod() {
+                if (!this.isLoading) {
+                    this.isLoading = true;
+                    this.resetInformation();
+
+                    let payload = {
+                        grade: this.selected,
+                        date_start: this.reportStartDate,
+                        date_end: this.reportEndDate
+                }
+                    
+                    this.selectedPeriod = this.formatRange(this.reportStartDate, this.reportEndDate)
+                    this.$store.dispatch("GetStudentsByGrade", payload).then(() => {
+                        this.studentsByGrade = this.$store.getters.StateStudents
+                        this.getStudentCareHours();
+                        this.isLoading = false;
+                    });
+                }
+            },
+
             getStudentCareHours() {
                 let payload = {
                     'reportStartDate': this.reportStartDate,
@@ -294,6 +317,14 @@
             },
         },
 
+        getStudentRecordsByGrade() {
+            let payload = {
+                'grade': this.grade,
+                'start_date': this.reportStartDate,
+                'end_date': this.reportEndDate
+            }
+            console.log(payload)
+        },
         /*
         getBeforeCareHours () {
 

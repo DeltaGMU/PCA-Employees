@@ -14,9 +14,25 @@ const actions = {
         headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
       }
       let payload = {
-        "student_grade": items.student_grade,
+        "grade": items.student_grade,
         "care_type": items.care_type,
         "care_date": items.care_date
+      }
+      return await axios.post("api/v1/care", payload, headers).then(
+        resp => {
+          console.log(resp.data.data.students)
+          return resp.data.data.students;
+        }
+      );
+    },
+    async GetStudentRecordsByGrade(context, items) {
+      let headers = {
+        headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+      }
+      let payload = {
+        "grade": items.student_grade,
+        "start_date": items.start_date,
+        "end_date": items.end_date
       }
       return await axios.post("api/v1/care", payload, headers).then(
         resp => {
