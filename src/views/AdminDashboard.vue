@@ -6,7 +6,7 @@
             <Sidebar/>
             </div>
             
-            <div class = "p-2 flex-grow-1">
+            <div class = "p-2 manageButtonsDiv flex-grow-1">
                 <button id="manageBtn" class="btn blueBtn"  @click="$router.push({ path: 'manageadmin'})">
                     Manage My Account <br/>
                     <i class="fas fa-user"></i>
@@ -29,7 +29,7 @@
 
                 <button id="manageBtn" class="btn blueBtn" @click="goToStudentGradeManagement()">
                     Manage Grade Levels <br/>
-                    <i class icon="fas fa-address-card"></i>
+                    <i class="fas fa-graduation-cap"></i>
                 </button>
             </div>
         </div>
