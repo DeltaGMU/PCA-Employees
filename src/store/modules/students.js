@@ -94,6 +94,21 @@ const actions = {
         return false;
       });
     },
+    async CreateStudent(context, payload) {
+      try {
+          return await axios({
+            method: 'post',
+            url: "api/v1/students",
+            data: {
+                payload
+            },
+            headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+          });
+      }
+      catch(err) {
+        throw "Student creation failed!"
+      }
+    },
     async CheckInStudent(context, payload) {
       console.log(context)
       console.log(payload)

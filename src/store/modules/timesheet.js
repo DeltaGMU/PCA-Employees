@@ -12,7 +12,6 @@ const getters = {
 
 const actions = {
   async SubmitTimesheet(context, valueArray) {
-     console.log(valueArray);
     try {
       return await axios({
         method: 'post',
