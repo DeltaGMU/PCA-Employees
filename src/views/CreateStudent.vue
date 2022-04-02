@@ -52,7 +52,7 @@
                                     <label for="lastName" class="text-blue formLabel">Student Last Name</label>
                                 </div>
                                 
-                                <input type="text" class="form-control" id="lastName" maxlength="50" v-model="last_name">
+                                <input type="text" class="form-control" id="lastName" maxlength="50" v-model="last_name" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid student last name under 50 characters.
                                 </div>
@@ -63,15 +63,21 @@
                                     <label for="carpool" class="text-blue formLabel">Carpool Number</label>
                                 </div>
                                 
-                                <input type="text" class="form-control" id="carpool" v-model="car_pool_number">
+                                <input type="number" class="form-control" id="carpool" max="10000" v-model="car_pool_number" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid carpool number under 10,000.
+                                </div>
                             </div>
 
                             <div class="noSelect">
                                 <label for="selectGrades" class="text-blue formLabel">Grade</label>
-                                <select class="form-select" v-model="grade" name="selectGrades" id="selectGrades">
+                                <select class="form-select" v-model="grade" name="selectGrades" id="selectGrades" required>
                                     <option value="" selected disabled>Please select a grade...</option>
                                     <option v-for="(grade, index) in grades" :value="grades[index]" v-bind:key = "grade.id">{{ grades[index].name.toUpperCase() }}</option>
                                 </select>
+                                <div class="invalid-feedback">
+                                    Please select a grade.
+                                </div>
                             </div>
                             <br>
                             <hr>
@@ -102,7 +108,7 @@
                                     <label for="primaryEmail" class="text-blue formLabel">Parent #1 Email</label>
                                 </div>
                                     
-                                <input type="email" class="form-control" maxlength="100" id="primaryEmail" v-model="primary_email">
+                                <input type="email" class="form-control" maxlength="100" id="primaryEmail" v-model="primary_email" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid parent email under 100 characters.
                                 </div>
@@ -193,7 +199,7 @@
                             </div>
                         </div>
                         <br/>
-                        <button id="submitStudentFormBtn" class="btn blueBtn" @click="createStudent()">
+                        <button type="button" id="submitStudentFormBtn" class="btn blueBtn" @click="createStudent()">
                             <span v-show="!isLoading"> Create Student </span>
                             <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                             <span v-show="isLoading"> Loading... </span>
@@ -240,7 +246,9 @@
                 grades: [],
                 creationSuccess: false,
                 isLoading: false,
-                enableSecondaryEmailNotificationRadios: false
+                enableSecondaryEmailNotificationRadios: false,
+                clickEvent: null,
+                studentForm: null
             }
         },
         watch: {
@@ -248,7 +256,9 @@
                 if (value && value.length > 0) {
                     this.enableSecondaryEmailNotificationRadios = true;
                 }
-                this.enableSecondaryEmailNotificationRadios = false;
+                else {
+                    this.enableSecondaryEmailNotificationRadios = false;
+                }          
             }
         },
         methods: {
@@ -266,10 +276,12 @@
                     "grade": this.grade,
                     "is_enabled": this.is_enabled === "true",
                     "enable_primary_email_notifications": this.enable_primary_email_notifications === "true",
-                    "enable_secondary_email_notifications": this.enable_secondary_email_notifications === "true"
+                }
+                if(this.enable_secondary_email_notifications) {
+                    payload["enable_secondary_email_notifications"] = this.enable_secondary_email_notifications === "true"
                 }
 
-                if (!this.isLoading && this.employeeForm.checkValidity()) {
+                if (!this.isLoading && this.studentForm.checkValidity()) {
                     this.isLoading = true
                     this.$store.dispatch("CreateStudent", payload).then((resp) => {
                         if (resp.status !== 200) {
@@ -288,6 +300,7 @@
                         this.openModel()
                     })
                 }
+                //e.preventDefault()
             },
             openModal() {
                 document.getElementById("backdrop").style.display = "block"
@@ -318,6 +331,21 @@
                 this.isLoading = false
                 this.studentForm.classList.remove('was-validated')
             },
+        },
+        mounted () {
+            this.closeModal();
+            let submitButton = document.getElementById("submitStudentFormBtn")
+            this.studentForm = document.getElementById("studentForm")
+            submitButton.addEventListener('click', 
+                function (event) {
+                    let form = document.getElementById("studentForm")
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false);
+            this.clickEvent = new Event('click');
         },
         beforeMount() {
             this.$store.dispatch("GetAllStudentGrades").then(
