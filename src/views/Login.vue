@@ -15,14 +15,20 @@
 
                     <div v-if="showError" class="alert alert-danger ">{{ errorMessage }}</div>
                     
-                    <form @submit.prevent="submit" novalidate>
+                    <form class="needs-validation" id="loginForm" novalidate>
                         <div class="mb-3">
                             <label for="username" class="text-beige formLabel">Enter Employee ID or Email Address</label>
                             <input type="text" class="form-control form-control-lg textBox" name="username" v-model="usernameInput" required>
+                            <div class="invalid-feedback">
+                                Please provide an employee ID or email address.
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="text-beige formLabel">Enter Password</label>
                             <input type="password" class="form-control form-control-lg textBox" name="password" v-model="passwordInput" required>
+                            <div class="invalid-feedback">
+                                Please provide a password.
+                            </div>
                         </div>
                         <div class="text-center formText">
                             <a class="text-beige" @click="forgotPassword">Forgot password? Click here to get a reset code.</a>
@@ -32,7 +38,7 @@
                         </div>
 
                         <div class="d-flex justify-content-center">
-                          <button type="submit" id="submitLoginBtn" class="mt-3 btn formBtn">
+                          <button type="button" id="submitLoginBtn" class="mt-3 btn formBtn" @click="submit">
                               <span v-show="!isLoading"> Sign In </span>
                               <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                               <span v-show="isLoading"> Loading... </span>
@@ -65,6 +71,9 @@
         isLoading: false,
         showError: false,
         errorMessage: "",
+
+        loginButton: null,
+        clickEvent: null,
       };
     },
     computed: {
@@ -85,6 +94,19 @@
         }
       }
     },
+    mounted() {
+      this.loginButton = document.getElementById("submitLoginBtn")
+      this.loginButton.addEventListener('click', 
+          function (event) {
+              let form = document.getElementById("loginForm")
+              if (!form.checkValidity()) {
+                  event.preventDefault()
+                  event.stopPropagation()
+              }
+              form.classList.add('was-validated')
+          }, false);
+      this.clickEvent = new Event('click');
+    },
     methods: {
       ...mapActions(["LogIn", "GetRole", "GetUserInfo", "GetName"]),
       clearAllFields() {
@@ -98,78 +120,59 @@
           User.append("username", this.usernameInput);
           User.append("password", this.passwordInput);
 
-          await this.LogIn(User).then(resp => {
-            if (resp >= 500) {
-              this.errorMessage = "Server error encountered. Please contact a system administrator."
-              this.showError = true;
-              this.isLoading = false;
-              this.clearAllFields();
-              return;
-            }
-            else if (resp >= 400) {
-              this.errorMessage = "Invalid login credentials. Please try again."
-              this.showError = true;
-              this.isLoading = false;
-              this.clearAllFields();
-              return;
-            }
-            else if(resp === 0) {
-              this.GetRole().then(resp => {
-                if (resp === false) {
-                  this.errorMessage = "Unable to retrieve employee role. Please contact a system administrator."
-                  this.showError = true;
-                  this.isLoading = false;
-                  this.clearAllFields();
-                  return;
-                }
-              });
-              this.GetName().then(resp => {
-                if (resp === false) {
-                  this.errorMessage = "Unable to retrieve employee name. Please contact a system administrator."
-                  this.showError = true;
-                  this.isLoading = false;
-                  this.clearAllFields();
-                  return;
-                }
-              });
-              this.GetUserInfo().then(resp => {
-                if (resp === false) {
-                  this.errorMessage = "Unable to retrieve user information. Please contact a system administrator."
-                  this.showError = true;
-                  this.isLoading = false;
-                  this.clearAllFields();
-                  return;
-                }
-              }).then(() => {
-                if(this.getRole == "administrator") {
-                  this.$router.push("/admindashboard").catch((err) => console.log(err));
-                }
-                else if (this.getRole == "employee"){
-                  this.$router.push("/timesheet").catch((err) => console.log(err));
-                }
-              });
-            }
-            else {
+          if (this.usernameInput.length > 0 && this.passwordInput.length > 0) {
+            await this.LogIn(User).then(resp => {
+              if(resp === 0) {
+                this.GetRole().then(resp => {
+                  if (resp === false) {
+                    this.errorMessage = "Unable to retrieve employee role. Please contact a system administrator."
+                    this.showError = true;
+                    this.isLoading = false;
+                    this.clearAllFields();
+                    return;
+                  }
+                });
+                this.GetName().then(resp => {
+                  if (resp === false) {
+                    this.errorMessage = "Unable to retrieve employee name. Please contact a system administrator."
+                    this.showError = true;
+                    this.isLoading = false;
+                    this.clearAllFields();
+                    return;
+                  }
+                });
+                this.GetUserInfo().then(resp => {
+                  if (resp === false) {
+                    this.errorMessage = "Unable to retrieve user information. Please contact a system administrator."
+                    this.showError = true;
+                    this.isLoading = false;
+                    this.clearAllFields();
+                    return;
+                  }
+                }).then(() => {
+                  if(this.getRole == "administrator") {
+                    this.$router.push("/admindashboard").catch((err) => console.log(err));
+                  }
+                  else if (this.getRole == "employee"){
+                    this.$router.push("/timesheet").catch((err) => console.log(err));
+                  }
+                });
+              }
+              else {
+                this.errorMessage = "Invalid login credentials."
+                this.showError = true;
+                this.isLoading = false;
+                this.clearAllFields();
+                return;
+              }
+            }).catch(err => {
+              console.log(err)
               this.errorMessage = "Network connection error."
               this.showError = true;
               this.isLoading = false;
               this.clearAllFields();
-              return;
-            }
-          }).catch(err => {
-            console.log(err)
-            if (err.status === 400) {
-              this.errorMessage = "Invalid credentials."
-              this.showError = true;
-              this.isLoading = false;
-              this.clearAllFields();
-              return
-            }
-            this.errorMessage = "Network connection error."
-            this.showError = true;
-            this.isLoading = false;
-            this.clearAllFields();
-          });
+            });
+          }
           this.isLoading = false;
         }
       },

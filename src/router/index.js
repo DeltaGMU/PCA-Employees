@@ -18,6 +18,8 @@ import EditStudent from "../views/EditStudent";
 import CreateEmployee from "../views/CreateEmployee";
 import CreateStudent from "../views/CreateStudent";
 import GenerateStudentCare from "../views/GenerateStudentCare";
+import GenerateTimesheets from "../views/GenerateTimesheets";
+
 // Kiosk Imports
 import KioskHome from "../views/Kiosk/KioskHome";
 import StudentFinder from "../views/Kiosk/StudentFinder";
@@ -129,6 +131,12 @@ const routes = [
     path: "/generatestudentcare",
     name: "GenerateStudentCare",
     component: GenerateStudentCare,
+    meta: { requiredAuth: true }
+  },
+  {
+    path: "/generatetimesheets",
+    name: "GenerateTimesheets",
+    component: GenerateTimesheets,
     meta: { requiredAuth: true }
   },
   // Kiosk Routes:

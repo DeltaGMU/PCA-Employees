@@ -14,7 +14,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="table-responsive" style="height: 100%; max-height: 100%;">
-                                <table id="studentCareRecordsModalTable" class = "pcaTable table-hover" style="height: 100%; overflow-x: auto;">
+                                <table id="studentCareRecordsModalTable" class = "pcaTable table-hover" style="overflow-x: auto;">
                                     <thead>
                                         <th class="p-2" scope = "col">Date</th>
                                         <th class="p-2" style="border-left: 2px solid #c3a579" scope = "col">BC Check-in Time</th>

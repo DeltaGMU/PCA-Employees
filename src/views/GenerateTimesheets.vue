@@ -1,56 +1,56 @@
 <template>
     <div class = "container">
-        <NavBar/>
-        <div class = "p-2">
-            <Sidebar> </Sidebar>
-        </div>
+        <NavBar :signed_in= "signedIn" :name= "empName" :role= "empRole" :current_page= "currentPage"/>
+        <div class = "d-flex">
+            <div class = "p-2">
+                <Sidebar/>
+            </div>
 
-        <div class= "p-2">
-        
-        <form>
-            <div class="p-2 mb-2">
-                        <label class="text-blue formLabel">Pick a Reporting Period</label>
+            <div class= "p-2">
+                <div class="p-2 flex-grow-1">
+                    <h1 class="text-blue">Generate Timesheet Report</h1>
+                    <label class="form-check-label" for = "reportStartDateInput">Pick a Reporting Period</label>
+                        </div>
+                    <div class="pb-1 input-group">
+                        <input type="date" class="form-control textBox" id="reportStartDate" v-model="reportStartDate" required>
+                        <span class="input-group-text">to</span>
+                        <input type="date" class="form-control textBox" id="reportEndDate" v-model="reportEndDate" :min="reportStartDate" :disabled="!reportStartDate" required>    
+                        <button class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" @click="getReportingPeriod()" :disabled="!reportStartDate || !reportEndDate ">
+                            <span v-show="!isLoading"> Submit</span>
+                            <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
+                            <span v-show="isLoading"> Loading... </span>
+                    </button>
                     </div>
-             <div class=" p-2 mb-3 input-group">
-                    <input v-model = "rangeStart" type="date" class="form-control textBox" id="rangeDateStart" required>
-                    <span class="input-group-text">to</span>
-                    <input v-model = "rangeEnd" type="date" class="form-control textBox" id="rangeDateEnd" required>
+                
+
+                <div v-if= "selectedPeriod != '' ">
+                    <div class = "p-2" v-if= "selectedPeriod != '' ">
+                        <h2>Reporting Period for Timesheet: </h2> 
+                        <h3> {{  selectedPeriod  }}</h3>
+                    </div>
+
+                    <div class = "p-2" >
+                        <img class = "float-start w-50 h-75" v-bind:src= "report" style = "display: inline-block, position: absolute" />
                     
-        </div>
-        <button class="btn blueBtn"  @click= "submitReportingPeriod()">
-            Submit
-        </button>
-        </form>
+                        <button id= "btn blueBtn" class="btn blueBtn">
+                            Download .PDF
+                        </button>
 
-        <div v-show= "isSubmitted == true">
-        <div class = "p-2">
-            <h2>Reporting Period for Timesheets: </h2> 
-            <h3> {{ formatRange(rangeStart, rangeEnd) }}</h3>
-        </div>
+                        <br> <br>
 
-        <div class = "p-2">
-            <img class = "float-start w-50 h-75" v-bind:src= "report" style = "display: inline-block, position: absolute" />
-        
-            <button id= "btn blueBtn" class="btn blueBtn">
-                Download .PDF
-            </button>
-
-            <br> <br>
-
-            <button id= "btn blueBtn" class="btn blueBtn">
-                Download .CSV 
-            </button>
-        </div>
-        </div>
+                        <button id= "btn blueBtn" class="btn blueBtn">
+                            Download .CSV 
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-    import Sidebar from "../components/Sidebar.vue";
+    import Sidebar from "@/components/Sidebar.vue";
     import NavBar from "@/components/NavBar.vue";
-    import ConvertDateToTimezone from "@/store/utility/date_format";
-
 
     export default {
         components: {
@@ -58,17 +58,26 @@
             NavBar
         },
         data() {
+            
             return {
+                signedIn: this.$store.getters.isAuthenticated,
+                empName: this.$store.getters.StateName,
+                empRole: this.$store.getters.StateRole,
+                currentPage: "/generatetimesheet",
+        
                 report: 'https://www.slideteam.net/media/catalog/product/cache/1280x720/c/o/competitive_landscape_analysis_report_template_example_ppt_presentation_Slide01.jpg',
-                rangeStart: '',
-                rangeEnd: ''
+                
+                isLoading: false,
 
+                reportStartDate: "",
+                reportEndDate: "",
+                selectedPeriod: ""
             }
         },
     
         methods: {
             formatDate(rangeDate){
-                let newDate = ConvertDateToTimezone(new Date(rangeDate)).slice(0, 10);
+                let newDate = new Date(rangeDate).toISOString().slice(0, 10);
                 let formatedDate = newDate.slice(5,7) + "/" + newDate.slice(8, 10) + "/" + newDate.slice(0,4);
                 return formatedDate;
             },
@@ -80,9 +89,23 @@
                 return formatedRange;
             },
 
-            submitReportingPeriod(){
-                this.isSubmitted = true;
-            }
+            getReportingPeriod(){
+                if (!this.isLoading) {
+                    this.isLoading = true;
+                    this.resetInformation();
+                    this.selectedPeriod = this.formatRange(this.reportStartDate, this.reportEndDate);
+                    this.isLoading = false;
+                }
+            },
+            resetInformation() {
+                this.selectedPeriod = ""
+            },
+            mounted() {
+            this.resetInformation();
+            this.reportStartDate = ""
+            this.reportEndDate = ""
+            this.isLoading = false
+            },
         }
 }
 </script>
