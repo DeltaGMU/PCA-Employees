@@ -58,7 +58,7 @@ const actions = {
         }
       )
     },
-    async GetStudentInfo(studentID) {
+    async GetStudentInfoKiosk(studentID) {
       return await axios.get("api/v1/kiosk/info/"+studentID).then(
         resp => {
           return resp.data.data.student;

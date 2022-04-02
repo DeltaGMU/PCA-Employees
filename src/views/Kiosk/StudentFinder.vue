@@ -62,9 +62,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["GetStudentInfo"]),
+    ...mapActions(["GetStudentInfoKiosk"]),
     checkStudentInfo() {
-      this.GetStudentInfo(this.student_id).then(() => {
+      this.GetStudentInfoKiosk(this.student_id).then(() => {
         this.$router.push("/careoptions").catch((err) => console.log(err));
         this.showError = false;
         this.incorrect_id = "";
