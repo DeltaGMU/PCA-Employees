@@ -83,7 +83,7 @@
                         // this.$store.dispatch("GetAllStudents")
                     }
                 )
-            }
+            },
         },
     };
 </script>

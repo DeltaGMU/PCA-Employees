@@ -117,7 +117,7 @@
                     }
                     this.$store.dispatch("GetStudentCarePDFReport", payload).then(resp => {
                         if (resp !== null) {
-                            console.log(resp)
+                            // console.log(resp)
                             pdfData = resp
                             this.isLoadingPDF = false;
                         }
@@ -150,7 +150,7 @@
                     }
                     this.$store.dispatch("GetStudentCareCSVReport", payload).then(resp => {
                         if (resp !== null) {
-                            console.log(resp)
+                            // console.log(resp)
                             csvData = resp
                             this.isLoadingCSV = false;
                         }
