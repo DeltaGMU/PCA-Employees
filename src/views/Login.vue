@@ -18,14 +18,14 @@
                     <form class="needs-validation" id="loginForm" novalidate>
                         <div class="mb-3">
                             <label for="username" class="text-beige formLabel">Enter Employee ID or Email Address</label>
-                            <input type="text" class="form-control form-control-lg textBox" name="username" v-model="usernameInput" required>
+                            <input type="text" id="usernameField" class="form-control form-control-lg textBox" name="username" v-model="usernameInput" required>
                             <div class="invalid-feedback">
                                 Please provide an employee ID or email address.
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="text-beige formLabel">Enter Password</label>
-                            <input type="password" class="form-control form-control-lg textBox" name="password" v-model="passwordInput" required>
+                            <input type="password" id="passwordField" class="form-control form-control-lg textBox" name="password" v-model="passwordInput" required>
                             <div class="invalid-feedback">
                                 Please provide a password.
                             </div>
@@ -106,6 +106,21 @@
               form.classList.add('was-validated')
           }, false);
       this.clickEvent = new Event('click');
+
+      let usernameField = document.getElementById("usernameField")
+      usernameField.addEventListener('keyup', function(event) {
+        if (event.key == 13 || event.keyCode == 13) {
+          event.preventDefault();
+          document.getElementById("submitLoginBtn").click();
+        }
+      })
+      let passwordField = document.getElementById("passwordField")
+      passwordField.addEventListener('keyup', function(event) {
+        if (event.key == 13 || event.keyCode == 13) {
+          event.preventDefault();
+          document.getElementById("submitLoginBtn").click();
+        }
+      })
     },
     methods: {
       ...mapActions(["LogIn", "GetRole", "GetUserInfo", "GetName"]),
