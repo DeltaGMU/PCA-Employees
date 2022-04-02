@@ -111,8 +111,8 @@
                                     <label class="form-check-label" for="primaryEmailNotificationEnabled">
                                         Yes
                                     </label>
-                                    </div>
-                                    <div class="form-check">
+                                </div>
+                                <div class="form-check">
                                     <input class="form-check-input" name="primaryEmailNotification" type="radio" v-model="form_enable_primary_email_notifications" value="false" id="primaryEmailNotificationDisabled" required>
                                     <label class="form-check-label" for="primaryEmailNotificationDisabled">
                                         No
