@@ -19,12 +19,17 @@
 
                 <button id="manageBtn" class="btn blueBtn" @click="goToStudentManagement()">
                     Manage Students <br/>
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-school"></i>
                 </button>
 
                 <button id="manageBtn" class="btn blueBtn" @click="goToStudentCareManagement()">
                     Manage Student Care <br/>
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-address-card"></i>
+                </button>
+
+                <button id="manageBtn" class="btn blueBtn" @click="goToStudentGradeManagement()">
+                    Manage Grade Levels <br/>
+                    <i class icon="fas fa-address-card"></i>
                 </button>
             </div>
         </div>
@@ -72,6 +77,13 @@
                     }
                 )
             },
+            goToStudentGradeManagement() {
+                this.$router.push({ path: 'managestudentgrades'}).then(
+                    () => {
+                        // this.$store.dispatch("GetAllStudents")
+                    }
+                )
+            }
         },
     };
 </script>
