@@ -23,7 +23,6 @@
                                         <th class="middleCols" scope = "col">After Care Hours</th> 
                                         <th class="middleCols" scope = "col">After Care Check-in Time</th>
                                         <th scope = "col">After Care Check-out Time</th>
-                                        
                                     </thead>
                                     <tbody>
                                         <tr class = "row-striped" v-for="(record, index) in studentCareRecords" :key="index">
@@ -135,6 +134,7 @@
 <script>
     import Sidebar from "../components/Sidebar.vue";
     import NavBar from "@/components/NavBar.vue";
+    import ConvertDateToTimezone from "@/store/utility/date_format";
 
     export default {
         components: {
