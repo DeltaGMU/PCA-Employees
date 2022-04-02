@@ -33,14 +33,14 @@
                     </a>
                     <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                         <li>
-                            <a class="nav-link align-middle noSelect" @click="() => {}">
+                            <a class="nav-link align-middle noSelect" @click="generateTimesheetReport">
                                 <i class="d-block d-sm-none fa-solid fa-hourglass"></i> <span class="d-none d-sm-inline">Timesheet Report</span>
                             </a>
                         </li>
                     </ul>
                     <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                         <li>
-                            <a class="nav-link align-middle noSelect" @click="() => {}">
+                            <a class="nav-link align-middle noSelect" @click="generateStudentCareReport">
                                 <i class="d-block d-sm-none fa-solid fa-school"></i> <span class="d-none d-sm-inline">Student Care Report</span>
                             </a>
                         </li>
@@ -63,6 +63,12 @@ export default {
     },
     studentCareInfo() {
         this.$router.push("/studentcareinfo")
+    },
+    generateTimesheetReport() {
+        this.$router.push("/generatetimesheets")
+    },
+    generateStudentCareReport() {
+        this.$router.push('/generatestudentcare')
     },
 
     rotateChevron(idOfChevron, value) {
