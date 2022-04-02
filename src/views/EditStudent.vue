@@ -54,6 +54,17 @@
                             
                             <input type="text" class="form-control" id="carpool" required>
                         </div>
+
+                        <div class="noSelect">
+                                <label for="selectGrades" class="text-blue formLabel">Grade</label>
+                                <select class="form-select" v-model="grade" name="selectGrades" id="selectGrades" required>
+                                    <option value="" selected disabled>Please select a grade...</option>
+                                    <option v-for="(grade, index) in grades" :value="grades[index]" v-bind:key = "grade.id">{{ grades[index].name.toUpperCase() }}</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a grade.
+                                </div>
+                        </div>
                         <br>
                         <hr>
                         <div class="form-group noSelect">
@@ -190,7 +201,30 @@
                 signedIn: this.$store.getters.isAuthenticated,
                 empName: this.$store.getters.StateName,
                 empRole: this.$store.getters.StateRole,
-                currentPage: "/editstudent",                       
+                currentPage: "/editstudent",
+                
+                first_name: "",
+                last_name: "",
+                car_pool_number: "",
+                grade: "",
+
+                parent_one_first_name: "",
+                parent_one_last_name: "",
+                parent_two_first_name: "",
+                parent_two_last_name: "",
+
+                primary_email: "",
+                secondary_email: "",
+                enable_primary_email_notifications: "true",
+                enable_secondary_email_notifications: "false",
+                is_enabled: "true",
+
+                grades: [],
+                creationSuccess: false,
+                isLoading: false,
+                enableSecondaryEmailNotificationRadios: false,
+                clickEvent: null,
+                studentForm: null
             }
         },
         methods: {
