@@ -249,7 +249,7 @@
         },
         watch: {
             form_secondary_email(secondary_email) {
-                if (secondary_email.length > 0) {
+                if (secondary_email && secondary_email.length > 0) {
                     this.enableSecondaryEmailNotificationRadios = true;
                 }
                 else {
