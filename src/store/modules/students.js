@@ -95,19 +95,20 @@ const actions = {
       });
     },
     async CreateStudent(context, payload) {
-      try {
-          return await axios({
-            method: 'post',
-            url: "api/v1/students",
-            data: {
-                payload
-            },
-            headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
-          });
-      }
-      catch(err) {
-        throw "Student creation failed!"
-      }
+      return await axios({
+          method: 'post',
+          url: "api/v1/students",
+          data: payload,
+          headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+      }).then(resp => {
+          if (resp && resp.status == 201) {
+            return true;
+          }
+          return false;
+      }).catch(err => {
+          console.log(err)
+          return false
+      });
     },
     async CheckInStudent(context, payload) {
       console.log(context)
