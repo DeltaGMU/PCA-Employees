@@ -8,7 +8,7 @@
 
             <div class= "p-2">
                 <div class="p-2 flex-grow-1">
-                    <h1 class="text-blue">Generate Timesheets Report</h1>
+                    <h1 class="text-blue">Generate Timesheet Report</h1>
                     <label class="form-check-label" for = "reportStartDateInput">Pick a Reporting Period</label>
                         </div>
                     <div class="pb-1 input-group">
@@ -24,9 +24,9 @@
                 
 
                 <div v-if= "selectedPeriod != '' ">
-                    <div class = "p-2" >
-                        <h2>Reporting Period for Timesheets: </h2> 
-                        <h3> {{ formatRange(reportStartDate, reportEndDate) }}</h3>
+                    <div class = "p-2" v-if= "selectedPeriod != '' ">
+                        <h2>Reporting Period for Timesheet: </h2> 
+                        <h3> {{  selectedPeriod  }}</h3>
                     </div>
 
                     <div class = "p-2" >
@@ -63,7 +63,7 @@
                 signedIn: this.$store.getters.isAuthenticated,
                 empName: this.$store.getters.StateName,
                 empRole: this.$store.getters.StateRole,
-                currentPage: "/generatetimesheets",
+                currentPage: "/generatetimesheet",
         
                 report: 'https://www.slideteam.net/media/catalog/product/cache/1280x720/c/o/competitive_landscape_analysis_report_template_example_ppt_presentation_Slide01.jpg',
                 

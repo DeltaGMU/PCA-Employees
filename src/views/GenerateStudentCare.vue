@@ -24,9 +24,9 @@
                 
 
                 <div v-if= "selectedPeriod != '' ">
-                    <div class = "p-2" >
+                    <div class = "p-2" v-if= "selectedPeriod != '' ">
                         <h2>Reporting Period for Student Care: </h2> 
-                        <h3> {{ formatRange(reportStartDate, reportEndDate) }}</h3>
+                        <h3> {{  selectedPeriod  }}</h3>
                     </div>
 
                     <div class = "p-2" >
