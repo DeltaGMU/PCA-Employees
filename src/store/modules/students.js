@@ -93,6 +93,21 @@ const actions = {
         console.log(err);
         return false;
       });
+    },
+    async CreateStudent(context, payload) {
+      try {
+          return await axios({
+            method: 'post',
+            url: "api/v1/students",
+            data: {
+                payload
+            },
+            headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+          });
+      }
+      catch(err) {
+        throw "Student creation failed!"
+      }
     }
 };
   
