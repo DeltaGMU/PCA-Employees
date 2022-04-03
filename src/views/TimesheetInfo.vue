@@ -209,7 +209,6 @@
                     this.isLoading = true;
                     this.resetInformation();
 
-                    // this.selectedPeriod = this.reportStartDate + " to " + this.reportEndDate
                     this.selectedPeriod = this.formatRange(this.reportStartDate, this.reportEndDate)
                     this.$store.dispatch("GetAllEmployees").then(resp => {
                         if (resp) {
