@@ -73,10 +73,7 @@ export default {
           await this.LogIn(User);
           await this.GetRole();
           await this.$store.dispatch("GetName");
-          if(this.getRole == "administrator") {
-            this.$router.push("/kiosk/checkinmultiple").catch((err) => console.log(err));
-          }
-          else if (this.getRole == "employee"){
+          if(this.getRole == "administrator" || this.getRole == "employee") {
             this.$router.push("/kiosk/checkinmultiple").catch((err) => console.log(err));
           }
       } catch (error) {
