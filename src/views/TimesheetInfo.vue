@@ -28,7 +28,7 @@
                                             <td class = "middleCols">{{ record.work_hours }} </td>
                                             <td class = "middleCols">{{ record.pto_hours }} </td>
                                             <td class = "middleCols">{{ record.extra_hours}} </td>
-                                            <td class = "middleCols">{{ record.comment }} </td>
+                                            <td class = "middleCols mobilePadding">{{ record.comment }} </td>
                                         </tr>
                                     </tbody>
                                 </table>
