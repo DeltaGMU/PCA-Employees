@@ -95,7 +95,7 @@
                             <div class="invalid-feedback">
                                 Please provide a valid parent last name under 50 characters.
                             </div>
-                        </div>>
+                        </div>
 
                         <div class="noSelect">
                             <div class="mb-1">
@@ -108,7 +108,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="noSelect">
                                 <div class="mb-1">
                                     <label for="enable_notifications_parent_one" class="text-blue formLabel">Enable email notifications for Parent #1 email?</label>
                                 </div>
@@ -171,34 +171,34 @@
                             </div>
                             <div class="invalid-feedback">Please select one of the provided options.</div>
                         </div>
+                        <br>
                         <hr>
-                        <div class="form-group noSelect">
+                        <div class="noSelect mb-3">
                             <div class="mb-1">
-                                <label for="deleteStudentAccountBtn" class="text-blue formLabel">Delete Student Account:</label><br/>
-                                <button type="button" class="btn btn-danger" name="deleteStudentAccountBtn" id="deleteStudentAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Student Account</button>
+                                <label for="deleteStudentAccountBtn" class="text-blue formLabel">Delete Student Account:</label>                        
                             </div>
+                            <button type="button" class="btn btn-danger" name="deleteStudentAccountBtn" id="deleteStudentAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Student Account</button>
                         </div>
-                        <div class="noSelect">
+                        <div class="noSelect mb-3">
                                 <div class="mb-1">
                                     <label for="enable_student_account" class="text-blue formLabel">Enable or disable student account after creation:</label>
                                 </div>
                                 
-                                <div class="form-check form-check-inline">
+                                <div class="form-check form-check-inline mb-1">
                                     <input class="form-check-input" type="radio" value="true" name="enable_student_account" id="enableAccount" v-model="is_enabled" required>
                                     <label class="form-check-label" for="enableAccount">
                                         Enable Account
                                     </label>
                                 </div>
-                                <div class="form-check form-check-inline">
+                                <div class="form-check form-check-inline mb-1">
                                     <input class="form-check-input" type="radio" value="false" name="enable_student_account" id="disableAccount" v-model="is_enabled" required>
                                     <label class="form-check-label" for="disableAccount">
                                         Disable Account
                                     </label>
                                 </div>
                                 <div class="invalid-feedback">Please select one of the provided options.</div>
-                            </div>
-                        <br/>
-                        <button class="btn blueBtn">Submit</button>
+                        </div>
+                        <button class="mb-3 btn blueBtn">Submit</button>
                     </div>
                 </form>
             </div>
@@ -243,16 +243,47 @@
                 isLoading: false,
                 enableSecondaryEmailNotificationRadios: false,
                 clickEvent: null,
-                studentForm: null
+                studentForm: null,
+
+                studentInfo: {}
             }
         },
         methods: {
+            populateFields() {
+                this.first_name = this.studentInfo.first_name.charAt(0).toUpperCase() + this.studentInfo.first_name.slice(1)
+                this.last_name = this.studentInfo.last_name.charAt(0).toUpperCase() + this.studentInfo.last_name.slice(1)
+                this.car_pool_number = this.studentInfo.carpool_number
+                this.grade = this.studentInfo.grade
+                
+                this.parent_one_first_name = this.studentInfo.contact_info.parent_one_first_name.charAt(0).toUpperCase() + this.studentInfo.contact_info.parent_one_first_name.slice(1)
+                this.parent_one_last_name = this.studentInfo.contact_info.parent_one_last_name.charAt(0).toUpperCase() + this.studentInfo.contact_info.parent_one_last_name.slice(1)
+                this.primary_email = this.studentInfo.contact_info.primary_email
+                this.enable_primary_email_notifications = this.studentInfo.contact_info.enable_primary_email_notifications
+                this.parent_two_first_name = this.studentInfo.contact_info.parent_two_first_name.charAt(0).toUpperCase() + this.studentInfo.contact_info.parent_two_first_name.slice(1)
+                this.parent_two_last_name = this.studentInfo.contact_info.parent_two_last_name.charAt(0).toUpperCase() + this.studentInfo.contact_info.parent_two_last_name.slice(1)                
+                this.secondary_email = this.studentInfo.contact_info.secondary_email
+                this.enableSecondaryEmailNotificationRadios = this.studentInfo.contact_info.enableSecondaryEmailNotificationRadios
+                this.is_enabled = this.studentInfo.is_enabled
+            },
             deleteStudentAccount: function() {
-                return
+                this.$store.dispatch("DeleteStudent", this.$route.params.id)
             },
         },
         mounted() {
-            this.$store.dispatch("GetStudentInfo")
+            this.$store.dispatch("GetStudentInfo", this.$route.params.id).then(resp => {
+                if (resp) {
+                    this.studentInfo = resp
+                }
+            }).then(() => {this.populateFields()})
+        },
+        beforeMount() {
+            this.$store.dispatch("GetAllStudentGrades").then(
+                (resp) => {
+                    if (resp !== undefined) {
+                        this.grades = resp
+                    }
+                }
+            );
         }
     }
 </script>
