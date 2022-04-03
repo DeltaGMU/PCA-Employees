@@ -15,7 +15,7 @@ const actions = {
     }
     return axios.post("api/v1/employees", employee_data, headers).then(
       resp => {
-        if (resp.status === 201) {
+        if (resp && resp.status === 201) {
           return true;
         }
         return false;
@@ -47,9 +47,11 @@ const actions = {
     let headers = {
       headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token},    
     }
-    return axios.put("api/v1/employees/"+context.rootState.auth.user.employee_id, employee_data, headers).then(
+    let employee_id = employee_data['employee_id']
+    delete employee_data['employee_id']
+    return axios.put("api/v1/employees/"+employee_id, employee_data, headers).then(
       resp => {
-        if (resp.status === 200) {
+        if (resp && resp.status === 200) {
           return true;
         }
         return false;
@@ -65,7 +67,7 @@ const actions = {
     }
     return axios.put("api/v1/employees/password/new", password_payload, headers).then(
       resp => {
-        if (resp.status === 200) {
+        if (resp && resp.status === 200) {
           return true;
         }
         return false;

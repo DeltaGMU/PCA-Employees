@@ -317,6 +317,7 @@
             },
             async submit(e) {
                 let payload = {
+                    "employee_id": this.$store.getters.StateUser.employee_id,
                     "first_name": this.form_first_name,
                     "last_name": this.form_last_name,
                     "primary_email": this.form_primary_email,
