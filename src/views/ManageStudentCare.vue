@@ -114,7 +114,7 @@
 
                 <hr>
                 <div class="table-responsive noSelect" v-if="!filteredRecordsList || Object.keys(filteredRecordsList).length == 0">
-                    <h4 class="text-blue">Records period: {{ this.thirty_days_ago }} to {{ this.today }}</h4>
+                    <h4 class="text-blue">Records period: {{ records_period }}</h4>
                     <table class="pcaTable table-hover">
                         <thead>
                             <th scope = "col" >
@@ -211,7 +211,8 @@
                 records: {},
 
                 selected_record: {},
-                selected_care: 0
+                selected_care: 0,
+                records_period: '',
             }
         },
         watch: {
@@ -240,6 +241,17 @@
         },
         methods: {
             ...mapActions(["GetStudentCareRecords", "DeleteStudentCareRecord"]),
+            formatDate(rangeDate){
+                let newDate = new Date(rangeDate).toISOString().slice(0, 10);
+                let formatedDate = newDate.slice(5,7) + "/" + newDate.slice(8, 10) + "/" + newDate.slice(0,4);
+                return formatedDate;
+            },
+            formatRange(rangeStart, rangeEnd){
+                let formatedStart = this.formatDate(rangeStart); 
+                let formatedEnd = this.formatDate(rangeEnd);
+                let formatedRange = formatedStart + " to " + formatedEnd;
+                return formatedRange;
+            },
             openModal() {
                 document.getElementById("backdrop").style.display = "block"
                 document.getElementById("no-records-found").style.display = "block"
@@ -313,5 +325,8 @@
                 return false;
             }
         },
+        mounted() {
+            this.records_period = this.formatRange(this.thirty_days_ago, this.today)
+        }
     };
 </script>
