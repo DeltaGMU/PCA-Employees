@@ -36,7 +36,6 @@ const actions = {
           return resp.data.data.employees
         }
         return []
-        // commit("setEmployees", resp.data.data.employees);
       }
     ).catch(err => {
       console.log(err)
