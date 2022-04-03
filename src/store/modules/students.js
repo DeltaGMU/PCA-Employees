@@ -149,6 +149,22 @@ const actions = {
           return false
       });
     },
+    async DeleteStudent(context, studentID) {
+      let headers = {
+        headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+      }
+      return await axios.delete("api/v1/students"+studentID, headers).then(
+        resp => {
+          if (resp && resp.status == 200){
+            return true;
+          }
+          return false;
+        }
+        ).catch(err => {
+            console.log(err);
+            return false;
+        })
+    },
     async CheckInStudent(_, payload) {
       return await axios.post("api/v1/care/checkin", payload).then(
         resp => {
