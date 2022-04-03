@@ -32,10 +32,16 @@ const actions = {
     return axios.get("api/v1/employees/all", headers).then(
       resp => {
         console.log(resp)
-        return resp.data.data.employees
+        if (resp && resp.status === 200) {
+          return resp.data.data.employees
+        }
+        return []
         // commit("setEmployees", resp.data.data.employees);
       }
-    );
+    ).catch(err => {
+      console.log(err)
+      return []
+    });
   },
   async UpdateEmployee(context, employee_data) {
     let headers = {
