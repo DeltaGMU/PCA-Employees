@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const state = {
-  employees: null,
+
 };
 
 const getters = {
-  StateEmployees: (state) => state.employees,
+
 };
 
 const actions = {
@@ -29,9 +29,11 @@ const actions = {
     let headers = {
       headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
     }
-    axios.get("api/v1/employees/all", headers).then(
+    return axios.get("api/v1/employees/all", headers).then(
       resp => {
-        context.commit("setEmployees", resp.data.data.employees);
+        console.log(resp)
+        return resp.data.data.employees
+        // commit("setEmployees", resp.data.data.employees);
       }
     );
   },
@@ -70,9 +72,7 @@ const actions = {
 };
 
 const mutations = {
-  setEmployees(state, employees) {
-    state.employees = employees;
-  },
+
 };
 
 export default {

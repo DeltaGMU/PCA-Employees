@@ -64,6 +64,7 @@ export default {
   methods: {
     ...mapActions(["GetStudentInfoKiosk"]),
     checkStudentInfo() {
+      console.log(this.student_id)
       this.GetStudentInfoKiosk(this.student_id).then(() => {
         this.$router.push("/careoptions").catch((err) => console.log(err));
         this.showError = false;

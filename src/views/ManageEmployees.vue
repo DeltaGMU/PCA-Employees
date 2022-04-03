@@ -87,7 +87,7 @@
                 currentPage: "/manageemployees",
 
                 searchQuery: '',
-                employeeInfo: this.$store.getters.StateEmployees,
+                employeeInfo: [],
                 columns: [
                     'employeeID',
                     'last_name',
@@ -122,8 +122,9 @@
         methods: {
             refreshEmployeesTable() {
                 this.$store.dispatch("GetAllEmployees").then(
-                    () => {
-                        this.employeeInfo = this.$store.getters.StateEmployees
+                    resp => {
+                        // this.employeeInfo = this.$store.getters.StateEmployees
+                        this.employeeInfo = resp
                     }
                 )
             },

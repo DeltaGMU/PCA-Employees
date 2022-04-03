@@ -2,7 +2,7 @@ import axios from "axios";
 
 const state = {
   name: null,
-  role: null,
+  role: {},
   info: null,
 };
 

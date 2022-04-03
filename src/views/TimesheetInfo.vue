@@ -230,9 +230,9 @@
                         })
                     }
                     console.log(payload)
-                    this.$store.dispatch("GetTotalHoursForEmployees", payload).then(() => {
+                    this.$store.dispatch("GetTotalHoursForEmployees", payload).then((resp) => {
                         //console.log("AFTER RETRIEVING HOURS")
-                        this.empTotalHours = this.$store.getters.RetrievedTotalHours
+                        this.empTotalHours = resp
                         //console.log(this.empTotalHours)
                     })
                 }

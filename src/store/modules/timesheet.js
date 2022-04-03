@@ -1,13 +1,11 @@
 import axios from "axios";
 
 const state = {
-  retrievedTimesheets: null,
-  retrievedTotalHours: null
+
 };
 
 const getters = {
-  RetrievedTimesheet: (state) => state.retrievedTimesheets,
-  RetrievedTotalHours: (state) => state.retrievedTotalHours
+
 };
 
 const actions = {
@@ -28,9 +26,7 @@ const actions = {
   },
   
   async GetTimesheets(context, payload) {
-     //console.log("start day in payload: " + payload.firstDay);
-     //console.log("end day in payload: " + payload.lastDay);
-    await axios({
+    return await axios({
       method: 'get',
       url: "api/v1/timesheet/" + context.rootState.auth.user.employee_id,
       params: {
@@ -40,19 +36,17 @@ const actions = {
       headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
     }).then(resp => {
       if (resp !== undefined) {
-        context.commit("retrievedTimesheet", resp.data.data)
-        //console.log(resp.data.data)
+        // console.log(resp)
+        return resp.data.data
       }
       else {
         console.log("No employee time sheet records exist for the provided date range!")
-        context.commit("retrievedTimesheet", {})
+        return null
       }
     })
   },
   async GetTimesheetsForEmployee(context, payload) {
-    //console.log("start day in payload: " + payload.firstDay);
-    //console.log("end day in payload: " + payload.lastDay);
-    console.log(payload)
+    // console.log(payload)
     return await axios({
       method: 'get',
       url: "api/v1/timesheet/" + payload.employee_id,
@@ -85,13 +79,13 @@ const actions = {
      headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
     }).then(resp => {
       if (resp !== undefined) {
-        console.log(resp.data.data.total_hours)
+        // console.log(resp.data.data.total_hours)
         return resp.data.data.total_hours
         // context.commit("retrievedTotalHours", resp.data)
       }
       else {
         console.log("No employee time sheet records exist for the provided date range!")
-        return {}
+        return null
         // context.commit("retrievedTotalHours", {})
       }
     })
@@ -106,32 +100,28 @@ const actions = {
         date_end: payload.reportEndDate,
         employee_id: employee_ids[employee].employee_id
       }
-      console.log(new_payload)
+      // console.log(new_payload)
       await context.dispatch("GetTotalHours", new_payload).then(resp => {
-        if(resp !== undefined) {
+        console.log(resp)
+        if(resp) {
           employee_hours_obj[new_payload.employee_id] = {
             first_name: employee_ids[employee].first_name,
             last_name: employee_ids[employee].last_name,
             total_hours: resp
           }
+          console.log(employee_hours_obj)
         }
         else {
           console.log("MISSING DATA FOR - " + new_payload.employee_id)
         }
-      }).then(() => {
-        context.commit("retrievedTotalHours", employee_hours_obj)
       })
     }
+    return employee_hours_obj
   }
 };
 
 const mutations = {
-  retrievedTimesheet(state, retrievedTimesheets) {
-    state.retrievedTimesheets = retrievedTimesheets;
-  },
-  retrievedTotalHours(state, retrievedTotalHours) {
-    state.retrievedTotalHours = retrievedTotalHours;
-  }
+
 };
 
 export default {

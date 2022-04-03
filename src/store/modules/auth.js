@@ -32,22 +32,25 @@ const actions = {
   },
   
   async LogOut(context) {
-    context.rootState.employees.employees = null;
-    context.rootState.user.name = null;
-    context.rootState.user.role = null;
-    context.rootState.user.info = null;
-    context.rootState.timesheet.retrievedTimesheets = null;
-    context.rootState.students.students = null;
+    context.rootState.user = {};
+    context.rootState.reports = null;
 
-    /*
+    console.log("logging out!")
     if (this.state.isAuthenticated) {
+      console.log("Logging out...")
       let headers = { 'Authorization': 'Bearer '+context.rootState.auth.user.token }
       await axios.post("api/v1/logout", headers).then(
-        () => { context.commit("logout") }
+        (resp) => {
+          if (resp.status === 200) {
+            console.log("Logged out.")
+            context.commit("logout") 
+          } 
+        }
       ).catch(e => console.log(e));
     }
-    */
-    context.commit("logout")
+    else {
+      context.commit("logout")
+    }
   },
 };
 

@@ -95,7 +95,7 @@
                 currentPage: "/managestudents",
 
                 searchQuery: "",
-                studentInfo: this.$store.getters.StateStudents,
+                studentInfo: [],
                 columns: [
                     'studentID',
                     'carpoolNum',
@@ -136,8 +136,8 @@
         methods: {
             refreshStudentsTable() {
                 this.$store.dispatch("GetAllStudents").then(
-                    () => {
-                        this.studentInfo = this.$store.getters.StateStudents
+                    (resp) => {
+                        this.studentInfo = resp
                     }
                 )
             }

@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const state = {
-  students: null,
+
 };
 
 const getters = {
-    StateStudents: (state) => state.students,
+
 };
 
 const actions = {
@@ -58,7 +58,7 @@ const actions = {
         }
       )
     },
-    async GetStudentInfoKiosk(studentID) {
+    async GetStudentInfoKiosk(_, studentID) {
       return await axios.get("api/v1/kiosk/info/"+studentID).then(
         resp => {
           return resp.data.data.student;
@@ -81,9 +81,15 @@ const actions = {
       }
       return await axios.get("api/v1/students", headers).then(
         resp => {
-          context.commit("setStudents", resp.data.data.students)
+          if(resp && resp.status === 200) {
+            return resp.data.data.students;
+          }
+          return [];
         }
-      )
+      ).catch(err => {
+        console.log(err)
+        return [];
+      })
     },
     async GetStudentCareRecords(context, items) {
       let headers = {
@@ -143,9 +149,7 @@ const actions = {
           return false
       });
     },
-    async CheckInStudent(context, payload) {
-      console.log(context)
-      console.log(payload)
+    async CheckInStudent(_, payload) {
       return await axios.post("api/v1/care/checkin", payload).then(
         resp => {
           console.log(resp)
@@ -162,9 +166,7 @@ const actions = {
 };
   
 const mutations = {
-    setStudents(state, students) {
-      state.students = students;
-    }
+
 };
   
 export default {

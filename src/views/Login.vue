@@ -146,31 +146,34 @@
                     this.clearAllFields();
                     return;
                   }
-                });
-                this.GetName().then(resp => {
-                  if (resp === false) {
-                    this.errorMessage = "Unable to retrieve employee name. Please contact a system administrator."
-                    this.showError = true;
-                    this.isLoading = false;
-                    this.clearAllFields();
-                    return;
-                  }
-                });
-                this.GetUserInfo().then(resp => {
-                  if (resp === false) {
-                    this.errorMessage = "Unable to retrieve user information. Please contact a system administrator."
-                    this.showError = true;
-                    this.isLoading = false;
-                    this.clearAllFields();
-                    return;
-                  }
+                  console.log(this.$store.getters.StateRole)
                 }).then(() => {
-                  if(this.getRole == "administrator") {
-                    this.$router.push("/admindashboard").catch((err) => console.log(err));
-                  }
-                  else if (this.getRole == "employee"){
-                    this.$router.push("/timesheet").catch((err) => console.log(err));
-                  }
+                  this.GetName().then(resp => {
+                    if (resp === false) {
+                      this.errorMessage = "Unable to retrieve employee name. Please contact a system administrator."
+                      this.showError = true;
+                      this.isLoading = false;
+                      this.clearAllFields();
+                      return;
+                    }
+                  }).then(() => {
+                    this.GetUserInfo().then(resp => {
+                      if (resp === false) {
+                        this.errorMessage = "Unable to retrieve user information. Please contact a system administrator."
+                        this.showError = true;
+                        this.isLoading = false;
+                        this.clearAllFields();
+                        return;
+                      }
+                    }).then(() => {
+                      if(this.getRole == "administrator") {
+                        this.$router.push("/admindashboard").catch((err) => console.log(err));
+                      }
+                      else if (this.getRole == "employee"){
+                        this.$router.push("/timesheet").catch((err) => console.log(err));
+                      }
+                    });
+                  })
                 });
               }
               else {

@@ -330,6 +330,7 @@
                 reporting_period_end: 9,
                 submissionSuccess: false,
                 isLoading: false,
+                timesheets: null,
             }
         },
         computed: {
@@ -545,7 +546,7 @@
 
             // Fill the input fields with any previously submitted timesheet info
             getTimesheet() {
-                let timesheets = this.$store.getters.RetrievedTimesheet
+                let timesheets = this.timesheets
                 let isoDate
                 let formCount = 0
 
@@ -657,18 +658,18 @@
                 'lastDay': this.lastDay
             };
 
-            this.$store.dispatch("GetTimesheets", payload).then(() => {
-                this.getTimesheet()
-                //console.log(this.$store.getters.RetrievedTimesheet)
-                //console.log("RE MOUNT")
-            })
+            this.$store.dispatch("GetTimesheets", payload).then(resp => {
+                console.log(resp)
+                if (resp) {
+                    this.timesheets = resp
+                    // console.log(this.timesheets)
+                }
+            }).then(() => {this.getTimesheet()})
         },
         beforeMount() {
             let dt = new Date()
-            
             // console.log(dt)
             // console.log("CURRENT MONTH: " + dt.getMonth())
-            
             // console.log("GET DATE: " + dt.getDate())
             if(dt.getDate() < this.reporting_period_start) {
                 if (dt.getMonth() > 0) {
