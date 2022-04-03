@@ -5,7 +5,7 @@
             <div class="mt-5 col-xl-8 col-lg-8 col-md-10 col-sm-12">
                 <div class="homeContainer">
                     <div class="text-center">
-                        <img src="../../assets/pcawhite.svg" class="mb-4 homeLogo" alt="PCA Lion Logo">
+                        <img src="@/assets/pcawhite.svg" class="mb-4 homeLogo" alt="PCA Lion Logo">
                         <h1 class="text-blue">Are you a PCA employee or parent?</h1>
                     </div>
                     <div class="mt-5 twoBtnCol">
