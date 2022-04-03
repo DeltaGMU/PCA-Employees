@@ -355,7 +355,6 @@
 
                 let abbrevDay
         
-                // setDate sets the month day of the date that was created above; starts at 1, goes until it gets to the end of the month
                 // getDay returns an int (0-6) of the weekday that correlates to the date that was set; reference the index of the days array that corresponds to that int
                 // Push the day number and abbreviated day name to dateAndDayArray
                 for(let i = this.reporting_period_start; i <= this.daysInThisMonth; i++) {                               
@@ -668,9 +667,7 @@
         },
         beforeMount() {
             let dt = new Date()
-            // console.log(dt)
-            // console.log("CURRENT MONTH: " + dt.getMonth())
-            // console.log("GET DATE: " + dt.getDate())
+
             if(dt.getDate() < this.reporting_period_start) {
                 if (dt.getMonth() > 0) {
                     this.monthNum = dt.getMonth() - 1
@@ -681,7 +678,6 @@
                 else {
                     this.monthNum = dt.getMonth()
                 }
-                // console.log("GET MONTH: " + this.monthNum)
             }
             else {
                 this.monthNum = dt.getMonth()
