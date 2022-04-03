@@ -76,6 +76,22 @@ const actions = {
       console.log(err);
       return false;
     });
+  },
+  async SubmitLeaveRequest(context, leave_payload) {
+    let headers = {
+      headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token},
+    }
+    return axios.post("api/v1/reports/leave-request", leave_payload, headers).then(
+      resp => {
+        if (resp && resp.status === 201) {
+          return true;
+        }
+        return false;
+      }
+    ).catch(err => {
+      console.log(err);
+      return false;
+    });
   }
 };
 
