@@ -146,7 +146,6 @@
                     this.clearAllFields();
                     return;
                   }
-                  console.log(this.$store.getters.StateRole)
                 }).then(() => {
                   this.GetName().then(resp => {
                     if (resp === false) {
