@@ -220,6 +220,13 @@
                 }
             }
         },
+        watch: {
+            reportStartDate(value) {
+                if (value && this.reportEndDate !== '') {
+                    this.reportEndDate = ''
+                }
+            }
+        },
         methods: {
             formatDate(rangeDate){
                 let newDate = new Date(rangeDate).toISOString().slice(0, 10);
