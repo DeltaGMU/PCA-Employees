@@ -31,7 +31,6 @@ const actions = {
     }
     return axios.get("api/v1/employees/all", headers).then(
       resp => {
-        console.log(resp)
         if (resp && resp.status === 200) {
           return resp.data.data.employees
         }
