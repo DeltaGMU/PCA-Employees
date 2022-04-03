@@ -22,7 +22,7 @@
           </ul>
         </div>
         <div v-if="current_page === '/kiosk/checkinmultiple'">
-          <button type="button" @click="logout">Sign Out</button>
+          <button type="button" class="btn formBtn p-1" @click="logout">Sign Out</button>
         </div>
       </div>    
     </span>
