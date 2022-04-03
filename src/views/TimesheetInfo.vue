@@ -56,59 +56,62 @@
                         <span v-show="isLoading"> Loading... </span>
                     </button>
                 </div>
-                <div class="pb-3" v-if=" selectedPeriod != ''">
-                    <hr>
-                    <h4 class="text-blue">Reporting Period: {{ selectedPeriod }}</h4>
-                </div>
 
-                <label class="form-check-label" for="reportSearchBar">
-                    Filter timesheets list:
-                </label>
-                <div class="pb-3 input-group">
-                    <input type="text" v-model="searchQuery" class="form-control" placeholder="Search for timesheets by First Name, Last Name..." name="reportSearchBar" id="reportSearchBar">
-                </div>
+                <div v-if="selectedPeriod != ''">
+                    <div class="pb-3">
+                        <hr>
+                        <h4 class="text-blue">Reporting Period: {{ selectedPeriod }}</h4>
+                    </div>
 
-                <div class="table-responsive" v-if="!filteredReportsList || Object.keys(filteredReportsList).length == 0">
-                    <table class = "pcaTable table-hover">
-                        <thead>
-                            <th scope = "col">
-                                Timesheets List
-                            </th>
-                        </thead>
-                        <tbody>
-                            <tr class = "row-striped">
-                                <td class="noInfo">No timesheet information available...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <label class="form-check-label" for="reportSearchBar">
+                        Filter timesheets list:
+                    </label>
+                    <div class="pb-3 input-group">
+                        <input type="text" v-model="searchQuery" class="form-control" placeholder="Search for timesheets by First Name, Last Name..." name="reportSearchBar" id="reportSearchBar">
+                    </div>
 
-                <div class="table-responsive" id="timesheetRecordsTable" v-else>
-                    <table class = "pcaTable table-hover">
-                        <thead>
-                            <th scope = "col">Last Name</th>
-                            <th class="middleCols" scope = "col">First Name</th>
-                            <th class="middleCols" scope = "col">Work Hours</th>
-                            <th class="middleCols" scope = "col">PTO Hours</th>
-                            <th class="middleCols" scope = "col">Extra Hours</th>
-                            <th scope = "col">View Details</th>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive" v-if="!filteredReportsList || Object.keys(filteredReportsList).length == 0">
+                        <table class = "pcaTable table-hover">
+                            <thead>
+                                <th scope = "col">
+                                    Timesheets List
+                                </th>
+                            </thead>
+                            <tbody>
+                                <tr class = "row-striped">
+                                    <td class="noInfo">No timesheet information available...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                            <tr class = "row-striped" v-for="(emp, index) in filteredReportsList" v-bind:key="index">
-                                <td>{{ emp.last_name.charAt(0).toUpperCase() + emp.last_name.slice(1) }} </td>
-                                <td class = "middleCols">{{ emp.first_name.charAt(0).toUpperCase() + emp.first_name.slice(1)}} </td>
-                                <td class = "middleCols">{{ emp.total_hours.work_hours}} </td>
-                                <td class = "middleCols">{{ emp.total_hours.pto_hours}} </td>
-                                <td class = "middleCols">{{ emp.total_hours.extra_hours}} </td>
-                                <td> 
-                                    <button type="button" class="btn blueBtn p-2" data-bs-toggle="modal" data-bs-target="#timesheetModal" @click="viewTimesheetRecords(index)">
-                                        <img src="https://s2.svgbox.net/hero-outline.svg?ic=zoom-in&color=ffffff" width="28" height="28">
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive" id="timesheetRecordsTable" v-else>
+                        <table class = "pcaTable table-hover">
+                            <thead>
+                                <th scope = "col">Last Name</th>
+                                <th class="middleCols" scope = "col">First Name</th>
+                                <th class="middleCols" scope = "col">Work Hours</th>
+                                <th class="middleCols" scope = "col">PTO Hours</th>
+                                <th class="middleCols" scope = "col">Extra Hours</th>
+                                <th scope = "col">View Details</th>
+                            </thead>
+                            <tbody>
+
+                                <tr class = "row-striped" v-for="(emp, index) in filteredReportsList" v-bind:key="index">
+                                    <td>{{ emp.last_name.charAt(0).toUpperCase() + emp.last_name.slice(1) }} </td>
+                                    <td class = "middleCols">{{ emp.first_name.charAt(0).toUpperCase() + emp.first_name.slice(1)}} </td>
+                                    <td class = "middleCols">{{ emp.total_hours.work_hours}} </td>
+                                    <td class = "middleCols">{{ emp.total_hours.pto_hours}} </td>
+                                    <td class = "middleCols">{{ emp.total_hours.extra_hours}} </td>
+                                    <td> 
+                                        <button type="button" class="btn blueBtn p-2" data-bs-toggle="modal" data-bs-target="#timesheetModal" @click="viewTimesheetRecords(index)">
+                                            <img src="https://s2.svgbox.net/hero-outline.svg?ic=zoom-in&color=ffffff" width="28" height="28">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -208,9 +211,12 @@
 
                     // this.selectedPeriod = this.reportStartDate + " to " + this.reportEndDate
                     this.selectedPeriod = this.formatRange(this.reportStartDate, this.reportEndDate)
-                    this.$store.dispatch("GetAllEmployees").then(() => {
-                        this.allEmps = this.$store.getters.StateEmployees
-                        this.getEmployeeHours();
+                    this.$store.dispatch("GetAllEmployees").then(resp => {
+                        if (resp) {
+                            this.allEmps = resp
+                            this.getEmployeeHours();
+                        }
+                    }).then(() => {
                         this.isLoading = false;
                     });
                 }
@@ -233,7 +239,7 @@
                     this.$store.dispatch("GetTotalHoursForEmployees", payload).then((resp) => {
                         //console.log("AFTER RETRIEVING HOURS")
                         this.empTotalHours = resp
-                        //console.log(this.empTotalHours)
+                        console.log(this.empTotalHours)
                     })
                 }
             },
