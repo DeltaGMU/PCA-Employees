@@ -40,7 +40,7 @@
                     </div>
                     <div class = "p-2" >
                         <button type="button" id= "btn formBtn blueBorder" class="btn blueBtn" @click="downloadPDF">
-                            <span v-show="!isLoadingPDF"> Download PDF </span>
+                            <span v-show="!isLoadingPDF"><i class="fa-solid fa-file-pdf"></i> | Download PDF </span>
                             <span v-show="isLoadingPDF" class="spinner-border spinner-border-sm" role="status"></span>
                             <span v-show="isLoadingPDF"> Loading... </span>
                         </button>
@@ -48,7 +48,9 @@
                         <br> <br>
 
                         <button type="button" id= "btn formBtn blueBorder" class="btn blueBtn" @click="downloadCSV">
-                            Download .CSV 
+                            <span v-show="!isLoadingCSV"><i class="fa-solid fa-file-csv"></i> | Download CSV </span>
+                            <span v-show="isLoadingCSV" class="spinner-border spinner-border-sm" role="status"></span>
+                            <span v-show="isLoadingCSV"> Loading... </span>
                         </button>
                     </div>
                 </div>
@@ -86,6 +88,13 @@
                 selectedPeriod: ""
             }
         },
+        watch: {
+            reportStartDate(value) {
+                if (value && this.reportEndDate !== '') {
+                    this.reportEndDate = ''
+                }
+            }
+        },
         methods: {
             formatDate(rangeDate){
                 let newDate = new Date(rangeDate).toISOString().slice(0, 10);
@@ -117,7 +126,6 @@
                     }
                     this.$store.dispatch("GetStudentCarePDFReport", payload).then(resp => {
                         if (resp !== null) {
-                            // console.log(resp)
                             pdfData = resp
                             this.isLoadingPDF = false;
                         }
@@ -135,6 +143,7 @@
                             link.setAttribute('download', 'StudentCareReport.pdf');
                             document.body.appendChild(link);
                             link.click();
+                            link.remove();
                         }
                     })
                 }
@@ -150,7 +159,6 @@
                     }
                     this.$store.dispatch("GetStudentCareCSVReport", payload).then(resp => {
                         if (resp !== null) {
-                            // console.log(resp)
                             csvData = resp
                             this.isLoadingCSV = false;
                         }
@@ -168,6 +176,7 @@
                             link.setAttribute('download', 'StudentCareReport.csv');
                             document.body.appendChild(link);
                             link.click();
+                            link.remove();
                         }
                     })
                 }
