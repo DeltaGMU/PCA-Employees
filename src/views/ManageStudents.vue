@@ -11,14 +11,13 @@
                 <h1 class="text-blue">Manage Students</h1>
 
                 <div class="d-flex mb-3">
-                    <div class="me-auto p-2">
+                    <div class="me-auto pt-2 pb-2">
                         <button class="btn blueBtn" @click="$router.push({ path: 'createstudent'})">
                             Create Student 
                         </button>
                     </div>
-                    <div class="p-2"></div>
-                    <div class="p-2">
-                        <button class="btn blueBtn" style="float: right;" @click="refreshStudentsTable()">
+                    <div class="pt-2 pb-2">
+                        <button class="btn blueBtn right-align" @click="refreshStudentsTable()">
                             Refresh Students List
                         </button>
                     </div>
