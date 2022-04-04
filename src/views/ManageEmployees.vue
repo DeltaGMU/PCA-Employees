@@ -9,13 +9,12 @@
             <div class = "p-2 flex-grow-1">
                 <h1 class="text-blue">Manage Employees</h1>
                 <div class="d-flex mb-3">
-                    <div class="me-auto p-2">
+                    <div class="me-auto pe-2 pt-2 pb-2">
                         <button class="btn blueBtn" @click="$router.push({ path: 'createemployee'})">
                             Create Employee 
                         </button>
                     </div>
-                    <div class="p-2"></div>
-                    <div class="p-2">
+                    <div class="ps-2 pt-2 pb-2">
                         <button class="btn blueBtn" style="float: right;" @click="refreshEmployeesTable()">
                             Refresh Employees List
                         </button>
