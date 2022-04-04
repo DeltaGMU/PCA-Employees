@@ -44,7 +44,7 @@
                         </div>
                         <div class="pb-3 input-group">
                             <input type="text" class="form-control textBox" id="gradeLevel" v-model="form_grade_level" required>                            
-                            <button type="button" id="submitGradeBtn" class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" @click="addNewGrade()" :disabled="!reportStartDate || !reportEndDate">
+                            <button type="button" id="submitGradeBtn" class="btn blueBtn p-2" style="border-radius: 0px 5px 5px 0px;" @click="addNewGrade()" :disabled="!form_grade_level">
                                 <span v-show="!isLoading"> Submit</span>
                                 <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                                 <span v-show="isLoading"> Loading... </span>
@@ -116,7 +116,7 @@
                 this.form_grade_level = ""
                 this.gradeForm.classList.remove('was-validated')
             },
-            async AddNewGrade() {
+            async addNewGrade() {
 
             },
         }
