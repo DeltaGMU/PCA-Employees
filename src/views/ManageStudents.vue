@@ -60,7 +60,7 @@
                         <tbody>
                             <tr class = "row-striped" v-for = "(student, index) in filteredStudentsList" v-bind:key="index">
                                 <td>{{ student.student_id }} </td>
-                                <td class = "middleCols">{{ student.carpool_number }} </td>
+                                <td class = "middleCols">{{ student.car_pool_number }} </td>
                                 <td class = "middleCols">{{ student.last_name }} </td>
                                 <td class = "middleCols">{{ student.first_name}} </td>
                                 <td class = "middleCols">{{ student.grade.name}} </td>
