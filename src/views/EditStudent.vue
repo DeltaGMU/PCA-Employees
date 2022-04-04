@@ -17,13 +17,43 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn blueBtn" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="deleteStudentAccount()">Delete</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" href="#student-deleted" @click="deleteStudentAccount()">Delete</button>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="student-deleted" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="studentDeletedLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div v-if=" deletionSuccess ">
+                            <div class="modal-header">
+                                Student Account Deleted!
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                The student account was successfully deleted.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <div class="modal-header">
+                                The Student Account Could Not Be Deleted!
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                There was an error with the deletion request.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn blueBtn" data-bs-dismiss="modal">OK</button>
+                            </div>
+                        </div>                     
+                    </div>
+                </div>
+            </div>
             <div class="p-2 flex-grow-1">
-                <form>
+                <form class="needs-validation" id="studentForm" novalidate>
                     <div class="topSection noSelect">
                         <div class="mb-1">
                             <h1 class="text-blue">Edit Student</h1>
@@ -239,7 +269,7 @@
                 is_enabled: "true",
 
                 grades: [],
-                creationSuccess: false,
+                deletionSuccess: false,
                 isLoading: false,
                 enableSecondaryEmailNotificationRadios: false,
                 clickEvent: null,
@@ -259,15 +289,40 @@
                 this.parent_one_last_name = this.studentInfo.contact_info.parent_one_last_name.charAt(0).toUpperCase() + this.studentInfo.contact_info.parent_one_last_name.slice(1)
                 this.primary_email = this.studentInfo.contact_info.primary_email
                 this.enable_primary_email_notifications = this.studentInfo.contact_info.enable_primary_email_notifications
-                this.parent_two_first_name = this.studentInfo.contact_info.parent_two_first_name.charAt(0).toUpperCase() + this.studentInfo.contact_info.parent_two_first_name.slice(1)
-                this.parent_two_last_name = this.studentInfo.contact_info.parent_two_last_name.charAt(0).toUpperCase() + this.studentInfo.contact_info.parent_two_last_name.slice(1)                
+                if (this.studentInfo.contact_info.parent_two_first_name !== null){
+                    this.parent_two_first_name = this.studentInfo.contact_info.parent_two_first_name.charAt(0).toUpperCase() + this.studentInfo.contact_info.parent_two_first_name.slice(1)
+                }
+                if (this.studentInfo.contact_info.parent_two_last_name !== null) {
+                    this.parent_two_last_name = this.studentInfo.contact_info.parent_two_last_name.charAt(0).toUpperCase() + this.studentInfo.contact_info.parent_two_last_name.slice(1)
+                }                            
                 this.secondary_email = this.studentInfo.contact_info.secondary_email
                 this.enableSecondaryEmailNotificationRadios = this.studentInfo.contact_info.enableSecondaryEmailNotificationRadios
                 this.is_enabled = this.studentInfo.is_enabled
             },
-            deleteStudentAccount: function() {
-                this.$store.dispatch("DeleteStudent", this.$route.params.id)
+            deleteStudentAccount () {
+                console.log(this.$route.params.id)
+                this.$store.dispatch("DeleteStudent", {studentID: this.$route.params.id}).then(resp => {
+                    console.log(resp)
+                    
+                })
             },
+            clearAllFields() {
+                this.first_name = ""
+                this.last_name = ""
+                this.car_pool_number = ""
+                this.grade = ""
+                this.parent_one_first_name = ""
+                this.parent_one_last_name = ""
+                this.primary_email = ""
+                this.parent_two_first_name = ""
+                this.parent_two_last_name = ""
+                this.secondary_email = ""
+                this.enable_primary_email_notifications = "true"
+                this.enable_secondary_email_notifications = "false"
+                this.is_enabled = "true"
+                this.isLoading = false
+                this.studentForm.classList.remove('was-validated')
+            }
         },
         mounted() {
             this.$store.dispatch("GetStudentInfo", this.$route.params.id).then(resp => {

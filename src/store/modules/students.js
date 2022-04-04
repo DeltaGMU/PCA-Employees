@@ -149,11 +149,11 @@ const actions = {
           return false
       });
     },
-    async DeleteStudent(context, studentID) {
+    async DeleteStudent(context, payload) {
       let headers = {
         headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
       }
-      return await axios.delete("api/v1/students"+studentID, headers).then(
+      return await axios.post("api/v1/students/remove/"+payload.studentID, headers).then(
         resp => {
           if (resp && resp.status == 200){
             return true;
