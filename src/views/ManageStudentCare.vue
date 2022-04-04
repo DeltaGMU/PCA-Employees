@@ -186,6 +186,7 @@
     import Sidebar from "@/components/Sidebar.vue";
     import NavBar from "@/components/NavBar.vue";
     import ConvertDateToTimezone from "@/store/utility/date_format";
+    import config from "../server_config";
 
     export default {
         name: "ManageStudentCare",
@@ -206,7 +207,7 @@
                 student_id: "",
                 showError: false,
                 isLoading: false,
-                today: ConvertDateToTimezone(new Date()).slice(0, 10),
+                today: config.debug_mode ? ConvertDateToTimezone(config.test_date()).slice(0, 10) : ConvertDateToTimezone(new Date()).slice(0, 10),
                 thirty_days_ago: ConvertDateToTimezone(new Date(new Date().setDate(new Date().getDate() - 30))).slice(0, 10),
                 records: {},
 

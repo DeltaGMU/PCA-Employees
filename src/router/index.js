@@ -26,7 +26,6 @@ import KioskHome from "../views/Kiosk/KioskHome";
 import StudentFinder from "../views/Kiosk/StudentFinder";
 import CareOptions from "../views/Kiosk/CareOptions";
 import CheckInMultiple from "../views/Kiosk/CheckInMultiple";
-import CheckInAndCheckOut from "../views/Kiosk/CheckInAndCheckOut";
 import KioskLogin from "../views/Kiosk/KioskLogin";
 
 Vue.use(VueRouter);
@@ -178,12 +177,6 @@ const routes = [
     path: "/kiosk/careoptions",
     name: "CareOptions",
     component: CareOptions,
-    meta: { guest: true },
-  },
-  {
-    path: "/kiosk/checkinandcheckout",
-    name: "CheckInAndCheckOut",
-    component: CheckInAndCheckOut,
     meta: { guest: true },
     props: true,
   },

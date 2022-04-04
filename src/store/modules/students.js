@@ -61,9 +61,31 @@ const actions = {
     async GetStudentInfoKiosk(_, studentID) {
       return await axios.get("api/v1/kiosk/info/"+studentID).then(
         resp => {
-          return resp.data.data.student;
+          if (resp && resp.status === 200) {
+            return resp.data.data.student;
+          }
+          return null
         }
-      );
+      ).catch(err => {
+        console.log(err)
+        return null
+      });
+    },
+    async GetStudentCareInfoKiosk(_, payload) {
+      return await axios.get("api/v1/kiosk/care/"+payload.studentID, 
+      { 
+        params: { care_date: payload.careDate } 
+      }).then(
+        resp => {
+          if (resp && resp.status === 200) {
+            return resp.data.data.care;
+          }
+          return null
+        }
+      ).catch(err => {
+        console.log(err)
+        return null
+      });
     },
     async GetStudentInfo(context, studentID) {
       let headers = {
@@ -170,6 +192,21 @@ const actions = {
         resp => {
           console.log(resp)
           if (resp && resp.status == 201) {
+            return true;
+          }
+          return false;
+        }
+      ).catch(err => {
+        console.log(err);
+        return false;
+      })
+    },
+    async CheckOutStudent(_, payload) {
+      console.log(payload)
+      return await axios.post("api/v1/care/checkout", payload).then(
+        resp => {
+          console.log(resp)
+          if (resp && resp.status == 200) {
             return true;
           }
           return false;

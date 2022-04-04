@@ -147,7 +147,7 @@ export default {
                 this.$store.dispatch("GetStudentsByGrade", {
                     student_grade: selected_grade, 
                     care_type: true, 
-                    care_date: ConvertDateToTimezone(new Date()).slice(0, 10),
+                    care_date: config.debug_mode ? ConvertDateToTimezone(config.test_date()).slice(0, 10) : ConvertDateToTimezone(new Date()).slice(0, 10),
                 }).then(
                     (resp) => {
                         if (resp !== undefined) {

@@ -29,6 +29,9 @@
 
     <span class="pcaNav" v-else>
       <p class="ms-3 ms-md-4 text-white navSection">Providence Christian Academy</p>
+      <div v-if="kioskGuestPaths.includes(current_page)">
+        <button type="button" class="btn formBtn p-1" @click="goToKioskHome">Cancel</button>
+      </div>
     </span>
 
   </div>
@@ -45,6 +48,7 @@ export default {
   },
   data() {
     return {
+      kioskGuestPaths: ["/kiosk/studentfinder", "/kiosk/checkinandcheckout", "/kiosk/careoptions"],
     }
   },
   computed: {
@@ -71,6 +75,9 @@ export default {
       this.$router.push("/timesheet");
       // this.current_page = window.location.pathname;
     },
+    goToKioskHome() {
+      this.$router.push("/kiosk");
+    }
   },
 };
 </script>
