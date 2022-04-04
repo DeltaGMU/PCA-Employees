@@ -179,6 +179,23 @@ const actions = {
         return false;
       })
     },
+    async UpdateStudent(context, payload) {
+      let headers = {
+        headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+      }
+      console.log(payload)
+      return await axios.put("api/v1/students/"+payload.studentID, payload.payload, headers).then(
+        resp => {
+          if (resp && resp.status == 200){
+            return true;
+          }
+          return false;
+        }
+        ).catch(err => {
+            console.log(err);
+            return false;
+        })
+    },
 };
   
 const mutations = {

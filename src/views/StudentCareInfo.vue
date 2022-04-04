@@ -6,7 +6,7 @@
                 <Sidebar/>
             </div>
             <div class="modal fade" id="studentCareModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="studentCareModalLbl" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable modal-fullscreen m-2">
+                <div class="modal-dialog modal-dialog-scrollable modal-fullscreen p-2">
                     <div class="modal-content">
                         <div class="modal-header">
                             Student Care Records
@@ -17,44 +17,44 @@
                                 <table id="studentCareRecordsModalTable" class = "pcaTable table-hover" style="overflow-x: auto;">
                                     <thead>
                                         <th class="p-2" scope = "col">Date</th>
-                                        <th class="p-2" style="border-left: 2px solid #c3a579" scope = "col">BC Check-in Time</th>
+                                        <th class="p-2 beigeBorderLeft" scope = "col">BC Check-in Time</th>
                                         <th class="middleCols p-2" scope = "col">BC Check-out Time</th>
                                         <th class="middleCols p-2" scope = "col">BC Check-in Signature</th>
-                                        <th class="p-2" style="border-right: 2px solid #c3a579" scope = "col">BC Check-out Signature</th>
-                                        <th class="p-2" style="border-left: 2px solid #c3a579" scope = "col">AC Check-in Time</th> 
+                                        <th class="p-2 beigeBorderRight" scope = "col">BC Check-out Signature</th>
+                                        <th class="p-2 beigeBorderLeft" scope = "col">AC Check-in Time</th> 
                                         <th class="middleCols p-2" scope = "col">AC Check-out Time</th>
                                         <th class="middleCols p-2" scope = "col">AC Check-in Signature</th>
-                                        <th class="p-2" style="border-right: 2px solid #c3a579" scope = "col">AC Check-out Signature</th>                                        
+                                        <th class="p-2 beigeBorderRight" scope = "col">AC Check-out Signature</th>                                        
                                     </thead>
                                     <tbody>
                                         <tr class = "row-striped" v-for="(record, index) in studentCareRecords" :key="index">
-                                            <td class = "p-2">{{ formatDate(index) }} </td>
+                                            <td class = "p-md-2">{{ formatDate(index) }} </td>
                                             <!-- Before Care -->
-                                            <td class = "p-2" style="border-left: 2px solid #c3a579" v-if="record.before_care !== undefined"> {{ record.before_care.check_in_time }} </td>
-                                            <td class = "middleCols p-2" style="border-left: 2px solid #c3a579" v-else> N/A </td>
+                                            <td class = "p-md-2 beigeBorderLeft" v-if="record.before_care !== undefined"> {{ record.before_care.check_in_time }} </td>
+                                            <td class = "middleCols p-md-2 beigeBorderLeft" v-else> N/A </td>
 
-                                            <td class = "middleCols p-2" v-if="record.before_care !== undefined"> {{ record.before_care.check_out_time }} </td>
-                                            <td class = "middleCols p-2" v-else> N/A </td>
+                                            <td class = "middleCols p-md-2" v-if="record.before_care !== undefined"> {{ record.before_care.check_out_time }} </td>
+                                            <td class = "middleCols p-md-2" v-else> N/A </td>
 
-                                            <td class = "middleCols p-2" v-if="record.before_care !== undefined"> {{ record.before_care.check_in_signature }} </td>
-                                            <td class = "middleCols p-2" v-else> N/A </td>
+                                            <td class = "middleCols p-md-2" v-if="record.before_care !== undefined"> {{ record.before_care.check_in_signature }} </td>
+                                            <td class = "middleCols p-md-2" v-else> N/A </td>
 
-                                            <td class = "middleCols p-2" style="border-right: 2px solid #c3a579" v-if="record.before_care !== undefined && record.before_care.check_out_signature !== null"> {{ record.before_care.check_out_signature }} </td>
-                                            <td class = "p-2" style="border-right: 2px solid #c3a579" v-else> N/A </td>
+                                            <td class = "middleCols p-md-2 beigeBorderRight" v-if="record.before_care !== undefined && record.before_care.check_out_signature !== null"> {{ record.before_care.check_out_signature }} </td>
+                                            <td class = "p-md-2 beigeBorderRight" v-else> N/A </td>
                                             <!-- Before Care -->
 
                                             <!-- After Care -->
-                                            <td class = "p-2" style="border-left: 2px solid #c3a579" v-if="record.after_care !== undefined"> {{ record.after_care.check_in_time }} </td>
-                                            <td class = "middleCols p-2" style="border-left: 2px solid #c3a579" v-else> N/A </td>
+                                            <td class = "p-md-2 beigeBorderLeft" v-if="record.after_care !== undefined"> {{ record.after_care.check_in_time }} </td>
+                                            <td class = "middleCols p-md-2 beigeBorderLeft" v-else> N/A </td>
 
-                                            <td class = "middleCols p-2" v-if="record.after_care !== undefined"> {{ record.after_care.check_out_time }} </td>
-                                            <td class = "middleCols p-2" v-else> N/A </td>
+                                            <td class = "middleCols p-md-2" v-if="record.after_care !== undefined"> {{ record.after_care.check_out_time }} </td>
+                                            <td class = "middleCols p-md-2" v-else> N/A </td>
 
-                                            <td class = "middleCols p-2" v-if="record.after_care !== undefined"> {{ record.after_care.check_in_signature }} </td>
-                                            <td class = "middleCols p-2" v-else> N/A </td>
+                                            <td class = "middleCols p-md-2" v-if="record.after_care !== undefined"> {{ record.after_care.check_in_signature }} </td>
+                                            <td class = "middleCols p-md-2" v-else> N/A </td>
 
-                                            <td class = "p-2" style="border-right: 2px solid #c3a579" v-if="record.after_care !== undefined && record.after_care.check_out_signature !== null"> {{ record.after_care.check_out_signature }} </td>
-                                            <td class = "p-2" style="border-right: 2px solid #c3a579" v-else> N/A </td>
+                                            <td class = "p-md-2 beigeBorderRight" v-if="record.after_care !== undefined && record.after_care.check_out_signature !== null"> {{ record.after_care.check_out_signature }} </td>
+                                            <td class = "p-md-2 beigeBorderRight" v-else> N/A </td>
                                             <!-- After Care -->
                                         </tr>
                                     </tbody>
