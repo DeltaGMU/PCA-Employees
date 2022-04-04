@@ -13,7 +13,6 @@ const actions = {
   async LogIn({commit}, credentials) {
     return await axios.post("api/v1/login", credentials).then(
       resp => {
-        console.log(resp.status);
         if (resp && resp.status === 200) {
           commit("setUser", resp.data.data);
           return 0;
@@ -35,19 +34,12 @@ const actions = {
     context.commit("logout")
   },
   async LogOut(context) {
-    console.log("logging out!")
-
-    if (this.getters.isAuthenticated) {
-      console.log("Authenticated log out...")
-      
-      let loggedOut = false;
-      console.log(this.getters.StateUser.token)
+    if (this.getters.isAuthenticated) {      
       let headers = {
         headers: {'Authorization': 'Bearer '+this.getters.StateUser.token}
       }
-      loggedOut = await axios.post("api/v1/logout", {}, headers).then(
+      await axios.post("api/v1/logout", {}, headers).then(
         resp => {
-          console.log(resp)
           if (resp && resp.status === 200) {
             console.log("Logged out.")
             return true
@@ -62,10 +54,7 @@ const actions = {
         console.log(e)
         return false
       });
-
-      console.log(loggedOut)
     }
-
     await context.dispatch("ClearDataOnLogout");
   },
 };
