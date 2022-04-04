@@ -25,6 +25,17 @@ const actions = {
       return false;
     });
   },
+  async GetEmployeeInfo(context, employeeID) {
+    let headers = {
+      headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+    }
+    return await axios.get("api/v1/employees/"+employeeID, headers).then(
+      resp => {
+        console.log(resp)
+        return resp.data.data.employee
+      }
+    );
+  },
   async GetAllEmployees(context) {
     let headers = {
       headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
@@ -58,6 +69,24 @@ const actions = {
       console.log(err);
       return false;
     });
+  },
+  async DeleteEmployee(context, employeeID) {
+    let headers = {
+      headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+    }
+
+    return await axios.post("api/v1/employees/remove/"+employeeID, {}, headers).then(
+      resp => {
+        if (resp && resp.status == 200){
+          console.log(resp)
+          return true;
+        }
+        return false;
+      }
+      ).catch(err => {
+          console.log(err);
+          return false;
+      })
   },
   async UpdateAccountPassword(context, password_payload) {
     let headers = {

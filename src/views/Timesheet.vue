@@ -511,7 +511,7 @@
                             this.$store.dispatch("GetTimesheets", payload);
                             this.submissionSuccess = true;
                             this.timesheetMessageTitle = "Timesheet submitted!"
-                            this.timesheetMessageBody = "Your timesheet was submitted succesfully."
+                            this.timesheetMessageBody = "Your timesheet was submitted successfully."
                         }
                         else {
                             this.submissionSuccess = false;

@@ -9,6 +9,27 @@ const getters = {
 };
 
 const actions = {
+    async GetTimesheetPDFReport(context, payload) {
+        let headers = {
+            headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token},
+            responseType: 'arraybuffer'
+        }
+        let employeePayload = {
+            "start_date": payload.start_date,
+            "end_date": payload.end_date
+        }
+        return await axios.post("api/v1/reports/employees/pdf", employeePayload, headers).then(
+            resp => {
+              if (resp && resp.status == 200) {
+                return resp.data;
+              }
+              return null;
+            }
+        ).catch(err => {
+            console.log(err)
+            return null;
+        });
+    },
     async GetStudentCarePDFReport(context, payload) {
         let headers = {
             headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token},
@@ -20,6 +41,27 @@ const actions = {
             "end_date": payload.end_date
         }
         return await axios.post("api/v1/reports/care/pdf", studentPayload, headers).then(
+            resp => {
+              if (resp && resp.status == 200) {
+                return resp.data;
+              }
+              return null;
+            }
+        ).catch(err => {
+            console.log(err)
+            return null;
+        });
+    },
+    async GetTimesheetCSVReport(context, payload) {
+        let headers = {
+            headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token},
+            responseType: 'arraybuffer'
+        }
+        let employeePayload = {
+            "start_date": payload.start_date,
+            "end_date": payload.end_date
+        }
+        return await axios.post("api/v1/reports/employees/csv", employeePayload, headers).then(
             resp => {
               if (resp && resp.status == 200) {
                 return resp.data;

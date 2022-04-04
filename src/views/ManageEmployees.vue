@@ -129,7 +129,7 @@
                 )
             },
             goToEditEmployee(option) {
-                this.$router.push({ name: 'EditEmployee', params: {employeeID: option}})
+                this.$router.push({  path: '/editStudent', name: 'EditEmployee',  params: {employeeID: option}})
             }
         },
         mounted() {
