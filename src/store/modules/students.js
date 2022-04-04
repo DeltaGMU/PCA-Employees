@@ -196,6 +196,40 @@ const actions = {
             return false;
         })
     },
+    async CreateStudentGrade(context, payload) {
+      let headers = {
+        headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+      }
+      console.log(payload)
+      return await axios.post("api/v1/grades", payload, headers).then(
+        resp => {
+          if (resp && resp.status == 201){
+            return true;
+          }
+          return false;
+        }
+        ).catch(err => {
+            console.log(err);
+            return false;
+        })
+    },
+    async DeleteStudentGrade(context, payload) {
+      let headers = {
+        headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
+      }
+      console.log(payload)
+      return await axios.post("api/v1/grades/remove", payload, headers).then(
+        resp => {
+          if (resp && resp.status == 200){
+            return true;
+          }
+          return false;
+        }
+        ).catch(err => {
+            console.log(err);
+            return false;
+        })
+    }
 };
   
 const mutations = {
