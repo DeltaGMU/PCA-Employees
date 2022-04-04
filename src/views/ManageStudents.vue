@@ -141,7 +141,7 @@
                 )
             },
             editStudentPage(studentID) {
-                this.$router.push({ name: 'EditStudent', params: { id: studentID }})
+                this.$router.push({ name: 'EditStudent', params: { studentID: studentID }})
             }
         },
         mounted() {

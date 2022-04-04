@@ -276,6 +276,9 @@
             Sidebar,
             NavBar
         },
+        props: {
+            studentID: String
+        },
         data() {
             return {
                 signedIn: this.$store.getters.isAuthenticated,
@@ -344,7 +347,7 @@
                 this.enableSecondaryEmailNotificationRadios = this.secondary_email && this.secondary_email.length > 0
             },
             deleteStudentAccount () {
-                this.$store.dispatch("DeleteStudent", {studentID: this.$route.params.id}).then(resp => {
+                this.$store.dispatch("DeleteStudent", {studentID: this.studentID}).then(resp => {
                     if (resp) {
                         this.deletionSuccess = true
                         this.clearAllFields()
@@ -373,7 +376,7 @@
                 if(this.enableSecondaryEmailNotificationRadios) {
                     payload["enable_secondary_email_notifications"] = this.enable_secondary_email_notifications === "true"
                 }
-                this.$store.dispatch("UpdateStudent", {"studentID" : this.$route.params.id, "payload" : payload}).then(resp => {
+                this.$store.dispatch("UpdateStudent", {"studentID" : this.studentID, "payload" : payload}).then(resp => {
                     console.log(resp)
                     if(resp) {
                         this.studentInfo = resp
@@ -388,7 +391,7 @@
                     this.updateSuccess = false
                     this.openStudentUpdatedModal()
                 }).then(() => {
-                    this.$store.dispatch("GetStudentInfo", this.$route.params.id).then(resp => {
+                    this.$store.dispatch("GetStudentInfo", this.studentID).then(resp => {
                         if (resp) {
                             this.studentInfo = resp
                         }
@@ -414,10 +417,10 @@
             }
         },
         mounted() {
-            if (this.$route.params.id === undefined) {
+            if (this.studentID === undefined) {
                 this.$router.push('/managestudents')
             }
-            this.$store.dispatch("GetStudentInfo", this.$route.params.id).then(resp => {
+            this.$store.dispatch("GetStudentInfo", this.studentID).then(resp => {
                 if (resp) {
                     this.studentInfo = resp
                 }
@@ -445,7 +448,7 @@
                     }
                 }
             );
-        }
+        },
     }
 </script>
 
