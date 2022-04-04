@@ -17,7 +17,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn blueBtn" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" href="#student-deleted" @click="deleteStudentAccount()">Delete</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#student-deleted" @click="deleteStudentAccount()">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -34,19 +34,35 @@
                                 The student account was successfully deleted.
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+                                <button type="button" class="btn btn-success" data-bs-dismiss="modal" @click="$router.push('/managestudents')">OK</button>
                             </div>
                         </div>
                         <div v-else>
                             <div class="modal-header">
-                                The Student Account Could Not Be Deleted!
+                                Student Account Was Not Deleted!
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 There was an error with the deletion request.
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn blueBtn" data-bs-dismiss="modal">OK</button>
+                                <button type="button" class="btn blueBtn" data-bs-dismiss="modal" @click="this.$router.push('/managestudents')">OK</button>
+                            </div>
+                        </div>                     
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="student-updated" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="studentDeletedLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            Student Account Updated!
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-body">
+                                The student account was successfully updated.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" data-bs-dismiss="modal" @click="$router.push('/managestudents')">OK</button>
                             </div>
                         </div>                     
                     </div>
@@ -139,22 +155,22 @@
                         </div>
 
                         <div class="noSelect">
-                                <div class="mb-1">
-                                    <label for="enable_notifications_parent_one" class="text-blue formLabel">Enable email notifications for Parent #1 email?</label>
-                                </div>
+                            <div class="mb-1">
+                                <label for="enable_notifications_parent_one" class="text-blue formLabel">Enable email notifications for Parent #1 email?</label>
+                            </div>
                                 
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" value="true" name="enable_notifications_parent_one" id="notificationsParentOne_yes" v-model="enable_primary_email_notifications" required>
-                                    <label class="form-check-label" for="notificationsParentOne_yes" selected>
-                                        Yes
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="enable_notifications_parent_one" value="false" id="notificationsParentOne_no" v-model="enable_primary_email_notifications" required>
-                                    <label class="form-check-label" for="notificationsParentOne_no">
-                                        No
-                                    </label>
-                                </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" value="true" name="enable_notifications_parent_one" id="notificationsParentOne_yes" v-model="enable_primary_email_notifications" required>
+                                <label class="form-check-label" for="notificationsParentOne_yes" selected>
+                                    Yes
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="enable_notifications_parent_one" value="false" id="notificationsParentOne_no" v-model="enable_primary_email_notifications" required>
+                                <label class="form-check-label" for="notificationsParentOne_no">
+                                    No
+                                </label>
+                            </div>
                         </div>
                         <br>
                         <hr>
@@ -228,7 +244,7 @@
                                 </div>
                                 <div class="invalid-feedback">Please select one of the provided options.</div>
                         </div>
-                        <button class="mb-3 btn blueBtn">Submit</button>
+                        <button type="button" id="updateStudentBtn" class="mb-3 btn blueBtn" data-bs-toggle="modal" data-bs-target="#student-updated" @click="updateStudentAccount">Update Student</button>
                     </div>
                 </form>
             </div>
@@ -270,6 +286,7 @@
 
                 grades: [],
                 deletionSuccess: false,
+                updateSuccess: false,
                 isLoading: false,
                 enableSecondaryEmailNotificationRadios: false,
                 clickEvent: null,
@@ -282,7 +299,7 @@
             populateFields() {
                 this.first_name = this.studentInfo.first_name.charAt(0).toUpperCase() + this.studentInfo.first_name.slice(1)
                 this.last_name = this.studentInfo.last_name.charAt(0).toUpperCase() + this.studentInfo.last_name.slice(1)
-                this.car_pool_number = this.studentInfo.carpool_number
+                this.car_pool_number = this.studentInfo.car_pool_number
                 this.grade = this.studentInfo.grade
                 
                 this.parent_one_first_name = this.studentInfo.contact_info.parent_one_first_name.charAt(0).toUpperCase() + this.studentInfo.contact_info.parent_one_first_name.slice(1)
@@ -300,11 +317,22 @@
                 this.is_enabled = this.studentInfo.is_enabled
             },
             deleteStudentAccount () {
-                console.log(this.$route.params.id)
                 this.$store.dispatch("DeleteStudent", {studentID: this.$route.params.id}).then(resp => {
-                    console.log(resp)
+                    if (resp) {
+                        this.deletionSuccess = true
+                        this.clearAllFields()
+                    }
+                    else {
+                        this.deletionSuccess = false
+                    }
                     
                 })
+            },
+            updateStudentAccount() {
+                //let payload = {
+
+                //}
+                //this.$store.dispatch("UpdateStudent", payload)
             },
             clearAllFields() {
                 this.first_name = ""
@@ -330,6 +358,20 @@
                     this.studentInfo = resp
                 }
             }).then(() => {this.populateFields()})
+
+            this.studentForm = document.getElementById("studentForm")
+            this.submitButton = document.getElementById("updateStudentBtn")
+
+            this.submitButton.addEventListener('click', 
+                function (event) {
+                    let form = document.getElementById("studentForm")
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            this.clickEvent = new Event('click');
         },
         beforeMount() {
             this.$store.dispatch("GetAllStudentGrades").then(
