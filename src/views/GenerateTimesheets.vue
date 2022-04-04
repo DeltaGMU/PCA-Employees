@@ -24,12 +24,12 @@
                 <div v-if= "selectedPeriod != '' ">
                     <hr>
                     <div class = "p-2" v-if= "selectedPeriod != '' ">
-                        <h2>Reporting period: </h2> 
+                        <h2>Reporting period for employee timesheets: </h2> 
                         <h3> {{  selectedPeriod  }}</h3>
                     </div>
                     <div class = "p-2" >
                         <button type="button" id= "btn formBtn blueBorder" class="btn blueBtn" @click="downloadPDF">
-                            <span v-show="!isLoadingPDF"> Download PDF </span>
+                            <span v-show="!isLoadingPDF"><i class="fa-solid fa-file-pdf"></i> | Download PDF </span>
                             <span v-show="isLoadingPDF" class="spinner-border spinner-border-sm" role="status"></span>
                             <span v-show="isLoadingPDF"> Loading... </span>
                         </button>
@@ -37,7 +37,7 @@
                         <br> <br>
 
                         <button type="button" id= "btn formBtn blueBorder" class="btn blueBtn" @click="downloadCSV">
-                            <span v-show="!isLoadingCSV"> Download PDF </span>
+                            <span v-show="!isLoadingCSV"><i class="fa-solid fa-file-csv"></i> | Download CSV </span>
                             <span v-show="isLoadingCSV" class="spinner-border spinner-border-sm" role="status"></span>
                             <span v-show="isLoadingCSV"> Loading... </span>
                         </button>
@@ -65,9 +65,8 @@
                 empRole: this.$store.getters.StateRole,
                 currentPage: "/generatetimesheets",
                         
-                grades: [],
                 selected: '',
-                studentsByGrade: {},
+                employees: {},
 
                 isLoadingPDF: false,
                 isLoadingCSV: false,
@@ -75,6 +74,13 @@
                 reportStartDate: "",
                 reportEndDate: "",
                 selectedPeriod: ""
+            }
+        },
+        watch: {
+            reportStartDate(value) {
+                if (value && this.reportEndDate !== '') {
+                    this.reportEndDate = ''
+                }
             }
         },
         methods: {
@@ -104,11 +110,9 @@
                     let payload = {
                         start_date: this.reportStartDate,
                         end_date: this.reportEndDate,
-                        grade: this.selected.name,
                     }
                     this.$store.dispatch("GetTimesheetPDFReport", payload).then(resp => {
                         if (resp !== null) {
-                            // console.log(resp)
                             pdfData = resp
                             this.isLoadingPDF = false;
                         }
@@ -126,6 +130,7 @@
                             link.setAttribute('download', 'TimesheetReport.pdf');
                             document.body.appendChild(link);
                             link.click();
+                            link.remove();
                         }
                     })
                 }
@@ -137,11 +142,9 @@
                     let payload = {
                         start_date: this.reportStartDate,
                         end_date: this.reportEndDate,
-                        grade: this.selected.name,
                     }
                     this.$store.dispatch("GetTimesheetCSVReport", payload).then(resp => {
                         if (resp !== null) {
-                            // console.log(resp)
                             csvData = resp
                             this.isLoadingCSV = false;
                         }
@@ -159,6 +162,7 @@
                             link.setAttribute('download', 'TimesheetReport.csv');
                             document.body.appendChild(link);
                             link.click();
+                            link.remove();
                         }
                     })
                 }
