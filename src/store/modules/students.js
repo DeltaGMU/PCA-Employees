@@ -153,7 +153,7 @@ const actions = {
       let headers = {
         headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
       }
-      return await axios.post("api/v1/students/remove/"+payload.studentID, headers).then(
+      return await axios.post("api/v1/students/remove/"+payload.studentID, {}, headers).then(
         resp => {
           if (resp && resp.status == 200){
             return true;
