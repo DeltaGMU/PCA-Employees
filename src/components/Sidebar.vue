@@ -11,14 +11,14 @@
                     <a href="#submenu1" id="recordsMenu" @click='rotateChevron("recordsChevron", "down")' data-bs-toggle="collapse" class="nav-link align-middle">
                         <i class="d-block d-sm-none fas fa-info-circle"></i> <span class="d-none d-sm-inline fw-bold">View Records <i id="recordsChevron" class="fas fa-chevron-right rotate"></i></span>
                     </a>
-                    <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                    <ul class="collapse nav flex-column ms-1" id="submenu1">
                         <li>
                             <a class="nav-link align-middle noSelect" @click="timesheetInfo">
                                 <i class="d-block d-sm-none fa-solid fa-hourglass"></i> <span class="d-none d-sm-inline">Timesheet Records</span>
                             </a>
                         </li>
                     </ul>
-                    <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                    <ul class="collapse nav flex-column ms-1" id="submenu1">
                         <li>
                             <a class="nav-link align-middle noSelect" @click="studentCareInfo">
                                 <i class="d-block d-sm-none fa-solid fa-school"></i> <span class="d-none d-sm-inline">Student Care Records</span>
@@ -31,14 +31,14 @@
                     <a href="#submenu2" id="reportsMenu" data-bs-toggle="collapse" @click='rotateChevron("reportsChevron", "down")' class="nav-link align-middle">
                         <i class="d-block d-sm-none fas fa-file-alt"></i> <span class="d-none d-sm-inline fw-bold">Generate Report <i id="reportsChevron" class="fas fa-chevron-right rotate"></i></span>
                     </a>
-                    <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+                    <ul class="collapse nav flex-column ms-1" id="submenu2">
                         <li>
                             <a class="nav-link align-middle noSelect" @click="generateTimesheetReport">
                                 <i class="d-block d-sm-none fa-solid fa-hourglass"></i> <span class="d-none d-sm-inline">Timesheet Report</span>
                             </a>
                         </li>
                     </ul>
-                    <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+                    <ul class="collapse nav flex-column ms-1" id="submenu2">
                         <li>
                             <a class="nav-link align-middle noSelect" @click="generateStudentCareReport">
                                 <i class="d-block d-sm-none fa-solid fa-school"></i> <span class="d-none d-sm-inline">Student Care Report</span>
