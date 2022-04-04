@@ -64,7 +64,7 @@
                                 <td class = "middleCols">{{ student.first_name}} </td>
                                 <td class = "middleCols">{{ student.grade.name}} </td>
                                 <td> 
-                                    <button type="button" class="btn blueBtn" @click="$router.push({ path: '/editStudent', name: 'EditStudent', params: { id: student.student_id }})">
+                                    <button type="button" class="btn blueBtn" @click="editStudentPage(student.student_id)">
                                         Edit 
                                     </button>
                                 </td>
@@ -139,6 +139,9 @@
                         this.studentInfo = resp
                     }
                 )
+            },
+            editStudentPage(studentID) {
+                this.$router.push({ name: 'EditStudent', params: { id: studentID }})
             }
         },
         mounted() {
