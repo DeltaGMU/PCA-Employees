@@ -39,14 +39,14 @@
                         </div>
                         <div v-else>
                             <div class="modal-header">
-                                Student Account Was Not Deleted!
+                                Student Account Deletion Failed!
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 There was an error with the deletion request.
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn blueBtn" data-bs-dismiss="modal" @click="this.$router.push('/managestudents')">OK</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="this.$router.push('/managestudents')">OK</button>
                             </div>
                         </div>                     
                     </div>
@@ -55,16 +55,30 @@
             <div class="modal fade" id="student-updated" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="studentDeletedLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            Student Account Updated!
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div v-if=" updateSuccess ">
+                            <div class="modal-header">
+                                Student Account Updated!
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
                             <div class="modal-body">
                                 The student account was successfully updated.
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-success" data-bs-dismiss="modal" @click="$router.push('/managestudents')">OK</button>
                             </div>
-                        </div>                     
+                        </div>
+                        <div v-else>
+                            <div class="modal-header">
+                                Student Account Update Failed!
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                There was an error with your update request.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="$router.push('/managestudents')">OK</button>
+                            </div>
+                        </div>                    
                     </div>
                 </div>
             </div>
@@ -329,10 +343,33 @@
                 })
             },
             updateStudentAccount() {
-                //let payload = {
-
-                //}
-                //this.$store.dispatch("UpdateStudent", payload)
+                let payload = {
+                    "first_name": this.first_name,
+                    "last_name": this.last_name,
+                    "car_pool_number": this.car_pool_number,
+                    "parent_one_first_name": this.parent_one_first_name,
+                    "parent_one_last_name": this.parent_one_last_name,
+                    "parent_two_first_name": this.parent_two_first_name,
+                    "parent_two_last_name": this.parent_two_last_name,
+                    "primary_email": this.primary_email,
+                    "secondary_email": this.secondary_email,
+                    "grade": this.grade.name,
+                    "is_enabled": this.is_enabled == "true",
+                    "enable_primary_email_notifications": this.enable_primary_email_notifications == "true",
+                }
+                if(this.enable_secondary_email_notifications) {
+                    payload["enable_secondary_email_notifications"] = this.enable_secondary_email_notifications === "true"
+                }
+                this.$store.dispatch("UpdateStudent", {"studentID" : this.$route.params.id, "payload" : payload}).then(resp => {
+                    console.log(resp)
+                    if(resp) {
+                        this.studentInfo = resp
+                        this.updateSuccess = true
+                    }
+                    else {
+                        this.updateSuccess = false
+                    }
+                }).then(() => {this.populateFields()})
             },
             clearAllFields() {
                 this.first_name = ""
@@ -353,6 +390,9 @@
             }
         },
         mounted() {
+            if (this.$route.params.id === undefined) {
+                this.$router.push('/managestudents')
+            }
             this.$store.dispatch("GetStudentInfo", this.$route.params.id).then(resp => {
                 if (resp) {
                     this.studentInfo = resp
