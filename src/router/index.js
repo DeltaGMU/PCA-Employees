@@ -13,6 +13,7 @@ import ManageAdmin from "../views/ManageAdmin";
 import ManageEmployees from "../views/ManageEmployees";
 import ManageStudents from "../views/ManageStudents";
 import ManageStudentCare from "../views/ManageStudentCare";
+import ManageStudentGrades from "../views/ManageStudentGrades";
 import EditEmployee from "../views/EditEmployee";
 import EditStudent from "../views/EditStudent";
 import CreateEmployee from "../views/CreateEmployee";
@@ -101,6 +102,12 @@ const routes = [
     path: "/managestudentcare",
     name: "ManageStudentCare",
     component: ManageStudentCare,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/managestudentgrades",
+    name: "ManageStudentGrades",
+    component: ManageStudentGrades,
     meta: { requiresAuth: true },
   },
   {
