@@ -115,6 +115,7 @@ const routes = [
     name: "EditEmployee",
     component: EditEmployee,
     meta: { requiresAuth: true },
+    props: true
   },
   {
     path: "/editstudent",
