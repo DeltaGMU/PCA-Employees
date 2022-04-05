@@ -259,7 +259,11 @@
                                 </div>
                                 <div class="invalid-feedback">Please select one of the provided options.</div>
                         </div>
-                        <button type="button" id="updateStudentBtn" class="mb-3 btn blueBtn" @click="updateStudentAccount">Update Student</button>
+                        <button type="button" id="updateStudentBtn" class="mb-3 btn blueBtn" @click="updateStudentAccount">
+                            <span v-show="!isLoading"> Update Student </span>
+                            <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
+                            <span v-show="isLoading"> Loading... </span>
+                        </button>
                     </div>
                 </form>
             </div>
@@ -313,6 +317,16 @@
                 studentInfo: {}
             }
         },
+        watch: {
+            secondary_email(value) {
+                if (value && value.length > 0) {
+                    this.enableSecondaryEmailNotificationRadios = true;
+                }
+                else {
+                    this.enableSecondaryEmailNotificationRadios = false;
+                }          
+            }
+        },
         methods: {
             openStudentUpdatedModal() {
                 document.getElementById("student-updated-backdrop").style.display = "block"
@@ -359,44 +373,48 @@
                 })
             },
             updateStudentAccount() {
-                let payload = {
-                    "first_name": this.first_name,
-                    "last_name": this.last_name,
-                    "car_pool_number": parseInt(this.car_pool_number),
-                    "parent_one_first_name": this.parent_one_first_name,
-                    "parent_one_last_name": this.parent_one_last_name,
-                    "parent_two_first_name": this.parent_two_first_name,
-                    "parent_two_last_name": this.parent_two_last_name,
-                    "primary_email": this.primary_email,
-                    "secondary_email": this.secondary_email,
-                    "grade": this.grade.name,
-                    "is_enabled": this.is_enabled === "true",
-                    "enable_primary_email_notifications": this.enable_primary_email_notifications === "true",
-                }
-                if(this.enableSecondaryEmailNotificationRadios) {
-                    payload["enable_secondary_email_notifications"] = this.enable_secondary_email_notifications === "true"
-                }
-                this.$store.dispatch("UpdateStudent", {"studentID" : this.studentID, "payload" : payload}).then(resp => {
-                    console.log(resp)
-                    if(resp) {
-                        this.studentInfo = resp
-                        this.updateSuccess = true
+                if (!this.isLoading) {
+                    this.isLoading = true;
+                    let payload = {
+                        "first_name": this.first_name,
+                        "last_name": this.last_name,
+                        "car_pool_number": parseInt(this.car_pool_number),
+                        "parent_one_first_name": this.parent_one_first_name,
+                        "parent_one_last_name": this.parent_one_last_name,
+                        "parent_two_first_name": this.parent_two_first_name,
+                        "parent_two_last_name": this.parent_two_last_name,
+                        "primary_email": this.primary_email,
+                        "secondary_email": this.secondary_email,
+                        "grade": this.grade.name,
+                        "is_enabled": this.is_enabled === "true",
+                        "enable_primary_email_notifications": this.enable_primary_email_notifications === "true",
                     }
-                    else {
-                        this.updateSuccess = false
+                    if(this.enableSecondaryEmailNotificationRadios) {
+                        payload["enable_secondary_email_notifications"] = this.enable_secondary_email_notifications === "true"
                     }
-                    this.openStudentUpdatedModal()
-                }).catch(err => {
-                    console.log(err)
-                    this.updateSuccess = false
-                    this.openStudentUpdatedModal()
-                }).then(() => {
-                    this.$store.dispatch("GetStudentInfo", this.studentID).then(resp => {
-                        if (resp) {
-                            this.studentInfo = resp
+                    this.$store.dispatch("UpdateStudent", {"studentID" : this.studentID, "payload" : payload}).then(resp => {
+                        console.log(resp)
+                        if(resp) {
+                            this.updateSuccess = true
                         }
-                    }).then(() => {this.populateFields()})
-                })
+                        else {
+                            this.updateSuccess = false
+                        }
+                        this.isLoading = false
+                        this.openStudentUpdatedModal()
+                    }).catch(err => {
+                        console.log(err)
+                        this.updateSuccess = false
+                        this.isLoading = false
+                        this.openStudentUpdatedModal()
+                    }).then(() => {
+                        this.$store.dispatch("GetStudentInfo", this.studentID).then(resp => {
+                            if (resp) {
+                                this.studentInfo = resp
+                            }
+                        }).then(() => {this.populateFields()})
+                    })
+                }
             },
             clearAllFields() {
                 this.first_name = ""
