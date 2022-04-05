@@ -195,6 +195,8 @@
                             </div>
                         </div>
                         
+                        <hr>
+
                         <div class="noSelect">
                             <div class="mb-1">
                                  <label for="deleteEmployeeAccountBtn" class="text-blue formLabel">Delete Employee Account:</label><br/>
