@@ -41,10 +41,13 @@
                     <form class="needs-validation" id="forgotPasswordForm" novalidate>
                         <div class="mb-3">
                             <label for="username" class="text-beige formLabel">Enter Employee ID</label>
-                            <input type="text" class="form-control form-control-lg textBox" name="username" id="employeeIDField" v-model="employeeIDInput" required>
+                            <input type="text" class="form-control form-control-lg textBox" name="username" id="employeeIDField" maxlength="100" v-model="employeeIDInput" required>
                             <div class="invalid-feedback">
                               Please provide a valid Employee ID.
                             </div>
+                        </div>
+                        <div class="text-center formText">
+                            <a class="text-beige" @click="goToResetPageIfCodeExists">Already have a reset code? Click here to reset.</a>
                         </div>
                         <div class="twoBtnCol">
                             <button type="button" class="mt-3 btn formBtn smallerScreenBtn" @click="returnToLogin">Cancel</button>
@@ -156,7 +159,7 @@
       },
       goToResetPage() {
         if (this.submissionSuccess) {
-          this.$router.push('/resetpassword')
+          this.$router.push('/resetpassword').catch((err) => console.log(err));
         }
         else {
           this.closeModal();
@@ -164,6 +167,9 @@
       },
       returnToLogin() {
         this.$router.push("/").catch((err)=> console.log(err));
+      },
+      goToResetPageIfCodeExists() {
+        this.$router.push("/resetpassword").catch((err) => console.log(err));
       }
     },
   };
