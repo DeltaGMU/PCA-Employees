@@ -53,9 +53,9 @@
                 </div>
             </div>
             <div class="modal fade" id="employee-updated" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="employeeDeletedLabel" aria-hidden="true">
-                <div class="modal-dialog modal=dialog-centered">
+                <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class = "modal-header" v-if=" updateSuccess ">
+                        <div  v-if= "updateSuccess">
                             <div class="modal-header">
                                 Employee Account Updated!
                                 <button type="button" class="btn-close" aria-label="Close" @click="closeEmployeeUpdatedModal"></button>
@@ -64,6 +64,7 @@
                                 The employee account was successfully updated.
                             </div>
                             <div class="modal-footer">
+                                <button type="button" class="btn blueBtn" data-bs-dismiss="modal" @click="$router.push('/manageemployees')">Close</button>
                                 <button type="button" class="btn btn-success" @click="$router.push('/manageemployees')">OK</button>
                             </div>
                         </div>
@@ -84,12 +85,13 @@
             </div>
             <div class="modal-backdrop fade show" id="emplopyee-updated-backdrop" style="display: none;"></div>
             <div class="p-2 flex-grow-1">
-                <form class="needs-validation" id="employeeForm" novalidate>
+                <form class="needs-validation" id="employeeForm">
                     <div class="topSection noSelect">
                         <div class="mb-1">
                             <h1 class="text-blue">Edit Employee</h1>
                         </div>
                     </div>
+
                     <div>
                         <div class="noSelect">
                             <div class="mb-1">
@@ -160,7 +162,7 @@
                             <input type="text" class="form-control" id="secondaryEmail" v-model="secondary_email" placeholder="Optional...">
                         </div>
 
-                        <div class="form-group">
+                        <div>
                             <div class="mb-1">
                                 <label for="pass" class="text-blue formLabel">Enable email notifications for primary email?</label>
                             </div>
@@ -180,7 +182,7 @@
                             </div>          
                         </div>
 
-                        <div class="form-group noSelect">
+                        <div class="noSelect">
                             <div class="mb-1">
                                 <label for="notification" class="text-blue formLabel">Enable email notifications for secondary email?</label>
                             </div>
@@ -191,41 +193,47 @@
                                     Yes
                                 </label>
                             </div>
+
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" value = "false" name="flexRadioDefault2" id="notification flexRadioDefault2" :disabled="!enableSecondaryEmailNotificationRadios" v-model="enable_secondary_email_notifications">
                                 <label class="form-check-label" for="flexRadioDefault2" v-bind:selected = "enable_secondary_email_notifications">
                                     No
                                 </label>
                             </div>
-                            </div>
-                            <div class="form-group noSelect">
-                                <div class="mb-1">
-                                    <label for="deleteEmployeeAccountBtn" class="text-blue formLabel">Delete Employee Account:</label><br/>
-                                    <button type="button" class="btn btn-danger" name="deleteEmployeeAccountBtn" id="deleteEmployeeAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Account</button>
-                                </div>
-                            </div>
-                            <div class="form-group noSelect">
-                                <div>
-                                    <label for="notification" class="text-blue formLabel">Enable or disable employee account:</label>
-                                </div>
-                                
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" value = "true" name="flexRadioDefault3" id="notification flexRadioDefault3" v-model="is_enabled">
-                                    <label class="form-check-label" for="flexRadioDefault3" v-bind:selected= "is_enabled">
-                                        Enable Account
-                                    </label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" value = "false" name="flexRadioDefault3" id="notification flexRadioDefault3" v-model="is_enabled">
-                                    <label class="form-check-label" for="flexRadioDefault3" v-bind:selected= "is_enabled">
-                                        Disable Account
-                                    </label>
-                                </div>
+                        </div>
+                        
+                        <div class="noSelect">
+                            <div class="mb-1">
+                                 <label for="deleteEmployeeAccountBtn" class="text-blue formLabel">Delete Employee Account:</label><br/>
+                                <button type="button" class="btn btn-danger" name="deleteEmployeeAccountBtn" id="deleteEmployeeAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Account</button>
                             </div>
                         </div>
-                        <br/>
-                        <button type="button" id="updateEmpBtn" class="mb-2 btn formBtn blueBorder" @click="updateEmployeeAccount()">Update Employee
-                         </button>
+
+                        <div class="noSelect">
+                            <div>
+                                <label for="notification" class="text-blue formLabel">Enable or disable employee account:</label>
+                            </div>
+                                
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" value = "true" name="flexRadioDefault3" id="notification flexRadioDefault3" v-model="is_enabled">
+                                <label class="form-check-label" for="flexRadioDefault3" v-bind:selected= "is_enabled">
+                                    Enable Account
+                                </label>
+                            </div>
+        
+                           <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" value = "false" name="flexRadioDefault3" id="notification flexRadioDefault3" v-model="is_enabled">
+                                <label class="form-check-label" for="flexRadioDefault3" v-bind:selected= "is_enabled">
+                                     Disable Account
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <br/>
+
+                    <button type="button" id="updateEmpBtn" class="mb-2 btn formBtn blueBorder" @click="updateEmployeeAccount()">Update Employee</button>
+                
                 </form>
             </div>
         </div>
@@ -253,6 +261,7 @@
                 
                 isAdmin: false,
                 isEmployee: false,
+                isValidated: false,
 
                 first_name: "",
                 last_name: "",
@@ -289,6 +298,7 @@
                 this.first_name = this.employeeInfo.first_name.charAt(0).toUpperCase() + this.employeeInfo.first_name.slice(1)
                 this.last_name = this.employeeInfo.last_name.charAt(0).toUpperCase() + this.employeeInfo.last_name.slice(1)
                 this.role = this.employeeInfo.role.name.charAt(0).toUpperCase() + this.employeeInfo.role.name.slice(1)
+                
                 this.findRole()
 
                 this.primary_email = this.employeeInfo.contact_info.primary_email
@@ -303,13 +313,14 @@
             },
 
             findAdmin() {
-                if (this.form_role == "Admin"){
+                if (this.role == "Administrator"){
                     this.isAdmin = true
+                    console.log(this.isAdmin)
                 }
             },
 
             findEmployee() {
-                if (this.form_role == "Employee"){
+                if (this.role == "Employee"){
                     this.isEmployee = true
                 }
             },
@@ -331,42 +342,64 @@
                     
                 })
             },
+
+            checkValidation(payload) {
+                this.isValidated = Object.values(payload).every(value => {
+                    if (value == null || value == "") {
+                        return false
+                    }
+                    return true
+                })
+            },
+
             updateEmployeeAccount() {
                 let payload = {
                     "employee_id": this.employeeID,
                     "first_name": this.first_name,
                     "last_name": this.last_name,
                     "primary_email": this.primary_email,
-                    "role": this.role,
-                    "secondary_email": this.secondary_email,
+                    "role.name": this.role,
                     "is_enabled": this.is_enabled === "true",
                     "enable_primary_email_notifications": this.enable_primary_email_notifications === "true",
                 }
+
+                this.checkValidation(payload)
+
                 if(this.enableSecondaryEmailNotificationRadios) {
                     payload["enable_secondary_email_notifications"] = this.enable_secondary_email_notifications === "true"
                 }
-                this.$store.dispatch("UpdateEmployee", payload).then(resp => {
-                    console.log(resp)
-                    if(resp) {
-                        this.employeeInfo = resp
-                        this.updateSuccess = true
-                    }
-                    else {
-                        this.updateSuccess = false
-                    }
-                    this.openEmployeeUpdatedModal()
-                }).catch(err => {
-                    console.log(err)
-                    this.updateSuccess = false
-                    this.openEmployeeUpdatedModal()
-                }).then(() => {
-                    this.$store.dispatch("GetEmployeeInfo", this.employeeID).then(resp => {
-                        if (resp) {
+                if (this.secondary_email != null || this.secondary_email != ""){
+                    payload["secondary_email"] = this.secondary_email
+                }
+
+                if (this.isValidated) {
+                    this.$store.dispatch("UpdateEmployee", payload).then(resp => {
+                        console.log(resp)
+                        if(resp) {
                             this.employeeInfo = resp
+                            this.updateSuccess = true
                         }
-                    }).then(() => {this.populateFields()})
-                })
+                        else {
+                            this.updateSuccess = false
+                        }
+                        this.openEmployeeUpdatedModal()
+                    }).catch(err => {
+                        console.log(err)
+                        this.updateSuccess = false
+                        this.openEmployeeUpdatedModal()
+                    }).then(() => {
+                        this.$store.dispatch("GetEmployeeInfo", this.employeeID).then(resp => {
+                            if (resp) {
+                                this.employeeInfo = resp
+                                console.log(this.employeeInfo.role.name)
+                            }
+                        }).then(() => {this.populateFields()})
+                    })
+                } else{
+                    this.updateSuccess = false
+                }
             },
+
             clearAllFields() {
                 this.first_name = ""
                 this.last_name = ""
@@ -379,6 +412,7 @@
                 this.employeeForm.classList.remove('was-validated')
             }
         },
+
         mounted() {
             if (this.employeeID === undefined) {
                 this.$router.push('/manageemployees')
