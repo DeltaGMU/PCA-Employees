@@ -393,7 +393,6 @@
                         payload["enable_secondary_email_notifications"] = this.enable_secondary_email_notifications === "true"
                     }
                     this.$store.dispatch("UpdateStudent", {"studentID" : this.studentID, "payload" : payload}).then(resp => {
-                        console.log(resp)
                         if(resp) {
                             this.updateSuccess = true
                         }

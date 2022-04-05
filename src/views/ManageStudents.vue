@@ -136,7 +136,12 @@
             refreshStudentsTable() {
                 this.$store.dispatch("GetAllStudents").then(
                     (resp) => {
-                        this.studentInfo = resp
+                        if (resp) {
+                            this.studentInfo = resp
+                        }
+                        else {
+                            this.studentInfo = []
+                        }
                     }
                 )
             },

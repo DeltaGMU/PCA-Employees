@@ -247,7 +247,6 @@
                 }
                 this.$store.dispatch("GetStudentCareRecords", payload).then(resp => {
                     if (resp) {
-                        console.log(resp)
                         this.studentCareRecords = resp;
                     }
                     else {
@@ -267,9 +266,7 @@
                         grade: this.selected.name,
                         start_date: this.reportStartDate,
                         end_date: this.reportEndDate
-                    }
-                    console.log(payload)
-                    
+                    }                    
                     this.selectedPeriod = this.formatRange(this.reportStartDate, this.reportEndDate)
                     this.$store.dispatch("GetStudentCareHours", payload).then(resp => {
                         if (resp) {

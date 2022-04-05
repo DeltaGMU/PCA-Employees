@@ -368,8 +368,6 @@
                 this.is_enabled = this.employeeInfo.is_enabled ? 'true' : 'false'
 
                 this.enableSecondaryEmailNotificationRadios = this.secondary_email && this.secondary_email.length > 0
-
-                console.log(this.employeeInfo)
             },
 
             findRole() {
@@ -421,10 +419,8 @@
                     if(this.secondary_email !== null && this.secondary_email !== ""){
                         payload["secondary_email"] = this.secondary_email
                     }
-                    
-                    console.log(payload)
+    
                     this.$store.dispatch("UpdateEmployee", payload).then(resp => {
-                        console.log(resp)
                         if(resp) {
                             this.employeeInfo = resp
                             this.updateSuccess = true
@@ -443,7 +439,6 @@
                         this.$store.dispatch("GetEmployeeInfo", this.employeeID).then(resp => {
                             if (resp) {
                                 this.employeeInfo = resp
-                                console.log(this.employeeInfo.role.name)
                             }
                         }).then(() => {this.populateFields()})
                     })
