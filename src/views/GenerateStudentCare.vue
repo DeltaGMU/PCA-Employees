@@ -34,20 +34,18 @@
                 <div v-if= "selectedPeriod != '' ">
                     <hr>
                     <div class = "p-2" v-if= "selectedPeriod != '' ">
-                        <h2>Reporting Period for Student Care: </h2> 
-                        <h3> {{  selectedPeriod  }}</h3>
-                        <h3 v-if="selected !== ''"> Selected Grade: {{  selected.name  }}</h3>
+                        <h3>Reporting Period:  {{ selectedPeriod }}</h3> 
+                        <h4 v-if="selected !== ''"> Selected Grade: {{  selected.name.toUpperCase()  }}</h4>
                     </div>
+                    <br>
                     <div class = "p-2" >
-                        <button type="button" id= "btn formBtn blueBorder" class="btn blueBtn" @click="downloadPDF">
+                        <button type="button" id= "btn formBtn blueBorder" class="btn btn-danger" @click="downloadPDF">
                             <span v-show="!isLoadingPDF"><i class="fa-solid fa-file-pdf"></i> | Download PDF </span>
                             <span v-show="isLoadingPDF" class="spinner-border spinner-border-sm" role="status"></span>
                             <span v-show="isLoadingPDF"> Loading... </span>
                         </button>
-
                         <br> <br>
-
-                        <button type="button" id= "btn formBtn blueBorder" class="btn blueBtn" @click="downloadCSV">
+                        <button type="button" id= "btn formBtn blueBorder" class="btn btn-success" @click="downloadCSV">
                             <span v-show="!isLoadingCSV"><i class="fa-solid fa-file-csv"></i> | Download CSV </span>
                             <span v-show="isLoadingCSV" class="spinner-border spinner-border-sm" role="status"></span>
                             <span v-show="isLoadingCSV"> Loading... </span>
