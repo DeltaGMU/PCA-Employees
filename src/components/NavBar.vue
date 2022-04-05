@@ -48,7 +48,7 @@ export default {
   },
   data() {
     return {
-      kioskGuestPaths: ["/kiosk/studentfinder", "/kiosk/checkinandcheckout", "/kiosk/careoptions"],
+      kioskGuestPaths: ["/kiosk/login", "/kiosk/studentfinder", "/kiosk/checkinandcheckout", "/kiosk/careoptions"],
     }
   },
   computed: {
@@ -56,15 +56,25 @@ export default {
       return this.$store.getters.isAuthenticated;
     },
   },
+  mounted() {
+    this.$store.dispatch("SaveLastPage", this.current_page)
+  },
   methods: {
     async logout() {
-      await this.$store.dispatch("LogOut");
-      if (this.current_page == "/kiosk/checkinmultiple") {
-        this.$router.push("/kiosk")
-      }
-      else {
+      await this.$store.dispatch("LogOut").then(() => {
+        if (this.current_page == "/kiosk/checkinmultiple") {
+          this.$router.push("/kiosk")
+        }
+        else if (this.current_page == "/kiosk/login") {
+          this.$router.push("/kiosk/login")
+        }
+        else {
+          this.$router.push("/");
+        }
+      }).catch(err => {
+        console.log(err)
         this.$router.push("/");
-      }
+      });
       // this.current_page = "/";
     },
     goToLeaveRequest() {

@@ -2,11 +2,13 @@ import axios from "axios";
 
 const state = {
   user: {},
+  lastPage: "",
 };
 
 const getters = {
   isAuthenticated: (state) => !!state.user,
   StateUser: (state) => state.user,
+  StateLastPage: (state) => state.lastPage,
 };
 
 const actions = {
@@ -33,6 +35,9 @@ const actions = {
     context.rootState.user = {}
     context.commit("logout")
   },
+  async SaveLastPage(context, payload) {
+    context.commit("saveLastPage", payload)
+  },
   async LogOut(context) {
     if (this.getters.isAuthenticated) {      
       let headers = {
@@ -42,10 +47,12 @@ const actions = {
         resp => {
           if (resp && resp.status === 200) {
             console.log("Logged out.")
+            localStorage.clear();
             return true
           }
           else if (resp && resp.status === 400) {
             console.log("Token already invalidated")
+            localStorage.clear();
             return true
           }
           return false
@@ -62,6 +69,9 @@ const actions = {
 const mutations = {
   setUser(state, username) {
     state.user = username;
+  },
+  saveLastPage(state, lastPage) {
+    state.lastPage = lastPage;
   },
   logout(state) {
     state.user = {};

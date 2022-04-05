@@ -2,7 +2,7 @@
   <div>
     
     <div class="container">
-        <NavBar/>
+        <NavBar :current_page="currentPage"/>
         <div class="row justify-content-center">
 
             <div class="col-xxl-5 col-xl-6 col-lg-7 col-md-9 col-11">
@@ -66,6 +66,8 @@
     },
     data() {
       return {
+        currentPage: "/",
+
         usernameInput: "",
         passwordInput: "",
         isLoading: false,

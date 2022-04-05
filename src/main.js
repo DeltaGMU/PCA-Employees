@@ -19,7 +19,17 @@ axios.interceptors.response.use(undefined, function(error) {
     const originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      return router.push("/")
+      if (store.getters.StateLastPage !== undefined) {
+        if (store.getters.StateLastPage.startsWith("/kiosk")) {
+          return router.push("/kiosk")
+        }
+      }
+      else {
+        return router.push("/")
+      }
+      // localStorage.clear();
+      // store.dispatch("LogOut")
+      // return router.push("/")
     }
   }
 });
