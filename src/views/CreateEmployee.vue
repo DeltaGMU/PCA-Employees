@@ -86,7 +86,7 @@
                                     <label for="primaryEmail" class="text-blue formLabel">Primary Email</label>
                                 </div>
                                 
-                                <input type="text" class="form-control" id="primaryEmail" autocomplete="off" v-model="form_primary_email" placeholder="Employee primary email..." maxlength="100" required>
+                                <input type="email" class="form-control" id="primaryEmail" autocomplete="off" v-model="form_primary_email" placeholder="Employee primary email..." maxlength="100" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid email address under 100 characters.
                                 </div>
@@ -117,7 +117,7 @@
                                     <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Secondary Email [Optional]</label>
                                 </div>
                                 
-                                <input type="text" class="form-control" id="secondaryEmail" autocomplete="off" v-model="form_secondary_email" placeholder="Optional employee secondary email..." maxlength="100">
+                                <input type="email" class="form-control" id="secondaryEmail" autocomplete="off" v-model="form_secondary_email" placeholder="Optional employee secondary email..." maxlength="100">
                                 <div class="invalid-feedback">
                                     Please provide a valid email address under 100 characters.
                                 </div>
@@ -301,22 +301,21 @@
                 this.employeeForm.classList.remove('was-validated')
             },
             async submit(e) {                
-                let payload = {
-                    "first_name": this.form_first_name,
-                    "last_name": this.form_last_name,
-                    "primary_email": this.form_primary_email,
-                    "secondary_email": this.form_secondary_email,
-                    "role": this.form_role_selection,
-                    "enable_primary_email_notifications": this.form_enable_primary_email_notifications === 'true',
-                    "pto_hours_enabled": this.form_enable_pto_hours === 'true',
-                    "extra_hours_enabled": this.form_enable_extra_hours === 'true',
-                    "is_enabled": this.form_enable_account === 'true'
-                }
-                if (this.enableSecondaryEmailNotificationRadios) {
-                    payload["enable_secondary_email_notifications"] = this.form_enable_secondary_email_notifications === 'true'
-                }
-
                 if (!this.isLoading && this.employeeForm.checkValidity()) {
+                    let payload = {
+                        "first_name": this.form_first_name,
+                        "last_name": this.form_last_name,
+                        "primary_email": this.form_primary_email,
+                        "secondary_email": this.form_secondary_email,
+                        "role": this.form_role_selection,
+                        "enable_primary_email_notifications": this.form_enable_primary_email_notifications === 'true',
+                        "pto_hours_enabled": this.form_enable_pto_hours === 'true',
+                        "extra_hours_enabled": this.form_enable_extra_hours === 'true',
+                        "is_enabled": this.form_enable_account === 'true'
+                    }
+                    if (this.enableSecondaryEmailNotificationRadios) {
+                        payload["enable_secondary_email_notifications"] = this.form_enable_secondary_email_notifications === 'true'
+                    }
                     console.log(payload)
                     this.isLoading = true;
                     await this.$store.dispatch("CreateNewEmployee", payload).then(
