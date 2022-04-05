@@ -330,7 +330,7 @@
                 this.findEmployee()
             },
 
-            deleteEmployeeAccount () {
+            deleteEmployeeAccount() {
                 this.$store.dispatch("DeleteEmployee", this.employeeID).then(resp => {
                     if (resp) {
                         this.deletionSuccess = true
@@ -339,7 +339,9 @@
                     else {
                         this.deletionSuccess = false
                     }
-                    
+                }).catch(err => {
+                    console.log(err)
+                    this.deletionSuccess = false
                 })
             },
 
@@ -365,7 +367,7 @@
                 if (!this.checkValidation(payload)) {
                     console.log("Fields are invalid!")
                 }
-                
+
                 if(this.enableSecondaryEmailNotificationRadios) {
                     payload["enable_secondary_email_notifications"] = this.enable_secondary_email_notifications === "true"
                 }
