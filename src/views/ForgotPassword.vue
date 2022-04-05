@@ -13,7 +13,7 @@
                         </div>
                         <div class="modal-header" v-else>
                             <h5 class="modal-title">Reset Request Failed!</h5>
-                            <button type="button" class="btn-close" aria-label="Close"  @click="goToResetPage"></button>
+                            <button type="button" class="btn-close" aria-label="Close"  @click="closeModal"></button>
                         </div>
                         <div class="modal-body" v-if="submissionSuccess">
                             Successfully submitted password reset request. Your primary email should receive a reset code soon!
