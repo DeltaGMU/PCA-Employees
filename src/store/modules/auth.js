@@ -64,6 +64,34 @@ const actions = {
     }
     await context.dispatch("ClearDataOnLogout");
   },
+  async ForgotPassword(_, payload) {
+    console.log(payload)
+    return await axios.post("api/v1/employees/password/forgot", payload).then(
+      resp => {
+        if (resp && resp.status === 200) {
+          return resp.data.data.token
+        }
+        return null
+      }
+    ).catch(e => {
+      console.log(e)
+      return null
+    });
+  },
+  async ResetPassword(_, payload) {
+    console.log(payload)
+    return await axios.post("api/v1/employees/password/reset", payload).then(
+      resp => {
+        if (resp && resp.status === 200) {
+          return true
+        }
+        return false
+      }
+    ).catch(e => {
+      console.log(e)
+      return false
+    });
+  },
 };
 
 const mutations = {
