@@ -31,7 +31,6 @@ const actions = {
     }
     return await axios.get("api/v1/employees/"+employeeID, headers).then(
       resp => {
-        console.log(resp)
         return resp.data.data.employee
       }
     );
@@ -57,7 +56,9 @@ const actions = {
       headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token},    
     }
     let employee_id = employee_data['employee_id']
+    console.log(employee_data)
     delete employee_data['employee_id']
+    
     return axios.put("api/v1/employees/"+employee_id, employee_data, headers).then(
       resp => {
         if (resp && resp.status === 200) {

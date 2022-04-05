@@ -113,7 +113,7 @@
                                 </div>
                         </div>
 
-                        <div class="form-group">
+                        <div>
                             <div class="mb-1">
                                 <label for="pass" class="text-blue formLabel">Password</label>
                                 <br/><small>Resetting the password will send a new generated temporary password to the employee's primary email.</small>
@@ -127,7 +127,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group noSelect">
+                        <div class="noSelect">
                             <div class="mb-1">
                                 <label for="employeeRole" class="text-blue formLabel leaveLabel">Select Role</label>
                             </div>
@@ -141,7 +141,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group noSelect">
+                        <div class="noSelect">
                             <div class="mb-1">
                                <label for="primaryEmail" class="text-blue formLabel">Primary Email</label>
                              </div>
@@ -333,10 +333,11 @@
             },
             updateEmployeeAccount() {
                 let payload = {
+                    "employee_id": this.employeeID,
                     "first_name": this.first_name,
                     "last_name": this.last_name,
                     "primary_email": this.primary_email,
-                    "role.name": this.role,
+                    "role": this.role,
                     "secondary_email": this.secondary_email,
                     "is_enabled": this.is_enabled === "true",
                     "enable_primary_email_notifications": this.enable_primary_email_notifications === "true",
