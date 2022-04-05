@@ -111,7 +111,7 @@
                                 <div class="mb-1">
                                     <label for="primaryEmail" class="text-blue formLabel">Primary Email</label>
                                 </div>
-                                <input type="text" class="form-control" autocomplete="off" id="primaryEmail" v-model="form_primary_email" placeholder="Your primary email..." required maxlength="100">
+                                <input type="email" class="form-control" autocomplete="off" id="primaryEmail" v-model="form_primary_email" placeholder="Your primary email..." required maxlength="100">
                                 <div class="invalid-feedback">
                                     Please provide a valid email address under 100 characters.
                                 </div>
@@ -141,7 +141,7 @@
                                 <div class="mb-1">
                                     <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Secondary Email</label>
                                 </div>
-                                <input type="text" class="form-control" autocomplete="off" id="secondaryEmail" v-model="form_secondary_email" placeholder="Optional secondary email..." maxlength="100">
+                                <input type="email" class="form-control" autocomplete="off" id="secondaryEmail" v-model="form_secondary_email" placeholder="Optional secondary email..." maxlength="100">
                                 <div class="invalid-feedback">
                                     Please provide a valid email address under 100 characters.
                                 </div>

@@ -6,7 +6,7 @@
                 <Sidebar/>
             </div>
             <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deleteAccountBtnLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             Delete Student Account?
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="modal fade" id="student-deleted" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="studentDeletedLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div v-if=" deletionSuccess ">
                             <div class="modal-header">
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="modal fade" id="student-updated" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="studentDeletedLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div v-if=" updateSuccess ">
                             <div class="modal-header">
@@ -393,7 +393,6 @@
                         payload["enable_secondary_email_notifications"] = this.enable_secondary_email_notifications === "true"
                     }
                     this.$store.dispatch("UpdateStudent", {"studentID" : this.studentID, "payload" : payload}).then(resp => {
-                        console.log(resp)
                         if(resp) {
                             this.updateSuccess = true
                         }

@@ -316,7 +316,6 @@
                     if (this.enableSecondaryEmailNotificationRadios) {
                         payload["enable_secondary_email_notifications"] = this.form_enable_secondary_email_notifications === 'true'
                     }
-                    console.log(payload)
                     this.isLoading = true;
                     await this.$store.dispatch("CreateNewEmployee", payload).then(
                         resp => {
