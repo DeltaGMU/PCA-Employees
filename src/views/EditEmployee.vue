@@ -116,8 +116,15 @@
 
                         <div>
                             <div class="mb-1">
-                                <label for="resetPassword" class="text-blue formLabel">Reset Password</label><br>
-                                <button type="button" class="mt-2 btn blueBtn" id="resetPassword" @click="() => {}">Reset Password</button>
+                                <label for="pass" class="text-blue formLabel">Password</label>
+                                <br/><small>Resetting the password will send a new generated temporary password to the employee's primary email.</small>
+                            </div>
+                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="resetPasswordCheckbox" id="pass resetPasswordCheckbox">
+                                <label class="form-check-label" for="resetPasswordCheckbox">
+                                    Reset Password
+                                </label>
                             </div>
                         </div>
 
@@ -146,16 +153,8 @@
                                 Please provide a valid primary email under 100 characters.
                             </div>
                          </div>
-                        
-                         <div class="form-group noSelect">
-                            <div class="mb-1">
-                                 <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Secondary Email</label>
-                            </div>
-                                    
-                            <input type="text" class="form-control" id="secondaryEmail" v-model="secondary_email" placeholder="Optional...">
-                        </div>
 
-                        <div>
+                          <div>
                             <div class="mb-1">
                                 <label for="pass" class="text-blue formLabel">Enable email notifications for primary email?</label>
                             </div>
@@ -175,7 +174,16 @@
                             </div>          
                         </div>
 
-                        <div class="noSelect">
+                        
+                         <div class="noSelect">
+                            <div class="mb-1">
+                                 <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Secondary Email [Optional]</label>
+                            </div>
+                                    
+                            <input type="text" class="form-control" id="secondaryEmail" v-model="secondary_email" placeholder="Optional...">
+                        </div>
+
+                        <div>
                             <div class="mb-1">
                                 <label for="notification" class="text-blue formLabel">Enable email notifications for secondary email?</label>
                             </div>
@@ -196,29 +204,69 @@
                         </div>
                         
                         <hr>
-
                         <div class="noSelect">
                             <div class="mb-1">
-                                 <label for="deleteEmployeeAccountBtn" class="text-blue formLabel">Delete Employee Account:</label><br/>
-                                <button type="button" class="btn btn-danger" name="deleteEmployeeAccountBtn" id="deleteEmployeeAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Account</button>
+                                <label for="ptoHoursOptions" class="text-blue formLabel">Enable or disable PTO hours in employee timesheet:</label>
+                             </div>
+                                
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio"  value="true" name="ptoHoursOptions" id="ptoHoursEnabled" v-model="enable_pto_hours">
+                                <label class="form-check-label" for="ptoHoursEnabled" v-bind:selected= "enable_pto_hours">
+                                    Enable PTO Hours
+                                </label>
                             </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="false" name="ptoHoursOptions" id="ptoHoursDisabled" v-model="enable_pto_hours">
+                                <label class="form-check-label" for="ptoHoursDisabled" v-bind:selected= "enable_pto_hours">
+                                    Disable PTO Hours
+                                </label>
+                            </div>
+                            <div class="invalid-feedback">Please select one of the provided options.</div>
+                        </div>
+                        <div class="noSelect">
+                            <div class="mb-1">
+                                <label for="extraHoursOptions" class="text-blue formLabel">Enable or disable Extra hours in employee timesheet:</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="true" name="extraHoursOptions" id="extraHoursEnabled" v-model="enable_extra_hours">
+                                <label class="form-check-label" for="extraHoursEnabled" v-bind:selected= "enable_extra_hours">
+                                    Enable Extra Hours
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="false" name="extraHoursOptions" id="extraHoursDisabled" v-model="enable_extra_hours">
+                                <label class="form-check-label" for="extraHoursDisabled" v-bind:selected= "enable_extra_hours">
+                                    Disable Extra Hours
+                                </label>
+                            </div>
+                            <div class="invalid-feedback">Please select one of the provided options.</div>
                         </div>
 
+                        <hr>
+                        
+                        <div class="noSelect">
+                            <div class="mb-1">
+                                    <label for="deleteEmployeeAccountBtn" class="text-blue formLabel">Delete Employee Account:</label><br/>
+                                <button type="button" class="btn btn-danger" name="deleteEmployeeAccountBtn" id="deleteEmployeeAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Account</button>
+                            </div>
+                         </div>
+                    
                         <div class="noSelect">
                             <div>
-                                <label for="notification" class="text-blue formLabel">Enable or disable employee account:</label>
+                                <label for="employeeOptions" class="text-blue formLabel">Enable or disable employee account:</label>
                             </div>
                                 
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" value = "true" name="flexRadioDefault3" id="notification flexRadioDefault3" v-model="is_enabled">
-                                <label class="form-check-label" for="flexRadioDefault3" v-bind:selected= "is_enabled">
+                                <input class="form-check-input" type="radio" value = "true" name="employeeOptions" id="employeeEnabled" v-model="is_enabled">
+                                <label class="form-check-label" for="employeeEnabled" v-bind:selected= "is_enabled">
                                     Enable Account
                                 </label>
                             </div>
         
                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" value = "false" name="flexRadioDefault3" id="notification flexRadioDefault3" v-model="is_enabled">
-                                <label class="form-check-label" for="flexRadioDefault3" v-bind:selected= "is_enabled">
+                                <input class="form-check-input" type="radio" value = "false" name="employeeOptions" id="employeeDisabled" v-model="is_enabled">
+                                <label class="form-check-label" for="employeeEnabled" v-bind:selected= "is_enabled">
                                      Disable Account
                                 </label>
                             </div>
@@ -268,6 +316,8 @@
                 enable_primary_email_notifications: "true",
                 enable_secondary_email_notifications: "false",
                 is_enabled: "true",
+                enable_pto_hours: "true",
+                enable_extra_hours: "true",
 
                 deletionSuccess: false,
                 updateSuccess: false,
@@ -313,9 +363,13 @@
                 this.secondary_email = this.employeeInfo.contact_info.secondary_email
                 this.enable_secondary_email_notifications = this.employeeInfo.contact_info.enable_secondary_email_notifications ? 'true' : 'false'
 
+                this.enable_pto_hours = this.employeeInfo.enable_pto_hours ? 'true' : 'false'
+                this.enable_extra_hours = this.employeeInfo.enable_extra_hours ? 'true' : 'false'
                 this.is_enabled = this.employeeInfo.is_enabled ? 'true' : 'false'
 
                 this.enableSecondaryEmailNotificationRadios = this.secondary_email && this.secondary_email.length > 0
+
+                console.log(this.employeeInfo)
             },
 
             findRole() {
@@ -355,14 +409,16 @@
                         "last_name": this.last_name,
                         "primary_email": this.primary_email,
                         "role": this.roleSelection,
+                        "pto_hours_enabled": this.enable_pto_hours === "true",
+                        "extra_hours_enabled": this.enable_pto_hours === "true",
                         "is_enabled": this.is_enabled === "true",
-                        "enable_primary_email_notifications": this.enable_primary_email_notifications === "true"
+                        "enable_primary_email_notifications": this.enable_primary_email_notifications === "true",
                     }
 
                     if(this.enableSecondaryEmailNotificationRadios) {
                         payload["enable_secondary_email_notifications"] = this.enable_secondary_email_notifications === "true"
                     }
-                    if (this.secondary_email !== null || this.secondary_email !== ""){
+                    if(this.secondary_email !== null || this.secondary_email !== ""){
                         payload["secondary_email"] = this.secondary_email
                     }
                     
@@ -401,6 +457,8 @@
                 this.secondary_email = ""
                 this.enable_primary_email_notifications = "true"
                 this.enable_secondary_email_notifications = "false"
+                this.enable_pto_hours = "true"
+                this.enable_extra_hours = "true"
                 this.is_enabled = "true"
                 this.isLoading = false
                 this.employeeForm.classList.remove('was-validated')
