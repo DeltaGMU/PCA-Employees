@@ -5,6 +5,30 @@
             <div class="p-2">
                 <Sidebar/>
             </div>
+            <div class="modal fade" id="reset-password" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="passwordResetLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header" v-if="passwordResetRequestSuccess">
+                            Sent Password Reset Request!
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closePasswordModal"></button>
+                        </div>
+                        <div class="modal-header" v-else>
+                            Failed To Send Request!
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closePasswordModal"></button>
+                        </div>
+                        <div class="modal-body" v-if="passwordResetRequestSuccess">
+                            Successfully sent a password reset request to the employee's primary email!
+                        </div>
+                        <div class="modal-body" v-else>
+                            Encountered an error when trying to send a password reset request for the employee.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blueBtn" data-bs-dismiss="modal" @click="closePasswordModal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-backdrop fade show" id="reset-password-backdrop" style="display: none;"></div>
             <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="deletEmployeeBtnLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -116,15 +140,9 @@
 
                         <div>
                             <div class="mb-1">
-                                <label for="pass" class="text-blue formLabel">Password</label>
-                                <br/><small>Resetting the password will send a new generated temporary password to the employee's primary email.</small>
-                            </div>
-                            
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="resetPasswordCheckbox" id="pass resetPasswordCheckbox">
-                                <label class="form-check-label" for="resetPasswordCheckbox">
-                                    Reset Password
-                                </label>
+                                <label for="passwordChange" class="text-blue formLabel">Password</label>
+                                <br/><small>This will send a password reset request to the employee's primary email.</small><br>
+                                <button type="button" class="mt-2 btn blueBtn" id="passwordChange" @click="sendPasswordResetRequest">Send Reset Password Request</button>
                             </div>
                         </div>
 
@@ -326,7 +344,8 @@
                 clickEvent: null,
                 employeeForm: null,
 
-                employeeInfo: {}
+                employeeInfo: {},
+                passwordResetRequestSuccess: false,
             }
         },
         watch: {
@@ -340,6 +359,16 @@
             }
         },
         methods: {
+            openPasswordModal() {
+                document.getElementById("reset-password-backdrop").style.display = "block"
+                document.getElementById("reset-password").style.display = "block"
+                document.getElementById("reset-password").classList.add("show")
+            },
+            closePasswordModal() {
+                document.getElementById("reset-password-backdrop").style.display = "none"
+                document.getElementById("reset-password").style.display = "none"
+                document.getElementById("reset-password").classList.remove("show")
+            },
             openEmployeeUpdatedModal() {
                 document.getElementById("employee-updated-backdrop").style.display = "block"
                 document.getElementById("employee-updated").style.display = "block"
@@ -443,6 +472,25 @@
                         }).then(() => {this.populateFields()})
                     })
                 }
+            },
+            
+            sendPasswordResetRequest() {
+                let payload = {
+                    employee_id: this.employeeInfo.employee_id
+                }
+                this.$store.dispatch("ForgotPassword", payload).then(resp => {
+                    if (resp && resp === true) {
+                        this.passwordResetRequestSuccess = true;
+                    }
+                    else {
+                        this.passwordResetRequestSuccess = false;
+                    }
+                    this.openPasswordModal()
+                }).catch(err => {
+                    console.log(err)
+                    this.passwordResetRequestSuccess = false;
+                    this.openPasswordModal()
+                })
             },
 
             clearAllFields() {
