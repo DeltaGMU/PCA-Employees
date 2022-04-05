@@ -64,8 +64,7 @@
                                 The employee account was successfully updated.
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn blueBtn" data-bs-dismiss="modal" @click="$router.push('/manageemployees')">Close</button>
-                                <button type="button" class="btn btn-success" @click="$router.push('/manageemployees')">OK</button>
+                                <button type="button" class="btn btn-success" data-bs-dismiss="modal" @click="$router.push('/manageemployees')">OK</button>
                             </div>
                         </div>
                         <div v-else>
@@ -134,9 +133,10 @@
                                 <label for="employeeRole" class="text-blue formLabel leaveLabel">Select Role</label>
                             </div>
 
-                            <select class="form-control" name="employeeRole" id="employeeRole" required>
-                                <option value="adminRole" v-bind:selected = "isAdmin" >Administrator</option>
-                                <option value="empRole" v-bind:selected = "isEmployee"> Employee</option>
+                            <select class="form-control" name="employeeRole" id="employeeRole" v-model="roleSelection" required>
+                                <option selected disabled value="">Please select a role...</option>
+                                <option value="Administrator">Administrator</option>
+                                <option value="Employee"> Employee</option>
                             </select>
                              <div class="invalid-feedback">
                                 Please select a role.
@@ -232,8 +232,11 @@
                     
                     <br/>
 
-                    <button type="button" id="updateEmpBtn" class="mb-2 btn formBtn blueBorder" @click="updateEmployeeAccount()">Update Employee</button>
-                
+                    <button type="button" id="updateEmpBtn" class="mb-2 btn formBtn blueBorder" @click="updateEmployeeAccount()">
+                        <span v-show="!isLoading"> Update Employee </span>
+                        <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
+                        <span v-show="isLoading"> Loading... </span>
+                    </button>
                 </form>
             </div>
         </div>
@@ -259,9 +262,7 @@
                 empRole: this.$store.getters.StateRole,
                 currentPage: "/editemployee",
                 
-                isAdmin: false,
-                isEmployee: false,
-                isValidated: false,
+                roleSelection: "",
 
                 first_name: "",
                 last_name: "",
@@ -283,14 +284,22 @@
                 employeeInfo: {}
             }
         },
+        watch: {
+            secondary_email(value) {
+                if (value && value.length > 0) {
+                    this.enableSecondaryEmailNotificationRadios = true;
+                }
+                else {
+                    this.enableSecondaryEmailNotificationRadios = false;
+                }
+            }
+        },
         methods: {
-            openEmployeeUpdatedModal() {
-               
+            openEmployeeUpdatedModal() {          
                 document.getElementById("employee-updated").style.display = "block"
                 document.getElementById("employee-updated").classList.add("show")
             },
             closeEmployeeUpdatedModal() {
-          
                 document.getElementById("employee-updated").style.display = "none"
                 document.getElementById("employee-updated").classList.remove("show")
             },
@@ -305,29 +314,23 @@
                 this.enable_primary_email_notifications = this.employeeInfo.contact_info.enable_primary_email_notifications ? 'true' : 'false'
 
                 this.secondary_email = this.employeeInfo.contact_info.secondary_email
-                this.enable_secondary_email_notifications = this.employeeInfo.contact_info.enable_secondary_email_notifications
+                this.enable_secondary_email_notifications = this.employeeInfo.contact_info.enable_secondary_email_notifications ? 'true' : 'false'
 
                 this.is_enabled = this.employeeInfo.is_enabled ? 'true' : 'false'
 
                 this.enableSecondaryEmailNotificationRadios = this.secondary_email && this.secondary_email.length > 0
             },
 
-            findAdmin() {
-                if (this.role == "Administrator"){
-                    this.isAdmin = true
-                    console.log(this.isAdmin)
-                }
-            },
-
-            findEmployee() {
-                if (this.role == "Employee"){
-                    this.isEmployee = true
-                }
-            },
-            
             findRole() {
-                this.findAdmin()
-                this.findEmployee()
+                if (this.role == "Administrator"){
+                    this.roleSelection = "Administrator"
+                }
+                else if (this.role == "Employee"){
+                    this.roleSelection = "Employee"
+                }
+                else {
+                    this.roleSelection = ""
+                }
             },
 
             deleteEmployeeAccount() {
@@ -345,38 +348,28 @@
                 })
             },
 
-            checkValidation(payload) {
-                this.isValidated = Object.values(payload).every(value => {
-                    if (value == null || value == "") {
-                        return false
-                    }
-                    return true
-                })
-            },
-
             updateEmployeeAccount() {
-                let payload = {
-                    "employee_id": this.employeeID,
-                    "first_name": this.first_name,
-                    "last_name": this.last_name,
-                    "primary_email": this.primary_email,
-                    "role": this.role,
-                    "is_enabled": this.is_enabled === "true",
-                    "enable_primary_email_notifications": this.enable_primary_email_notifications === "true",
-                }
-                if (!this.checkValidation(payload)) {
-                    console.log("Fields are invalid!")
-                }
-
-                if(this.enableSecondaryEmailNotificationRadios) {
-                    payload["enable_secondary_email_notifications"] = this.enable_secondary_email_notifications === "true"
-                }
-                if (this.secondary_email !== null || this.secondary_email !== ""){
-                    payload["secondary_email"] = this.secondary_email
-                }
+                if (!this.isLoading) {
+                    this.isLoading = true;
                 
+                    let payload = {
+                        "employee_id": this.employeeID,
+                        "first_name": this.first_name,
+                        "last_name": this.last_name,
+                        "primary_email": this.primary_email,
+                        "role": this.roleSelection,
+                        "is_enabled": this.is_enabled === "true",
+                        "enable_primary_email_notifications": this.enable_primary_email_notifications === "true"
+                    }
 
-                if (this.isValidated) {
+                    if(this.enableSecondaryEmailNotificationRadios) {
+                        payload["enable_secondary_email_notifications"] = this.enable_secondary_email_notifications === "true"
+                    }
+                    if (this.secondary_email !== null || this.secondary_email !== ""){
+                        payload["secondary_email"] = this.secondary_email
+                    }
+                    
+                    console.log(payload)
                     this.$store.dispatch("UpdateEmployee", payload).then(resp => {
                         console.log(resp)
                         if(resp) {
@@ -386,10 +379,12 @@
                         else {
                             this.updateSuccess = false
                         }
+                        this.isLoading = false
                         this.openEmployeeUpdatedModal()
                     }).catch(err => {
                         console.log(err)
                         this.updateSuccess = false
+                        this.isLoading = false
                         this.openEmployeeUpdatedModal()
                     }).then(() => {
                         this.$store.dispatch("GetEmployeeInfo", this.employeeID).then(resp => {
@@ -399,8 +394,6 @@
                             }
                         }).then(() => {this.populateFields()})
                     })
-                } else{
-                    this.updateSuccess = false
                 }
             },
 
@@ -416,7 +409,6 @@
                 this.employeeForm.classList.remove('was-validated')
             }
         },
-
         mounted() {
             if (this.employeeID === undefined) {
                 this.$router.push('/manageemployees')
