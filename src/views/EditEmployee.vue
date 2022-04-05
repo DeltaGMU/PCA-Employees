@@ -410,7 +410,7 @@
                         "primary_email": this.primary_email,
                         "role": this.roleSelection,
                         "pto_hours_enabled": this.enable_pto_hours === "true",
-                        "extra_hours_enabled": this.enable_pto_hours === "true",
+                        "extra_hours_enabled": this.enable_extra_hours === "true",
                         "is_enabled": this.is_enabled === "true",
                         "enable_primary_email_notifications": this.enable_primary_email_notifications === "true",
                     }
