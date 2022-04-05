@@ -21,10 +21,12 @@ axios.interceptors.response.use(undefined, function(error) {
       originalRequest._retry = true;
       if (store.getters.StateLastPage !== undefined) {
         if (store.getters.StateLastPage.startsWith("/kiosk")) {
+          localStorage.clear()
           return router.push("/kiosk")
         }
       }
       else {
+        localStorage.clear()
         return router.push("/")
       }
       // localStorage.clear();
