@@ -148,7 +148,7 @@
                                <label for="primaryEmail" class="text-blue formLabel">Primary Email</label>
                              </div>
                                     
-                             <input type="text" class="form-control" id="primaryMail" v-model="primary_email" placeholder="Employee primary email..." maxLength ="100" required>
+                             <input type="email" class="form-control" id="primaryMail" v-model="primary_email" placeholder="Employee primary email..." maxLength ="100" required>
                             <div class="invalid-feedback">
                                 Please provide a valid primary email under 100 characters.
                             </div>
@@ -180,7 +180,7 @@
                                  <label for="secondaryEmail" class="text-blue formLabel leaveLabel">Secondary Email [Optional]</label>
                             </div>
                                     
-                            <input type="text" class="form-control" id="secondaryEmail" v-model="secondary_email" placeholder="Optional...">
+                            <input type="email" class="form-control" id="secondaryEmail" v-model="secondary_email" placeholder="Optional...">
                         </div>
 
                         <div>
@@ -400,7 +400,7 @@
             },
 
             updateEmployeeAccount() {
-                if (!this.isLoading) {
+                if (!this.isLoading && this.employeeForm.checkValidity()) {
                     this.isLoading = true;
                 
                     let payload = {
@@ -418,7 +418,7 @@
                     if(this.enableSecondaryEmailNotificationRadios) {
                         payload["enable_secondary_email_notifications"] = this.enable_secondary_email_notifications === "true"
                     }
-                    if(this.secondary_email !== null || this.secondary_email !== ""){
+                    if(this.secondary_email !== null && this.secondary_email !== ""){
                         payload["secondary_email"] = this.secondary_email
                     }
                     

@@ -373,7 +373,7 @@
                 })
             },
             updateStudentAccount() {
-                if (!this.isLoading) {
+                if (!this.isLoading && this.studentForm.checkValidity()) {
                     this.isLoading = true;
                     let payload = {
                         "first_name": this.first_name,
