@@ -363,8 +363,8 @@
                 this.secondary_email = this.employeeInfo.contact_info.secondary_email
                 this.enable_secondary_email_notifications = this.employeeInfo.contact_info.enable_secondary_email_notifications ? 'true' : 'false'
 
-                this.enable_pto_hours = this.employeeInfo.enable_pto_hours ? 'true' : 'false'
-                this.enable_extra_hours = this.employeeInfo.enable_extra_hours ? 'true' : 'false'
+                this.enable_pto_hours = this.employeeInfo.pto_hours_enabled ? 'true' : 'false'
+                this.enable_extra_hours = this.employeeInfo.extra_hours_enabled ? 'true' : 'false'
                 this.is_enabled = this.employeeInfo.is_enabled ? 'true' : 'false'
 
                 this.enableSecondaryEmailNotificationRadios = this.secondary_email && this.secondary_email.length > 0
