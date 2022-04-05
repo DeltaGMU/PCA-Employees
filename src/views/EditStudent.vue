@@ -210,7 +210,7 @@
                                 <label for="secondaryEmail" class="text-blue formLabel">Parent #2 Email</label>
                             </div>
                                     
-                            <input type="text" class="form-control" id="secondaryEmail" v-model="secondary_email" placeholder="Optional...">
+                            <input type="email" class="form-control" id="secondaryEmail" v-model="secondary_email" placeholder="Optional...">
                         </div>
 
                         <div class="noSelect">
