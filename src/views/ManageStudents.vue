@@ -60,9 +60,9 @@
                             <tr class = "row-striped" v-for = "(student, index) in filteredStudentsList" v-bind:key="index">
                                 <td>{{ student.student_id }} </td>
                                 <td class = "middleCols">{{ student.car_pool_number }} </td>
-                                <td class = "middleCols">{{ student.last_name }} </td>
-                                <td class = "middleCols">{{ student.first_name}} </td>
-                                <td class = "middleCols">{{ student.grade.name}} </td>
+                                <td class = "middleCols">{{ student.last_name.charAt(0).toUpperCase() + student.last_name.slice(1) }} </td>
+                                <td class = "middleCols">{{ student.first_name.charAt(0).toUpperCase() + student.first_name.slice(1) }} </td>
+                                <td class = "middleCols">{{ student.grade.name.toUpperCase()}} </td>
                                 <td> 
                                     <button type="button" class="btn blueBtn" @click="editStudentPage(student.student_id)">
                                         Edit 

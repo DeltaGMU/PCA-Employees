@@ -53,8 +53,8 @@
                         <tbody>
                             <tr class = "row-striped" v-for = "(employee, index) in filteredEmployeesList" v-bind:key=index>
                                 <td>{{ employee.employee_id }} </td>
-                                <td class = "middleCols">{{ employee.last_name }} </td>
-                                <td class = "middleCols">{{ employee.first_name}} </td>
+                                <td class = "middleCols">{{ employee.last_name.charAt(0).toUpperCase() + employee.last_name.slice(1) }} </td>
+                                <td class = "middleCols">{{ employee.first_name.charAt(0).toUpperCase() + employee.first_name.slice(1) }} </td>
                                 <td> 
                                     <button class="btn blueBtn" @click="goToEditEmployee(employee.employee_id)">
                                         Edit 

@@ -151,7 +151,7 @@
                         <tbody>
                             <tr class="row-striped text-center" v-for="(record, index) in filteredRecordsList" :key="index">
                                 <td>{{ index }}</td>
-                                <td class="middleCols">{{ record.student.first_name }} {{ record.student.last_name }}</td>
+                                <td class="middleCols">{{ record.student.first_name.charAt(0).toUpperCase() + record.student.first_name.slice(1) }} {{ record.student.last_name.charAt(0).toUpperCase() + record.student.last_name.slice(1) }}</td>
                                 <td class="middleCols"><input class="form-check-input" type="checkbox" onClick="return false;" :checked="!!record.before_care" disabled></td>
                                 <td class="middleCols"><input class="form-check-input" type="checkbox" onClick="return false;" :checked="!!record.after_care" disabled></td>
                                 <td class="middleCols mobilePadding">
