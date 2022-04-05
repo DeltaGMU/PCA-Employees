@@ -116,15 +116,8 @@
 
                         <div>
                             <div class="mb-1">
-                                <label for="pass" class="text-blue formLabel">Password</label>
-                                <br/><small>Resetting the password will send a new generated temporary password to the employee's primary email.</small>
-                            </div>
-                            
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="resetPasswordCheckbox" id="pass resetPasswordCheckbox">
-                                <label class="form-check-label" for="resetPasswordCheckbox">
-                                    Reset Password
-                                </label>
+                                <label for="resetPassword" class="text-blue formLabel">Reset Password</label><br>
+                                <button type="button" class="mt-2 btn blueBtn" id="resetPassword" @click="() => {}">Reset Password</button>
                             </div>
                         </div>
 
