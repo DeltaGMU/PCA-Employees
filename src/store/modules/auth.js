@@ -69,13 +69,13 @@ const actions = {
     return await axios.post("api/v1/employees/password/forgot", payload).then(
       resp => {
         if (resp && resp.status === 200) {
-          return resp.data.data.token
+          return true
         }
-        return null
+        return false
       }
     ).catch(e => {
       console.log(e)
-      return null
+      return false
     });
   },
   async ResetPassword(_, payload) {

@@ -2,27 +2,57 @@
   <div>
     
     <div class="container">
-        <NavBar/>
+        <NavBar :current_page="currentPage"/>
         <div class="row justify-content-center">
+            <div class="modal fade" id="forgotModal" tabindex="-1" aria-labelledby="forgotModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">                    
+                        <div class="modal-header" v-if="submissionSuccess">
+                            <h5 class="modal-title">Reset Code Sent!</h5>
+                            <button type="button" class="btn-close" aria-label="Close" @click="goToResetPage"></button>
+                        </div>
+                        <div class="modal-header" v-else>
+                            <h5 class="modal-title">Reset Request Failed!</h5>
+                            <button type="button" class="btn-close" aria-label="Close"  @click="goToResetPage"></button>
+                        </div>
+                        <div class="modal-body" v-if="submissionSuccess">
+                            Successfully submitted password reset request. Your primary email should receive a reset code soon!
+                        </div>
+                        <div class="modal-body" v-else>
+                            Encountered an error submitting the password reset request. Please try again and ensure the Employee ID is filled correctly.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" :class="submissionSuccess ? 'btn-success' : 'btn-danger'" @click="goToResetPage">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
 
             <div class="col-xl-7 col-lg-8 col-md-11 col-sm-12 col-12">
-
                 <div class="loginContainer">
-    
+
                     <div class="text-center">
                         <h1 class="text-beige loginHeader">Forgot Password</h1>
                     </div>
 
-                    <div v-if="showError" class="alert alert-danger ">Employee ID not found. Please try again.</div>
+                    <div v-if="showError" class="alert alert-danger ">The provided Employee ID is incorrect. Please try again.</div>
                     
-                    <form @submit.prevent="submit" novalidate>
+                    <form class="needs-validation" id="forgotPasswordForm" novalidate>
                         <div class="mb-3">
                             <label for="username" class="text-beige formLabel">Enter Employee ID</label>
-                            <input type="text" class="form-control form-control-lg textBox" name="username" v-model="form.username" required>
+                            <input type="text" class="form-control form-control-lg textBox" name="username" id="employeeIDField" v-model="employeeIDInput" required>
+                            <div class="invalid-feedback">
+                              Please provide a valid Employee ID.
+                            </div>
                         </div>
                         <div class="twoBtnCol">
                             <button type="button" class="mt-3 btn formBtn smallerScreenBtn" @click="returnToLogin">Cancel</button>
-                            <button type="submit" class="mt-3 btn formBtn smallerScreenBtn">Send Reset Code</button>
+                            <button type="button" class="mt-3 btn formBtn smallerScreenBtn" id="submitForgotBtn" @click="submit">
+                              <span v-show="!isLoading"> Send Reset Code </span>
+                              <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
+                              <span v-show="isLoading"> Loading... </span>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -36,7 +66,6 @@
 </template>
 
 <script>
-  import { mapActions } from "vuex";
   import NavBar from "@/components/NavBar.vue";
 
   export default {
@@ -46,23 +75,91 @@
     },
     data() {
       return {
-        form: {
-          username: "",
-        },
-        showError: false
+        currentPage: "/forgotpassword",
+
+        forgotPasswordBtn: null,
+        employeeIDInput: "",
+        showError: false,
+        isLoading: false,
+        submissionSuccess: false,
       };
     },
+    watch: {
+      employeeIDInput(value) {
+        if (value.length > 0) {
+          this.showError = false;
+        }
+      },
+    },
+    mounted() {
+      this.forgotPasswordBtn = document.getElementById("submitForgotBtn")
+      this.forgotPasswordBtn.addEventListener('click', 
+          function (event) {
+              let form = document.getElementById("forgotPasswordForm")
+              if (!form.checkValidity()) {
+                  event.preventDefault()
+                  event.stopPropagation()
+              }
+              form.classList.add('was-validated')
+          }, false);
+      this.clickEvent = new Event('click');
+
+      let employeeIDField = document.getElementById("employeeIDField")
+      employeeIDField.addEventListener('keyup', function(event) {
+        if (event.key == 13 || event.keyCode == 13) {
+          event.preventDefault();
+          document.getElementById("submitForgotBtn").click();
+        }
+      })
+    },
     methods: {
-      ...mapActions(["LogIn"]),
+      openModal() {
+        document.getElementById("backdrop").style.display = "block"
+        document.getElementById("forgotModal").style.display = "block"
+        document.getElementById("forgotModal").classList.add("show")
+      },
+
+      closeModal() {
+        document.getElementById("backdrop").style.display = "none"
+        document.getElementById("forgotModal").style.display = "none"
+        document.getElementById("forgotModal").classList.remove("show")
+      },
       async submit() {
-        const User = new FormData();
-        User.append("username", this.form.username);
-        try {
-            await this.LogIn(User);
-            this.$router.push("/resetpassword").catch((err) => console.log(err));
-        } 
-        catch (error) {
-          this.showError = true;
+        if (!this.isLoading && this.employeeIDInput.trim().length > 0) {
+          this.isLoading = true
+          let payload = {
+            employee_id: this.employeeIDInput.trim()
+          }
+          await this.$store.dispatch("ForgotPassword", payload).then(resp => {
+            if (resp && resp === true) {
+              this.isLoading = false;
+              this.employeeIDInput = "";
+              this.submissionSuccess = true;
+              this.openModal();
+            }
+            else {
+              this.showError = true;
+              this.employeeIDInput = "";
+              this.isLoading = false;
+              this.submissionSuccess = false;
+              this.openModal();
+            }
+          }).catch(err => {
+            console.log(err)
+            this.showError = true;
+            this.employeeIDInput = "";
+            this.isLoading = false;
+            this.submissionSuccess = false;
+            this.openModal();
+          })
+        }
+      },
+      goToResetPage() {
+        if (this.submissionSuccess) {
+          this.$router.push('/resetpassword')
+        }
+        else {
+          this.closeModal();
         }
       },
       returnToLogin() {
