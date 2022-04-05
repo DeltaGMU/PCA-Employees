@@ -358,19 +358,21 @@
                     "first_name": this.first_name,
                     "last_name": this.last_name,
                     "primary_email": this.primary_email,
-                    "role.name": this.role,
+                    "role": this.role,
                     "is_enabled": this.is_enabled === "true",
                     "enable_primary_email_notifications": this.enable_primary_email_notifications === "true",
                 }
-
-                this.checkValidation(payload)
-
+                if (!this.checkValidation(payload)) {
+                    console.log("Fields are invalid!")
+                }
+                
                 if(this.enableSecondaryEmailNotificationRadios) {
                     payload["enable_secondary_email_notifications"] = this.enable_secondary_email_notifications === "true"
                 }
-                if (this.secondary_email != null || this.secondary_email != ""){
+                if (this.secondary_email !== null || this.secondary_email !== ""){
                     payload["secondary_email"] = this.secondary_email
                 }
+                
 
                 if (this.isValidated) {
                     this.$store.dispatch("UpdateEmployee", payload).then(resp => {
