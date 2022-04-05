@@ -55,11 +55,11 @@
 
                         <table class="table text-blue">
                             <tbody>
-                                <tr v-if="care_info">
+                                <tr v-if="care_info && care_info.metadata !== undefined">
                                     <td><b>Before-Care Time Slot:</b></td>
                                     <td>{{ care_info.metadata.before_care_check_in_time }} - {{ care_info.metadata.before_care_check_out_time }}</td>
                                 </tr>
-                                <tr v-if="care_info">
+                                <tr v-if="care_info && care_info.metadata !== undefined">
                                     <td><b>After-Care Time Slot:</b></td>
                                     <td>{{ care_info.metadata.after_care_check_in_time }} - {{ care_info.metadata.after_care_check_out_time }}</td>
                                 </tr>
