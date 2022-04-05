@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="modal fade" id="employee-deleted" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="employeeDeletedLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div v-if=" deletionSuccess ">
                             <div class="modal-header">
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="modal fade" id="employee-updated" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="employeeDeletedLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div  v-if= "updateSuccess">
                             <div class="modal-header">
@@ -82,7 +82,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-backdrop fade show" id="emplopyee-updated-backdrop" style="display: none;"></div>
+            <div class="modal-backdrop fade show" id="employee-updated-backdrop" style="display: none;"></div>
             <div class="p-2 flex-grow-1">
                 <form class="needs-validation" id="employeeForm">
                     <div class="topSection noSelect">
@@ -295,11 +295,13 @@
             }
         },
         methods: {
-            openEmployeeUpdatedModal() {          
+            openEmployeeUpdatedModal() {
+                document.getElementById("employee-updated-backdrop").style.display = "block"
                 document.getElementById("employee-updated").style.display = "block"
                 document.getElementById("employee-updated").classList.add("show")
             },
             closeEmployeeUpdatedModal() {
+                document.getElementById("employee-updated-backdrop").style.display = "none"
                 document.getElementById("employee-updated").style.display = "none"
                 document.getElementById("employee-updated").classList.remove("show")
             },
