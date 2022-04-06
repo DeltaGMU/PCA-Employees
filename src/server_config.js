@@ -4,7 +4,7 @@ const config = {
 
     test_date: function() {
         let currentDate = new Date()
-        currentDate.setHours(19, 30) // Set this to (6, 30) for before-care hours.
+        currentDate.setHours(5, 30) // Set this to (6, 30) for before-care hours, (15:30) for after-care hours.
         return currentDate
     },
     python_server: {
