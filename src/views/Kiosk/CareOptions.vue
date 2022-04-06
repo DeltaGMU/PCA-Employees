@@ -234,7 +234,7 @@ export default {
         beforeCareCheckIn() {
             if (!this.isLoading) {
                 this.isLoading = true;
-                if (this.checkBeforeCare() && this.student_info !== undefined && this.care_info.after_care.manually_checked_out !== true && this.parent_signature.trim().length > 0) {
+                if (this.checkBeforeCare() && this.student_info !== undefined && this.parent_signature.trim().length > 0) {
                     // Check in student to before-care.
                     let currentDate = config.debug_mode ? ConvertDateToTimezone(config.test_date()) : ConvertDateToTimezone(new Date())
                     currentDate = currentDate.slice(0, 10)
