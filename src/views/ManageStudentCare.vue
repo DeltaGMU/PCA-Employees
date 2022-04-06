@@ -3,7 +3,7 @@
         <NavBar :signed_in="signedIn" :name="empName" :role="empRole" :current_page="currentPage"/>
         <div class="d-flex">
             <div class="p-2">
-                <Sidebar>   </Sidebar>
+                <Sidebar/>
             </div>
             <div class="modal fade" id="no-records-found" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="noRecordsFoundLbl" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -319,9 +319,10 @@
                             this.modalDeleteMessage = "Deleted student record!"
                             return true;
                         }
+                    }).then(() => {
+                        this.clearSelectedCareRecord();
+                        this.checkStudentInfo();
                     })
-                    this.clearSelectedCareRecord();
-                    this.checkStudentInfo();
                 }
                 return false;
             }
