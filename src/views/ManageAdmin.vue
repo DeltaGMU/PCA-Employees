@@ -276,7 +276,6 @@
                     "current_password": this.form_current_password,
                     "new_password": this.form_new_password,
                 }
-                console.log(payload)
                 if (!this.passwordIsLoading && this.passwordForm.checkValidity()) {
                     this.passwordIsLoading = true;
                     await this.$store.dispatch("UpdateAccountPassword", payload).then(
