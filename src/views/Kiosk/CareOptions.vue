@@ -65,20 +65,29 @@
                                 </tr>
                                 <tr v-if="care_info && care_info.before_care !== undefined && care_info.after_care === undefined">
                                     <td><b>Student In:</b></td>
-                                    <td> 
+                                    <td v-if="checkWithinBeforeCareDateForBeforeCareButton"> 
                                         Before-Care
+                                    </td>
+                                    <td v-else>
+                                        Not in any care
                                     </td>
                                 </tr>
                                 <tr v-else-if="care_info && care_info.after_care !== undefined">
                                     <td><b>Student In:</b></td>
-                                    <td> 
+                                    <td v-if="checkWithinAfterCareDateForAfterCareButton && care_info.after_care.manually_checked_out"> 
+                                        Not in any care
+                                    </td>
+                                    <td v-else-if="checkWithinAfterCareDateForAfterCareButton">
                                         After-Care
+                                    </td>
+                                    <td v-else>
+                                        Not in any care
                                     </td>
                                 </tr>
                                 <tr v-else>
                                     <td><b>Student In:</b></td>
                                     <td> 
-                                        Student not in any care
+                                        Not in any care
                                     </td>
                                 </tr>
                             </tbody>
@@ -94,23 +103,26 @@
                     <div class="d-flex">
                         <div class="me-auto pe-2 pt-2 pb-2">
                            <button class="btn formBtn blueBorder" @click="beforeCareCheckIn" :disabled="(!canCheckInToBeforeCare || parent_signature.trim().length === 0)" :class="(!canCheckInToBeforeCare || parent_signature.trim().length === 0) ? 'btn-secondary' : 'formBtn blueBorder'">
-                                <div v-if="canCheckInToBeforeCare && this.care_info.before_care !== undefined && this.care_info.before_care.manually_checked_out !== true">
+                                <div v-if="canCheckInToBeforeCare">
                                     Before-Care
                                     <hr>
                                     <div v-if="parent_signature.trim().length === 0">
                                         Enter Signature
                                     </div>
                                     <div v-else>
-                                        <span v-show="!isLoading"> CHECK OUT </span>
+                                        <span v-show="!isLoading"> CHECK IN </span>
                                         <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                                         <span v-show="isLoading"> Loading... </span>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div v-else>
                                     Before-Care
                                     <hr>
-                                    <div v-if="this.care_info.before_care !== undefined && this.care_info.before_care.manually_checked_out === true">
-                                        ALREADY CHECKED OUT
+                                    <div v-if="this.care_info.before_care !== undefined && !checkWithinBeforeCareDateForBeforeCareButton">
+                                        AUTOMATICALLY CHECKED OUT
+                                    </div>
+                                    <div v-else-if="this.care_info.before_care !== undefined && checkWithinBeforeCareDateForBeforeCareButton">
+                                        CURRENTLY ENROLLED
                                     </div>
                                     <div v-else>
                                         CLOSED
@@ -119,7 +131,7 @@
                             </button> 
                         </div>
                         <div class="ps-2 pt-2 pb-2">
-                           <button class="btn formBtn blueBorder" @click="afterCareCheckOut" :disabled="(!canCheckOutOfAfterCare || parent_signature.trim().length === 0)" :class="(!canCheckOutOfAfterCare || parent_signature.trim().length === 0) ? 'btn-secondary' : 'formBtn blueBorder'">
+                           <button class="btn formBtn blueBorder" @click="afterCareCheckOut" :disabled="(!canCheckOutOfAfterCare || parent_signature.trim().length === 0 || this.care_info.after_care.manually_checked_out === true)" :class="(!canCheckOutOfAfterCare || parent_signature.trim().length === 0 || this.care_info.after_care.manually_checked_out === true) ? 'btn-secondary' : 'formBtn blueBorder'">
                                 <div v-if="canCheckOutOfAfterCare && this.care_info.after_care !== undefined && this.care_info.after_care.manually_checked_out !== true">
                                     After-Care
                                     <hr>
@@ -136,7 +148,16 @@
                                     After-Care
                                     <hr>
                                     <div v-if="this.care_info.after_care !== undefined && this.care_info.after_care.manually_checked_out === true">
-                                        ALREADY CHECKED OUT
+                                        MANUALLY CHECKED OUT
+                                    </div>
+                                    <div v-else-if="this.care_info.after_care !== undefined && !checkWithinAfterCareDateForAfterCareButton">
+                                        AUTOMATICALLY CHECKED OUT
+                                    </div>
+                                    <div v-else-if="this.care_info.after_care !== undefined && checkWithinAfterCareDateForAfterCareButton">
+                                        CURRENTLY ENROLLED
+                                    </div>
+                                    <div v-else-if="this.care_info.after_care === undefined && checkWithinAfterCareDateForAfterCareButton">
+                                        NOT ENROLLED
                                     </div>
                                     <div v-else>
                                         CLOSED
@@ -183,7 +204,19 @@ export default {
         },
         canCheckOutOfAfterCare() {
             return this.checkAfterCare();
-        },     
+        },
+        checkWithinBeforeCareDateForBeforeCareButton() {
+            let currentDate = config.debug_mode ? ConvertDateToTimezone(config.test_date()).slice(0, 10) : ConvertDateToTimezone(new Date()).slice(0, 10)
+            let beforeCareCheckIn = new Date(`${currentDate} ${this.care_info.metadata.before_care_check_in_time}`)
+            let beforeCareCheckOut = new Date(`${currentDate} ${this.care_info.metadata.before_care_check_out_time}`)
+            return this.checkWithinTimeRange(beforeCareCheckOut, beforeCareCheckIn)
+        },
+        checkWithinAfterCareDateForAfterCareButton() {
+            let currentDate = config.debug_mode ? ConvertDateToTimezone(config.test_date()).slice(0, 10) : ConvertDateToTimezone(new Date()).slice(0, 10)
+            let afterCareCheckIn = new Date(`${currentDate} ${this.care_info.metadata.after_care_check_in_time}`)
+            let afterCareCheckOut = new Date(`${currentDate} ${this.care_info.metadata.after_care_check_out_time}`)
+            return this.checkWithinTimeRange(afterCareCheckOut, afterCareCheckIn)
+        }
     },
     methods: {
         openModal() {
