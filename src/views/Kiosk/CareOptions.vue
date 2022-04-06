@@ -107,7 +107,7 @@
                                     Before-Care
                                     <hr>
                                     <div v-if="parent_signature.trim().length === 0">
-                                        Enter Signature
+                                        ENTER SIGNATURE
                                     </div>
                                     <div v-else>
                                         <span v-show="!isLoading"> CHECK IN </span>
@@ -136,7 +136,7 @@
                                     After-Care
                                     <hr>
                                     <div v-if="parent_signature.trim().length === 0">
-                                        Enter Signature
+                                        ENTER SIGNATURE
                                     </div>
                                     <div v-else>
                                         <span v-show="!isLoading"> CHECK OUT </span>
