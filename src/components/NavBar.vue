@@ -29,7 +29,7 @@
 
     <span class="pcaNav" v-else>
       <p class="ms-3 ms-md-4 text-white navSection">Providence Christian Academy</p>
-      <div v-if="kioskGuestPaths.includes(current_page)">
+      <div class="me-3 md-4" v-if="kioskGuestPaths.includes(current_page)">
         <button type="button" class="btn formBtn p-1" @click="goToKioskHome">Cancel</button>
       </div>
     </span>

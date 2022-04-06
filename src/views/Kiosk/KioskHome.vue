@@ -1,16 +1,20 @@
 <template>
     <div class="container">
         <NavBar/>
-        <div class="row justify-content-center">
-            <div class="mt-5 col-xl-8 col-lg-8 col-md-10 col-sm-12">
-                <div class="homeContainer">
+        <div class="d-flex justify-content-center">
+            <div class="mt-5 col-xl-8 col-lg-8 col-md-10 col-11">
+                <div>
                     <div class="text-center">
                         <img src="@/assets/pcawhite.svg" class="mb-4 homeLogo" alt="PCA Lion Logo">
                         <h1 class="text-blue">Are you a PCA employee or parent?</h1>
                     </div>
-                    <div class="mt-5 twoBtnCol">
-                        <button class="btn blueBtn" @click="employeeLogin">Employee</button>
-                        <button class="btn blueBtn" @click="studentFinder">Parent</button>
+                    <div class="d-flex mt-5">
+                        <div class="me-auto pe-2 pt-2 pb-2">
+                            <button class="btn blueBtn" style="font-size: 1.7rem; padding: 1rem;" @click="employeeLogin">Employee</button>
+                        </div>
+                        <div class="ps-2 pt-2 pb-2">
+                            <button class="btn blueBtn" style="font-size: 1.7rem; padding: 1rem;" @click="studentFinder">Parent</button>
+                        </div>
                     </div>
                 </div>  
             </div>

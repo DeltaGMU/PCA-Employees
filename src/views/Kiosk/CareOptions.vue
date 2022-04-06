@@ -23,7 +23,7 @@
         </div>
         <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
         <div class="row justify-content-center">
-            <div class="mt-5 col-xl-10 col-lg-10 col-md-10 col-sm-12 min-vh-100">
+            <div class="mt-5 col-xl-7 col-lg-10 col-md-10 col-11 min-vh-100">
                 <div class="homeContainer">
                     <div class="text-center noSelect">
                         <img src="../../assets/pcawhite.svg" class="mb-4 homeLogo" alt="PCA Lion Logo">
@@ -85,61 +85,66 @@
                         </table>
                     </div>
                     <div class="text-center">
-                        <label for="parentSignatureInput" class="text-blue">
+                        <label for="parentSignatureInput" class="text-blue formLabel">
                             Please enter your full name here:
                         </label>
                         <input type="text" autocomplete="off" v-model="parent_signature" class="form-control" placeholder="Parent Signature..." id="parentSignature" name="parentSignatureInput">
                     </div>
                     <br>
-                    <div class="twoBtnCol">
-                        <button class="btn formBtn blueBorder mobilePadding" @click="beforeCareCheckIn" :disabled="(!canCheckInToBeforeCare || parent_signature.trim().length === 0)" :class="(!canCheckInToBeforeCare || parent_signature.trim().length === 0) ? 'btn-secondary' : 'formBtn blueBorder'">
-                            <div v-if="canCheckInToBeforeCare && this.care_info.before_care !== undefined && this.care_info.before_care.manually_checked_out !== true">
-                                Before-Care
-                                <hr>
-                                <div v-if="parent_signature.trim().length === 0">
-                                    Enter Signature
+                    <div class="d-flex">
+                        <div class="me-auto pe-2 pt-2 pb-2">
+                           <button class="btn formBtn blueBorder" @click="beforeCareCheckIn" :disabled="(!canCheckInToBeforeCare || parent_signature.trim().length === 0)" :class="(!canCheckInToBeforeCare || parent_signature.trim().length === 0) ? 'btn-secondary' : 'formBtn blueBorder'">
+                                <div v-if="canCheckInToBeforeCare && this.care_info.before_care !== undefined && this.care_info.before_care.manually_checked_out !== true">
+                                    Before-Care
+                                    <hr>
+                                    <div v-if="parent_signature.trim().length === 0">
+                                        Enter Signature
+                                    </div>
+                                    <div v-else>
+                                        <span v-show="!isLoading"> CHECK OUT </span>
+                                        <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
+                                        <span v-show="isLoading"> Loading... </span>
+                                    </div> 
                                 </div>
                                 <div v-else>
-                                    <span v-show="!isLoading"> CHECK OUT </span>
-                                    <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
-                                    <span v-show="isLoading"> Loading... </span>
-                                </div> 
-                            </div>
-                            <div v-else>
-                                Before-Care
-                                <hr>
-                                <div v-if="this.care_info.before_care !== undefined && this.care_info.before_care.manually_checked_out === true">
-                                    ALREADY CHECKED OUT
+                                    Before-Care
+                                    <hr>
+                                    <div v-if="this.care_info.before_care !== undefined && this.care_info.before_care.manually_checked_out === true">
+                                        ALREADY CHECKED OUT
+                                    </div>
+                                    <div v-else>
+                                        CLOSED
+                                    </div>
+                                </div>
+                            </button> 
+                        </div>
+                        <div class="ps-2 pt-2 pb-2">
+                           <button class="btn formBtn blueBorder" @click="afterCareCheckOut" :disabled="(!canCheckOutOfAfterCare || parent_signature.trim().length === 0)" :class="(!canCheckOutOfAfterCare || parent_signature.trim().length === 0) ? 'btn-secondary' : 'formBtn blueBorder'">
+                                <div v-if="canCheckOutOfAfterCare && this.care_info.after_care !== undefined && this.care_info.after_care.manually_checked_out !== true">
+                                    After-Care
+                                    <hr>
+                                    <div v-if="parent_signature.trim().length === 0">
+                                        Enter Signature
+                                    </div>
+                                    <div v-else>
+                                        <span v-show="!isLoading"> CHECK OUT </span>
+                                        <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
+                                        <span v-show="isLoading"> Loading... </span>
+                                    </div> 
                                 </div>
                                 <div v-else>
-                                    CLOSED
+                                    After-Care
+                                    <hr>
+                                    <div v-if="this.care_info.after_care !== undefined && this.care_info.after_care.manually_checked_out === true">
+                                        ALREADY CHECKED OUT
+                                    </div>
+                                    <div v-else>
+                                        CLOSED
+                                    </div>
                                 </div>
-                            </div>
-                        </button>
-                        <button class="btn formBtn blueBorder mobilePadding" @click="afterCareCheckOut" :disabled="(!canCheckOutOfAfterCare || parent_signature.trim().length === 0)" :class="(!canCheckOutOfAfterCare || parent_signature.trim().length === 0) ? 'btn-secondary' : 'formBtn blueBorder'">
-                            <div v-if="canCheckOutOfAfterCare && this.care_info.after_care !== undefined && this.care_info.after_care.manually_checked_out !== true">
-                                After-Care
-                                <hr>
-                                <div v-if="parent_signature.trim().length === 0">
-                                    Enter Signature
-                                </div>
-                                <div v-else>
-                                    <span v-show="!isLoading"> CHECK OUT </span>
-                                    <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
-                                    <span v-show="isLoading"> Loading... </span>
-                                </div> 
-                            </div>
-                            <div v-else>
-                                After-Care
-                                <hr>
-                                <div v-if="this.care_info.after_care !== undefined && this.care_info.after_care.manually_checked_out === true">
-                                    ALREADY CHECKED OUT
-                                </div>
-                                <div v-else>
-                                    CLOSED
-                                </div>
-                            </div>
-                        </button>
+                            </button> 
+                        </div>
+                        
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@
         <NavBar :current_page="currentPage"/>
         <div class="row justify-content-center">
 
-            <div class="col-xl-10 col-lg-8 col-md-10 col-sm-12">
+            <div class="col-xxl-7 col-xl-10 col-lg-9 col-md-10 col-sm-12" style = "margin: 5rem 0;">
 
                 <div>
     
@@ -12,16 +12,16 @@
                         <h1 class="text-blue loginHeader">Student Before and After Care Service</h1>
                     </div>
 
-                    <div v-if="showError" class="alert alert-danger ">Invalid student ID: {{ this.incorrect_id }}. Please try again.</div>
+                    <div v-if="showError" class="alert alert-danger w-75 mx-auto text-center">Invalid student ID: {{ this.incorrect_id }}. Please try again.</div>
                     
                     <div>
-                        <div class="mb-3  text-center">
-                            <label for="student_id_input" class="text-blue">Enter a Student ID</label>
-                            <input type="text" class="form-control form-control-lg textBox text-center" name="student_id_input" autocomplete="off" id="student_id_input" v-model="student_id" required>
+                        <div class="mb-3 text-center">
+                            <label for="student_id_input" class="text-blue formLabel">Enter a Student ID</label>
+                            <input type="text" class="form-control form-control-lg textBox text-center w-75 mx-auto" name="student_id_input" autocomplete="off" id="student_id_input" v-model="student_id" required>
                         </div>
 
                         <div class="d-flex justify-content-center">
-                          <button type="button" id="submitStudentFinderBtn" :disabled="this.student_id.trim().length === 0" :class="this.student_id.trim().length === 0 ? 'btn-secondary' : 'formBtn blueBorder'" class="mt-3 btn formBtn smallerScreenBtn" @click="checkStudentInfo">
+                          <button type="button" id="submitStudentFinderBtn" :disabled="this.student_id.trim().length === 0" :class="this.student_id.trim().length === 0 ? 'btn-secondary' : 'formBtn blueBorder'" class="mt-3 btn formBtn" @click="checkStudentInfo">
                               <span v-show="!isLoading"> Submit </span>
                               <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                               <span v-show="isLoading"> Loading... </span>

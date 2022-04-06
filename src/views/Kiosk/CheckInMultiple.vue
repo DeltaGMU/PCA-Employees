@@ -26,7 +26,7 @@
                     </thead>
                     <tbody>
                         <tr class = "row-striped">
-                            <td class = "column text-center">No student information available for the selected grade...</td>
+                            <td class = "text-center noInfo">No student information available for the selected grade...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -53,7 +53,7 @@
             </div> 
 
             <div class="pt-2">
-                <button type="button" class="mt-3 btn formBtn blueBorder smallerScreenBtn" @click="checkInSelectedStudents">
+                <button type="button" class="mt-3 btn formBtn blueBorder" style="width: auto;" @click="checkInSelectedStudents">
                     <span v-show="!isLoading"> Check In Selected Students </span>
                     <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                     <span v-show="isLoading"> Loading... </span>

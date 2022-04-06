@@ -4,7 +4,7 @@
     <div class="container">
         <NavBar :current_page="currentPage"/>
 
-        <div class="row justify-content-center">
+        <div class="d-flex justify-content-center">
             <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">                    
@@ -30,7 +30,7 @@
             </div>
             <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
 
-            <div class="col-xl-6 col-lg-8 col-md-10 col-sm-12 col-12">
+            <div class="col-xxl-5 col-xl-6 col-lg-7 col-md-9 col-11">
 
                 <div class="loginContainer">
     
