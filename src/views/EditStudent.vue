@@ -238,7 +238,8 @@
                             <div class="mb-1">
                                 <label for="deleteStudentAccountBtn" class="text-blue formLabel">Delete Student Account:</label>                        
                             </div>
-                            <button type="button" class="btn btn-danger" name="deleteStudentAccountBtn" id="deleteStudentAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Student Account</button>
+                            <small v-if="!canDelete">Unable to delete a student account with existing student care records.<br></small>
+                            <button type="button" class="btn btn-danger" :disabled="!canDelete" name="deleteStudentAccountBtn" id="deleteStudentAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Student Account</button>
                         </div>
                         <div class="noSelect mb-3">
                                 <div class="mb-1">
@@ -306,6 +307,8 @@
                 enable_secondary_email_notifications: "false",
                 is_enabled: "true",
 
+                canDelete: false,
+
                 grades: [],
                 deletionSuccess: false,
                 updateSuccess: false,
@@ -357,8 +360,10 @@
                 this.secondary_email = this.studentInfo.contact_info.secondary_email
                 this.enable_secondary_email_notifications = this.studentInfo.contact_info.enable_secondary_email_notifications
                 this.is_enabled = this.studentInfo.is_enabled ? 'true' : 'false'
-
+                this.canDelete = this.studentInfo.can_delete
                 this.enableSecondaryEmailNotificationRadios = this.secondary_email && this.secondary_email.length > 0
+
+                console.log(this.studentInfo)
             },
             deleteStudentAccount () {
                 this.$store.dispatch("DeleteStudent", {studentID: this.studentID}).then(resp => {
@@ -430,6 +435,7 @@
                 this.enable_secondary_email_notifications = "false"
                 this.is_enabled = "true"
                 this.isLoading = false
+                this.canDelete = false
                 this.studentForm.classList.remove('was-validated')
             }
         },

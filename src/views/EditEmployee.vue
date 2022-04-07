@@ -265,8 +265,11 @@
                         
                         <div class="noSelect">
                             <div class="mb-1">
-                                    <label for="deleteEmployeeAccountBtn" class="text-blue formLabel">Delete Employee Account:</label><br/>
-                                <button type="button" class="btn btn-danger" name="deleteEmployeeAccountBtn" id="deleteEmployeeAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Account</button>
+                                <label for="deleteEmployeeAccountBtn" class="text-blue formLabel">Delete Employee Account:</label><br/>
+                                <small v-if="!canDelete">Unable to delete an employee account with existing timesheet records.<br></small>
+                                <button type="button" class="btn btn-danger" name="deleteEmployeeAccountBtn" :disabled="!canDelete" id="deleteEmployeeAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">
+                                    Delete Account
+                                </button>
                             </div>
                          </div>
                     
@@ -336,6 +339,7 @@
                 is_enabled: "true",
                 enable_pto_hours: "true",
                 enable_extra_hours: "true",
+                canDelete: false,
 
                 deletionSuccess: false,
                 updateSuccess: false,
@@ -396,7 +400,11 @@
                 this.enable_extra_hours = this.employeeInfo.extra_hours_enabled ? 'true' : 'false'
                 this.is_enabled = this.employeeInfo.is_enabled ? 'true' : 'false'
 
+                this.canDelete = this.employeeInfo.can_delete
+
                 this.enableSecondaryEmailNotificationRadios = this.secondary_email && this.secondary_email.length > 0
+
+                console.log(this.employeeInfo)
             },
 
             findRole() {
@@ -504,6 +512,7 @@
                 this.enable_extra_hours = "true"
                 this.is_enabled = "true"
                 this.isLoading = false
+                this.canDelete = false
                 this.employeeForm.classList.remove('was-validated')
             }
         },
