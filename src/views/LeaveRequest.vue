@@ -101,37 +101,9 @@
                                 <label for="currentDate" class="text-blue formLabel">Reason for Absence</label>
                             </div>
                             <div>
-                                <div class="mb-3 form-check form-check-inline">
-                                    <input class="form-check-input textBox" type="checkbox" value="Illness - Self" :required="form_reason_checkbox.length === 0" v-model="form_reason_checkbox" id="illnessSelf">
-                                    <label class="form-check-label" for="illnessSelf">Illness - Self</label>
-                                </div>
-                                <div class="mb-3 form-check form-check-inline">
-                                    <input class="form-check-input textBox" type="checkbox" value="Illness - Family" :required="form_reason_checkbox.length === 0" v-model="form_reason_checkbox" id="illnessFamily">
-                                    <label class="form-check-label" for="illnessFamily">Illness - Family</label>
-                                </div>
-                                <div class="mb-3 form-check form-check-inline">
-                                    <input class="form-check-input textBox" type="checkbox" value="Death in the Family" :required="form_reason_checkbox.length === 0" v-model="form_reason_checkbox" id="deathInFamily">
-                                    <label class="form-check-label" for="deathInFamily">Death in the Family</label>
-                                </div>
-                                <div class="mb-3 form-check form-check-inline">
-                                    <input class="form-check-input textBox" type="checkbox" value="Personal" :required="form_reason_checkbox.length === 0" v-model="form_reason_checkbox" id="personal">
-                                    <label class="form-check-label" for="personal">Personal</label>
-                                </div>
-                                <div class="mb-3 form-check form-check-inline">
-                                    <input class="form-check-input textBox" type="checkbox" value="Jury Duty" :required="form_reason_checkbox.length === 0" v-model="form_reason_checkbox" id="juryDuty">
-                                    <label class="form-check-label" for="juryDuty">Jury Duty</label>
-                                </div>
-                                <div class="mb-3 form-check form-check-inline">
-                                    <input class="form-check-input textBox" type="checkbox" value="Reserves Or Guard" :required="form_reason_checkbox.length === 0" v-model="form_reason_checkbox" id="reservesOrGuard">
-                                    <label class="form-check-label" for="reservesOrGuard">Reserves Or Guard</label>
-                                </div>
-                                <div class="mb-3 form-check form-check-inline">
-                                    <input class="form-check-input textBox" type="checkbox" value="Professional" :required="form_reason_checkbox.length === 0" v-model="form_reason_checkbox" id="professional">
-                                    <label class="form-check-label" for="professional">Professional</label>
-                                </div>
-                                <div class="mb-3 form-check form-check-inline">
-                                    <input class="form-check-input textBox" type="checkbox" value="PCA Related" :required="form_reason_checkbox.length === 0" v-model="form_reason_checkbox" id="pcaRelated">
-                                    <label class="form-check-label" for="pcaRelated">PCA Related</label>
+                                <div class="mb-3 form-check form-check-inline" v-for="(listItem, index) in leaveRequestReasons" :key="index">
+                                    <input class="form-check-input textBox" type="checkbox" :value="listItem" :required="form_reason_checkbox.length === 0" v-model="form_reason_checkbox" id="listItem">
+                                    <label class="form-check-label" for="listItem">{{ listItem }}</label>
                                 </div>
                                 <div class="invalid-feedback">
                                     Please select at least one reason for your absence.
@@ -184,6 +156,7 @@
                 empRole: this.$store.getters.StateRole,
                 currentPage: "/leaverequest",       
 
+                leaveRequestReasons: [],
                 isLoading: false,
                 submissionSuccess: false,
                 submitButton: null,
@@ -234,6 +207,19 @@
                     form.classList.add('was-validated')
                 }, false);
             this.clickEvent = new Event('click');
+
+            this.$store.dispatch("GetLeaveRequestReasons").then(resp => {
+                if (resp) {
+                    this.leaveRequestReasons = resp
+                }
+                else {
+                    this.leaveRequestReasons = []
+                    alert('Encountered an error while retrieving the leave request reasons. Please check your configuration file for errors and network connectivity.')
+                }
+            }).catch(err => {
+                console.log(err)
+                this.leaveRequestReasons = []
+            })
         },
         methods: {
             openModal() {
