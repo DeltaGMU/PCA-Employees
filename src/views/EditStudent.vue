@@ -363,7 +363,7 @@
                 this.canDelete = this.studentInfo.can_delete
                 this.enableSecondaryEmailNotificationRadios = this.secondary_email && this.secondary_email.length > 0
 
-                console.log(this.studentInfo)
+                // console.log(this.studentInfo)
             },
             deleteStudentAccount () {
                 this.$store.dispatch("DeleteStudent", {studentID: this.studentID}).then(resp => {
