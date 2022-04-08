@@ -20,14 +20,18 @@ const actions = {
           return 0;
         }
         else if (resp) {
+          localStorage.clear()
           return resp.status;
         }
+        localStorage.clear()
         return -1;
       }
     ).catch((err) => {
       if (err) {
+        localStorage.clear()
         return err.status
       }
+      localStorage.clear()
       return -1;
     });
   },
