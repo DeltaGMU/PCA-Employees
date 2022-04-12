@@ -384,8 +384,15 @@ td input.textBox {
     #manageStudentGradesTable td:nth-of-type(1):before { content: "Grade Name"; font-weight: 700; }
     #manageStudentGradesTable td:nth-of-type(2):before { content: "Delete Grade"; font-weight: 700; }
 
+    #checkInMultipleTable td:nth-of-type(1):before { content: "Student ID"; font-weight: 700; }
+    #checkInMultipleTable td:nth-of-type(2):before { content: "Student Name"; font-weight: 700; }
+    #checkInMultipleTable td:nth-of-type(3):before { content: "Student Grade"; font-weight: 700; }
+    #checkInMultipleTable td:nth-of-type(4):before { content: "Previously Checked In"; font-weight: 700; }
+    #checkInMultipleTable td:nth-of-type(5):before { content: "Select"; font-weight: 700; }
+
+
     .showWhenSmall {
-        display: block;
+        display: block !important;
     }
 
     .hideWhenSmall {
@@ -419,7 +426,6 @@ td input.textBox {
 /* End timesheet styling */
 
 /* Admin dashboard styling */
-
 
 #manageBtn{
     width: 20%;

@@ -32,12 +32,12 @@
                 </table>
             </div>
             <div class="table-responsive noSelect" v-else>
-                <table class="pcaTable table-hover">
-                    <thead>
-                        <th class="col-2" scope = "col">Student ID</th>
-                        <th class="middleCols col-4" scope = "col">Student Name</th>
-                        <th class="middleCols col-2" scope = "col">Student Grade</th>
-                        <th class="middleCols col-2" scope = "col">Previously Checked In</th>
+                <table id="checkInMultipleTable" class="pcaTable table-hover">
+                    <thead class="showWhenSmall">
+                        <th class="col-2 hideWhenSmall" scope = "col">Student ID</th>
+                        <th class="middleCols col-4 hideWhenSmall" scope = "col">Student Name</th>
+                        <th class="middleCols col-2 hideWhenSmall" scope = "col">Student Grade</th>
+                        <th class="middleCols col-2 hideWhenSmall" scope = "col">Previously Checked In</th>
                         <th class="col-1" scope = "col">Select All <input class="form-check-input" type='checkbox' @click='checkAll()' v-model='isCheckAll'></th>
                     </thead>
                     <tbody>
