@@ -16,7 +16,7 @@
                             No student records were found for the provided student ID in the last 30 days.
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn blueBtn" data-bs-dismiss="modal" @click="closeModal">Ok</button>
+                            <button type="button" class="btn blueBtn" data-bs-dismiss="modal" @click="closeModal">OK</button>
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                             {{ modalDeleteMessage }}
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Ok</button>
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
                         </div>
                     </div>
                 </div>

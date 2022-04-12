@@ -199,7 +199,7 @@
                             </div>
                         </div>
                         <br/>
-                        <button type="button" id="submitStudentFormBtn" class="btn blueBtn mb-3" @click="createStudent()">
+                        <button type="button" id="submitStudentFormBtn" class="mb-3 btn formBtn blueBorder" @click="createStudent()">
                             <span v-show="!isLoading"> Create Student </span>
                             <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                             <span v-show="isLoading"> Loading... </span>

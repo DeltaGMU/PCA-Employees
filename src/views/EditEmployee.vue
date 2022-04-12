@@ -220,7 +220,7 @@
                                 </label>
                             </div>
                         </div>
-                        
+                        <br>
                         <hr>
                         <div class="noSelect">
                             <div class="mb-1">
@@ -260,13 +260,13 @@
                             </div>
                             <div class="invalid-feedback">Please select one of the provided options.</div>
                         </div>
-
+                        <br>
                         <hr>
                         
                         <div class="noSelect">
                             <div class="mb-1">
                                     <label for="deleteEmployeeAccountBtn" class="text-blue formLabel">Delete Employee Account:</label><br/>
-                                <button type="button" class="btn btn-danger" name="deleteEmployeeAccountBtn" id="deleteEmployeeAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Account</button>
+                                <button type="button" class="mt-2 btn btn-danger" name="deleteEmployeeAccountBtn" id="deleteEmployeeAccount" data-bs-toggle="modal" data-bs-target="#confirm-delete">Delete Account</button>
                             </div>
                          </div>
                     

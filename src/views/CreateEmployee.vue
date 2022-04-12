@@ -23,7 +23,7 @@
                             Encountered an error creating the employee account. Please try again and ensure the required fields are filled correctly.
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn" :class="submissionSuccess ? 'btn-success' : 'btn-danger'" @click="closeModal">Ok</button>
+                            <button type="button" class="btn" :class="submissionSuccess ? 'btn-success' : 'btn-danger'" @click="closeModal">OK</button>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,6 @@
                                 <h1 class="text-blue">Create Employee</h1>
                             </div>
                         </div>
-                        <hr>
                         <div>
                             <div class="form-group noSelect">
                                 <div class="mb-1">

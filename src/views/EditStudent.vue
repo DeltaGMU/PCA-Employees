@@ -259,7 +259,7 @@
                                 </div>
                                 <div class="invalid-feedback">Please select one of the provided options.</div>
                         </div>
-                        <button type="button" id="updateStudentBtn" class="mb-3 btn blueBtn" @click="updateStudentAccount">
+                        <button type="button" id="updateStudentBtn" class="mb-2 btn formBtn blueBorder" @click="updateStudentAccount">
                             <span v-show="!isLoading"> Update Student </span>
                             <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                             <span v-show="isLoading"> Loading... </span>

@@ -23,7 +23,7 @@
                             Encountered an error updating your administrator account. Please try again and ensure the required fields are filled correctly.
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn" :class="submissionSuccess ? 'blueBtn' : 'btn-danger'" @click="closeModal">Ok</button>
+                            <button type="button" class="btn" :class="submissionSuccess ? 'blueBtn' : 'btn-danger'" @click="closeModal">OK</button>
                         </div>
                     </div>
                 </div>
