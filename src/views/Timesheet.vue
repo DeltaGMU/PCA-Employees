@@ -72,7 +72,7 @@
                     View Previous Page
                 </button>
                 <button id="submitTimesheetBtn" class="mt-3 btn formBtn blueBorder smallerScreenBtn" @click="submitTimesheet">
-                    <span v-show="!isLoading"> Submit Timesheet </span>
+                    <span v-show="!isLoading"> Save Timesheet </span>
                     <span v-show="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
                     <span v-show="isLoading"> Loading... </span>
                 </button>
@@ -510,13 +510,13 @@
                         if (resp.status !== 200) {
                             this.$store.dispatch("GetTimesheets", payload);
                             this.submissionSuccess = true;
-                            this.timesheetMessageTitle = "Timesheet submitted!"
-                            this.timesheetMessageBody = "Your timesheet was submitted successfully."
+                            this.timesheetMessageTitle = "Timesheet saved!"
+                            this.timesheetMessageBody = "Your timesheet has been saved. The saved timesheet will be automatically submitted at the end of the reporting period."
                         }
                         else {
                             this.submissionSuccess = false;
-                            this.timesheetMessageTitle = "Timesheet submission error!"
-                            this.timesheetMessageBody = "There was an error with your timesheet submission."
+                            this.timesheetMessageTitle = "Error!"
+                            this.timesheetMessageBody = "Your timesheet could not be saved due to an error."
                         }
                         this.isLoading = false;
                         this.openModal()
@@ -524,8 +524,8 @@
                         console.log(err)
                         this.submissionSuccess = false;
                         this.isLoading = false;
-                        this.timesheetMessageTitle = "Timesheet submission error!"
-                        this.timesheetMessageBody = "There was an error with your timesheet submission."
+                        this.timesheetMessageTitle = "Error!"
+                        this.timesheetMessageBody = "Your timesheet could not be saved due to an error."
                         this.openModal()
                     });
                 }
