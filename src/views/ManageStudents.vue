@@ -117,14 +117,14 @@
         },
         computed: {
             filteredStudentsList() {
-                if (this.studentInfo !== null) {
+                if (this.studentInfo !== null && this.studentInfo !== undefined) {
                     return this.studentInfo.filter(item => {
                         return (
                             item.first_name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1
                             ) || (item.last_name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1) ||
                             (item.student_id.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1) ||
                             (item.grade.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1) ||
-                            (item.carpool_number.toString().toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1);
+                            (item.car_pool_number.toString().toLowerCase().indexOf(this.searchQuery.toLowerCase()) != -1);
                     })
                 }
                 else {

@@ -6,7 +6,7 @@ module.exports = {
       port: 443,
       https: true,
       disableHostCheck: true,
-      key: fs.readFileSync('src/certs/key.pem', 'utf-8'),
-      cert: fs.readFileSync('src/certs/server.crt', 'utf-8'),
+      key: fs.readFileSync('src/certs/web-interface-key.pem', 'utf-8'),
+      cert: fs.readFileSync('src/certs/web-interface-cert.pem', 'utf-8'),
     }
 };

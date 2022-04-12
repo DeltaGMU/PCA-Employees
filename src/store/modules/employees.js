@@ -120,6 +120,22 @@ const actions = {
       console.log(err);
       return false;
     });
+  },
+  async GetLeaveRequestReasons(context) {
+    let headers = {
+      headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token},
+    }
+    return axios.get("api/v1/reports/leave-request/reasons", headers).then(
+      resp => {
+        if (resp && resp.status === 200) {
+          return resp.data.data.reasons;
+        }
+        return [];
+      }
+    ).catch(err => {
+      console.log(err);
+      return [];
+    });
   }
 };
 
