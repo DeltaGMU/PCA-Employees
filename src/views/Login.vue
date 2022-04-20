@@ -26,15 +26,15 @@
                         <div class="mb-3">
                             <label for="password" class="text-beige formLabel">Enter Password</label>
                             <input type="password" id="passwordField" class="form-control form-control-lg textBox" name="password" v-model="passwordInput" required>
+                            <div class="pt-2 pb-2">
+                              <div class="d-flex flex-row justify-content-between">
+                                <a class="text-beige fst-italic text-decoration-none" @click="forgotPassword">Forgot password</a> 
+                                <a class="text-beige fst-italic text-decoration-none" @click="resetPassword">Reset password</a>
+                              </div>
+                            </div>
                             <div class="invalid-feedback">
                                 Please provide a password.
                             </div>
-                        </div>
-                        <div class="text-center formText">
-                            <a class="text-beige" @click="forgotPassword">Forgot password? Click here to get a reset code.</a>
-                        </div>
-                        <div class="text-center formText">
-                            <a class="text-beige" @click="resetPassword">Already have a reset code? Click here to reset.</a>
                         </div>
 
                         <div class="d-flex justify-content-center">
