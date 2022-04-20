@@ -36,7 +36,6 @@ const actions = {
       headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
     }).then(resp => {
       if (resp !== undefined) {
-        // console.log(resp)
         return resp.data.data
       }
       else {
@@ -46,7 +45,6 @@ const actions = {
     })
   },
   async GetTimesheetsForEmployee(context, payload) {
-    // console.log(payload)
     return await axios({
       method: 'get',
       url: "api/v1/timesheet/" + payload.employee_id,
@@ -68,7 +66,6 @@ const actions = {
   },
   
   async GetTotalHours(context, payload) {
-    //console.log(payload.employeeID)
     return await axios({
       method: 'get',
       url: "api/v1/timesheet/hours/" + payload.employee_id,
@@ -79,14 +76,11 @@ const actions = {
      headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
     }).then(resp => {
       if (resp !== undefined) {
-        // console.log(resp.data.data.total_hours)
         return resp.data.data.total_hours
-        // context.commit("retrievedTotalHours", resp.data)
       }
       else {
         console.log("No employee time sheet records exist for the provided date range!")
         return null
-        // context.commit("retrievedTotalHours", {})
       }
     })
   },
@@ -100,7 +94,6 @@ const actions = {
         date_end: payload.reportEndDate,
         employee_id: employee_ids[employee].employee_id
       }
-      // console.log(new_payload)
       await context.dispatch("GetTotalHours", new_payload).then(resp => {
         console.log(resp)
         if(resp) {
