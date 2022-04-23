@@ -11,10 +11,13 @@
 
         <div class="topSection noSelect">
             <div>
-
                 <h1 class="text-blue">Timesheet Submission Form</h1>
-                <p>Please fill in the hours under each week day and click Submit Timesheet.</p>
-
+                <p>
+                    Please fill in the hours <b style="color: #0C4A80;">(in 0.5 hour increments)</b> under each week day and click the <b style="color: #0C4A80;">Save Timesheet</b> button.
+                </p>
+                <p>
+                    Timesheet hours are rounded up to the nearest 0.5 hours. Your saved timesheets will be automatically submitted at the end of the reporting period.
+                </p>
             </div>       
         </div>
         
@@ -37,10 +40,10 @@
                         <!-- Get the date (format ex: 3/10) and day from the dateAndDayArray -->
                         <td>{{ dateAndDayArray[day-1][0] }}</td>
                         <td class="middleCols">{{ dateAndDayArray[day-1][1] }}</td>
-                        <td class="middleCols"><input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].work_hours "></td>
-                        <td class="middleCols" :style="!ptoHoursEnabled ? 'display: none': ''"><input type="number" min="0" :disabled="!ptoHoursEnabled" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].pto_hours "></td>
-                        <td class="middleCols" :style="!extraHoursEnabled ? 'display: none': ''"><input type="number" min="0" :disabled="!extraHoursEnabled" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[day-1].extra_hours "></td>
-                        <td><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[day-1].comment "></td>
+                        <td class="middleCols"><input type="number" min="0" max="24.0" step=".1" placeholder="..." class="form-control textBox" oninput="validity.valid||(value='');" v-model=" formData[day-1].work_hours "></td>
+                        <td class="middleCols" :style="!ptoHoursEnabled ? 'display: none': ''"><input type="number" min="0" max="24.0" step=".1" placeholder="..." oninput="validity.valid||(value='');" :disabled="!ptoHoursEnabled" class="form-control textBox" v-model=" formData[day-1].pto_hours "></td>
+                        <td class="middleCols" :style="!extraHoursEnabled ? 'display: none': ''"><input type="number" min="0" max="24.0" step=".1" placeholder="..." oninput="validity.valid||(value='');" :disabled="!extraHoursEnabled" class="form-control textBox" v-model=" formData[day-1].extra_hours "></td>
+                        <td><input type="text" maxlength="1024" class="form-control textBox" :placeholder="'Comments for '+dateAndDayArray[day-1][0]+'...'" v-model=" formData[day-1].comment "></td>
                     </tr>
 
                 </tbody>
@@ -53,10 +56,10 @@
                         <!-- In order to get the correct dates, add the index to the number of days in the first half of the month because index starts at 1 -->
                         <td>{{ dateAndDayArray[(daysInFirstHalf + day) - 1][0] }}</td>
                         <td class="middleCols">{{ dateAndDayArray[(daysInFirstHalf + day) - 1][1] }}</td>
-                        <td class="middleCols"><input type="text" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].work_hours "></td>
-                        <td class="middleCols" :style="!ptoHoursEnabled ? 'display: none': ''"><input type="text" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].pto_hours "></td>
-                        <td class="middleCols" :style="!extraHoursEnabled ? 'display: none': ''"><input type="text" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].extra_hours "></td>
-                        <td><input type="text" maxlength="1024" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].comment "></td>
+                        <td class="middleCols"><input type="number" min="0" max="24.0" step=".1" placeholder="..." class="form-control textBox" oninput="validity.valid||(value='');" v-model=" formData[(daysInFirstHalf + day) - 1].work_hours "></td>
+                        <td class="middleCols" :style="!ptoHoursEnabled ? 'display: none': ''"><input type="text" min="0" max="24.0" step=".1" placeholder="..." oninput="validity.valid||(value='');"  :disabled="!ptoHoursEnabled" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].pto_hours "></td>
+                        <td class="middleCols" :style="!extraHoursEnabled ? 'display: none': ''"><input type="text" min="0" max="24.0" step=".1" placeholder="..." oninput="validity.valid||(value='');" :disabled="!ptoHoursEnabled" class="form-control textBox" v-model=" formData[(daysInFirstHalf + day) - 1].extra_hours "></td>
+                        <td><input type="text" maxlength="1024" class="form-control textBox" :placeholder="'Comments for '+dateAndDayArray[(daysInFirstHalf + day) - 1][0]+'...'" v-model=" formData[(daysInFirstHalf + day) - 1].comment "></td>
                     </tr>
 
                 </tbody>
@@ -89,7 +92,7 @@
                             {{timesheetMessageBody}}
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn" @click="closeModal" :class="submissionSuccess ? 'blueBtn' : 'btn-danger'">OK</button>
+                            <button type="button" class="btn" @click="closeModal" :class="submissionSuccess ? 'btn-success' : 'btn-danger'">OK</button>
                         </div>
                     </div>
                 </div>
@@ -443,9 +446,9 @@
                     this.yearAndThisMonth.setDate(i)
                     date_worked = ConvertDateToTimezone(this.yearAndThisMonth).slice(0, 10)
 
-                    work_hours = parseInt(this.formData[formCount].work_hours)
-                    pto_hours = parseInt(this.formData[formCount].pto_hours)
-                    extra_hours = parseInt(this.formData[formCount].extra_hours)
+                    work_hours = parseFloat(this.formData[formCount].work_hours)
+                    pto_hours = parseFloat(this.formData[formCount].pto_hours)
+                    extra_hours = parseFloat(this.formData[formCount].extra_hours)
                     comment = this.formData[formCount].comment
 
                     if(isNaN(work_hours)) {
@@ -473,9 +476,9 @@
                     this.yearAndNextMonth.setDate(i)
                     date_worked = ConvertDateToTimezone(this.yearAndNextMonth).slice(0, 10)
 
-                    work_hours = parseInt(this.formData[formCount].work_hours)
-                    pto_hours = parseInt(this.formData[formCount].pto_hours)
-                    extra_hours = parseInt(this.formData[formCount].extra_hours)
+                    work_hours = parseFloat(this.formData[formCount].work_hours)
+                    pto_hours = parseFloat(this.formData[formCount].pto_hours)
+                    extra_hours = parseFloat(this.formData[formCount].extra_hours)
                     comment = this.formData[formCount].comment
 
                     if(isNaN(work_hours)) {
@@ -508,7 +511,11 @@
                     this.isLoading = true;
                     this.$store.dispatch("SubmitTimesheet", this.dateAndValuesArray).then((resp) => {
                         if (resp.status !== 200) {
-                            this.$store.dispatch("GetTimesheets", payload);
+                            this.$store.dispatch("GetTimesheets", payload).then(resp => {
+                                if (resp) {
+                                    this.timesheets = resp
+                                }
+                            }).then(() => this.getTimesheet());
                             this.submissionSuccess = true;
                             this.timesheetMessageTitle = "Timesheet saved!"
                             this.timesheetMessageBody = "Your timesheet has been saved. The saved timesheet will be automatically submitted at the end of the reporting period."
@@ -516,7 +523,7 @@
                         else {
                             this.submissionSuccess = false;
                             this.timesheetMessageTitle = "Error!"
-                            this.timesheetMessageBody = "Your timesheet could not be saved due to an error."
+                            this.timesheetMessageBody = "Your timesheet could not be saved due to an error. Please ensure the fields are filled out correctly, and the system is connected to the network."
                         }
                         this.isLoading = false;
                         this.openModal()
@@ -525,7 +532,7 @@
                         this.submissionSuccess = false;
                         this.isLoading = false;
                         this.timesheetMessageTitle = "Error!"
-                        this.timesheetMessageBody = "Your timesheet could not be saved due to an error."
+                        this.timesheetMessageBody = "Your timesheet could not be saved due to an error. Please ensure the fields are filled out correctly, and the system is connected to the network."
                         this.openModal()
                     });
                 }
@@ -569,6 +576,7 @@
                         this.formData[formCount].pto_hours = ""
                         this.formData[formCount].extra_hours = ""
                         this.formData[formCount].comment = ""
+                        formCount += 1
                         continue
                     }
 
@@ -611,6 +619,7 @@
                         this.formData[formCount].pto_hours = ""
                         this.formData[formCount].extra_hours = ""
                         this.formData[formCount].comment = ""
+                        formCount += 1
                         continue
                     }
 
@@ -658,7 +667,6 @@
             };
 
             this.$store.dispatch("GetTimesheets", payload).then(resp => {
-                console.log(resp)
                 if (resp) {
                     this.timesheets = resp
                     // console.log(this.timesheets)
