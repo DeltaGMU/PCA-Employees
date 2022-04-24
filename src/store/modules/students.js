@@ -20,7 +20,7 @@ const actions = {
       }
       return await axios.post("api/v1/care", payload, headers).then(
         resp => {
-          console.log(resp.data.data.students)
+          // console.log(resp.data.data.students)
           return resp.data.data.students;
         }
       );
@@ -34,11 +34,11 @@ const actions = {
         "start_date": items.start_date,
         "end_date": items.end_date
       }
-      console.log(payload)
+      // console.log(payload)
       return await axios.post("api/v1/care/records/total", payload, headers).then(
         resp => {
           if (resp && resp.status === 200) {
-            console.log(resp.data.data.students)
+            // console.log(resp.data.data.students)
             return resp.data.data.students;
           }
           return {}
@@ -79,6 +79,19 @@ const actions = {
         resp => {
           if (resp && resp.status === 200) {
             return resp.data.data.care;
+          }
+          return null
+        }
+      ).catch(err => {
+        console.log(err)
+        return null
+      });
+    },
+    async GetStudentCareTimeSlotsKiosk() {
+      return await axios.get("api/v1/kiosk/timeslots").then(
+        resp => {
+          if (resp && resp.status === 200) {
+            return resp.data.data;
           }
           return null
         }
@@ -142,7 +155,7 @@ const actions = {
       else if(items.care_type == 1) {
         payload["care_type"] = true
       }
-      console.log(payload)
+      // console.log(payload)
       return await axios.post("api/v1/care/records/remove", payload, headers).then(
         resp => {
           if (resp && resp.status == 200){
@@ -190,7 +203,7 @@ const actions = {
     async CheckInStudent(_, payload) {
       return await axios.post("api/v1/care/checkin", payload).then(
         resp => {
-          console.log(resp)
+          // console.log(resp)
           if (resp && resp.status == 201) {
             return true;
           }
@@ -202,10 +215,10 @@ const actions = {
       })
     },
     async CheckOutStudent(_, payload) {
-      console.log(payload)
+      // console.log(payload)
       return await axios.post("api/v1/care/checkout", payload).then(
         resp => {
-          console.log(resp)
+          // console.log(resp)
           if (resp && resp.status == 200) {
             return true;
           }
@@ -220,7 +233,7 @@ const actions = {
       let headers = {
         headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
       }
-      console.log(payload)
+      // console.log(payload)
       return await axios.put("api/v1/students/"+payload.studentID, payload.payload, headers).then(
         resp => {
           if (resp && resp.status == 200){
@@ -237,7 +250,7 @@ const actions = {
       let headers = {
         headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
       }
-      console.log(payload)
+      // console.log(payload)
       return await axios.post("api/v1/grades", payload, headers).then(
         resp => {
           if (resp && resp.status == 201){
@@ -254,7 +267,7 @@ const actions = {
       let headers = {
         headers: {'Authorization': 'Bearer '+context.rootState.auth.user.token}
       }
-      console.log(payload)
+      // console.log(payload)
       return await axios.post("api/v1/grades/remove", payload, headers).then(
         resp => {
           if (resp && resp.status == 200){
