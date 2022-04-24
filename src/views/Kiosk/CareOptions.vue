@@ -57,11 +57,11 @@
                             <tbody>
                                 <tr v-if="care_info && care_info.metadata !== undefined">
                                     <td><b>Before-Care Time Slot:</b></td>
-                                    <td>{{ care_info.metadata.before_care_check_in_time }} - {{ care_info.metadata.before_care_check_out_time }}</td>
+                                    <td>{{ convertTimeTo12HourFormat(care_info.metadata.before_care_check_in_time) }} - {{ convertTimeTo12HourFormat(care_info.metadata.before_care_check_out_time) }}</td>
                                 </tr>
                                 <tr v-if="care_info && care_info.metadata !== undefined">
                                     <td><b>After-Care Time Slot:</b></td>
-                                    <td>{{ care_info.metadata.after_care_check_in_time }} - {{ care_info.metadata.after_care_check_out_time }}</td>
+                                    <td>{{ convertTimeTo12HourFormat(care_info.metadata.after_care_check_in_time) }} - {{ convertTimeTo12HourFormat(care_info.metadata.after_care_check_out_time) }}</td>
                                 </tr>
                                 <tr v-if="care_info && care_info.before_care !== undefined && care_info.after_care === undefined">
                                     <td><b>Student In:</b></td>
@@ -230,6 +230,13 @@ export default {
             document.getElementById("careModal").classList.remove("show")
             this.$router.push("/kiosk")
         },
+        convertTimeTo12HourFormat(timeString) {
+            let currentDate = config.debug_mode ? ConvertDateToTimezone(config.test_date()).slice(0, 10) : ConvertDateToTimezone(new Date()).slice(0, 10)
+            let newDate = new Date(`${currentDate} ${timeString}`)
+            return newDate.toLocaleString('en-US', {
+                hour12: true
+            }).slice(10)
+        },
         getCurrentTime() {
             return new Date(config.debug_mode ? ConvertDateToTimezone(config.test_date()) : ConvertDateToTimezone(new Date())).toLocaleTimeString()
         },
@@ -238,10 +245,10 @@ export default {
                 let currentDate = config.debug_mode ? ConvertDateToTimezone(config.test_date()).slice(0, 10) : ConvertDateToTimezone(new Date()).slice(0, 10)
                 
                 let beforeCareCheckIn = new Date(`${currentDate} ${this.care_info.metadata.before_care_check_in_time}`)
-                console.log(beforeCareCheckIn)
+                // console.log(beforeCareCheckIn)
 
                 let beforeCareCheckOut = new Date(`${currentDate} ${this.care_info.metadata.before_care_check_out_time}`)
-                console.log(beforeCareCheckOut)
+                // console.log(beforeCareCheckOut)
 
                 return this.checkWithinTimeRange(beforeCareCheckOut, beforeCareCheckIn)
             }
@@ -252,10 +259,10 @@ export default {
                 let currentDate = config.debug_mode ? ConvertDateToTimezone(config.test_date()).slice(0, 10) : ConvertDateToTimezone(new Date()).slice(0, 10)
 
                 let afterCareCheckIn = new Date(`${currentDate} ${this.care_info.metadata.after_care_check_in_time}`)
-                console.log(afterCareCheckIn)
+                // console.log(afterCareCheckIn)
 
                 let afterCareCheckOut = new Date(`${currentDate} ${this.care_info.metadata.after_care_check_out_time}`)
-                console.log(afterCareCheckOut)
+                // console.log(afterCareCheckOut)
 
                 return this.checkWithinTimeRange(afterCareCheckOut, afterCareCheckIn)
             }
@@ -263,7 +270,7 @@ export default {
         },
         checkWithinTimeRange(maxDateTime, minDateTime) {
             let currentDateTime = new Date(config.debug_mode ? ConvertDateToTimezone(config.test_date()) : ConvertDateToTimezone(new Date()))
-            console.log(currentDateTime)
+            // console.log(currentDateTime)
             if (currentDateTime >= minDateTime && currentDateTime <= maxDateTime) {
                 return true
             }
@@ -286,9 +293,9 @@ export default {
                         care_type: false,
                         check_in_signature: this.parent_signature.trim()
                     }
-                    console.log(payload)
+                    // console.log(payload)
                     this.$store.dispatch("CheckInStudent", payload).then(resp => {
-                        console.log(resp);
+                        // console.log(resp);
                         if (resp) {
                             this.submissionSuccess = true;
                             this.modalMessage = `Successfully checked-in ${this.student_info.first_name} ${this.student_info.last_name} to Before-Care Services.`
@@ -327,9 +334,9 @@ export default {
                         care_type: true,
                         check_out_signature: this.parent_signature.trim()
                     }
-                    console.log(payload)
+                    // console.log(payload)
                     this.$store.dispatch("CheckOutStudent", payload).then(resp => {
-                        console.log(resp);
+                        // console.log(resp);
                         if (resp) {
                             this.submissionSuccess = true;
                             this.modalMessage = `Successfully checked-out ${this.student_info.first_name} ${this.student_info.last_name} from After-Care Services.`
@@ -358,7 +365,7 @@ export default {
         }
         else {
             let setDate = config.debug_mode ? config.test_date() : new Date()
-            console.log(setDate)
+            // console.log(setDate)
             let currentDate = ConvertDateToTimezone(setDate).slice(0, 10)
             let payload = {
                 studentID: this.student_info.student_id,
@@ -366,7 +373,7 @@ export default {
             }
             this.$store.dispatch("GetStudentCareInfoKiosk", payload).then(resp => {
                 if (resp) {
-                    console.log(resp)
+                    // console.log(resp)
                     this.care_info = resp
                 }
                 else {
